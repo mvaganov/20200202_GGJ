@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCSpawner : MonoBehaviour {
     [SerializeField] NPC prefabNPC;
     [SerializeField] Transform parentOfRegions;
-    int kNumPeopleToSpawn = 10;
+    int kNumPeopleToSpawn = 20;
 
     private void Start() {
         UnityEngine.Assertions.Assert.IsNotNull( prefabNPC );
@@ -13,18 +13,23 @@ public class NPCSpawner : MonoBehaviour {
         Spawn();
     }
 
+    // A random part within, but far above a region
     public static Vector3 RandomPointInRadius( Vector3 center, float radius ) {
         float xOffset = UnityEngine.Random.Range(-radius, radius);
         float zOffset = UnityEngine.Random.Range(-radius, radius);
-        return center + new Vector3( xOffset, 0, zOffset );
+        return center + new Vector3( xOffset, 999, zOffset );
     }
 
     // Find a point within the mesh, then return a point right on top of mesh
     public static Vector3 GetRandomPointWithinMeshRegion( MeshCollider mesh ) {
         float range = 20;
         Vector3 randomPoint = RandomPointInRadius( mesh.bounds.center, range);
-        randomPoint = mesh.ClosestPoint( randomPoint );
-        randomPoint.y = mesh.bounds.max.y;
+
+        RaycastHit hit;
+        if ( Physics.Raycast( randomPoint, -Vector3.up, out hit ) ) {
+            randomPoint.y -= hit.distance;
+        }
+
         return randomPoint;
     }
 
