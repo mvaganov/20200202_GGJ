@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCSpawner : MonoBehaviour {
     [SerializeField] NPC prefabNPC;
     [SerializeField] Transform parentOfRegions;
-    int kNumPeopleToSpawn = 20;
+    int kNumPeopleToSpawn = 12;
 
     private void Start() {
         UnityEngine.Assertions.Assert.IsNotNull( prefabNPC );

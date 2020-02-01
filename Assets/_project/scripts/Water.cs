@@ -28,9 +28,8 @@ public class Water : MonoBehaviour {
         }
     }
     private void OnTriggerEnter( Collider other ) {
-        Debug.Log( "Hit: " + other.gameObject.name );
         if ( other.tag == "Player" ) {
-
+            // TODO end game
         }
         else {
             Destroy( other.gameObject );
