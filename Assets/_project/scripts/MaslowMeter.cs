@@ -114,9 +114,9 @@ public class MaslowMeter : MonoBehaviour {
             safetyNumber = safetyNumber.Contains( "-" ) ? safetyNumber : "+"+safetyNumber;
             foodNumber = foodNumber.Contains( "-" ) ? foodNumber : "+"+foodNumber;
 
-            happyNumber = happyNumber.Substring( 0, 2 );
-            safetyNumber = safetyNumber.Substring( 0, 2 );
-            foodNumber = foodNumber.Substring( 0, 2 );
+            happyNumber = happyNumber.Substring( 0, 3 ).Replace( ".", " " );
+            safetyNumber = safetyNumber.Substring( 0, 3 ).Replace( ".", " " );
+            foodNumber = foodNumber.Substring( 0, 3 ).Replace( ".", " " );
 
             txtStatus.text = "";
             txtStatus.text +=    "<sprite=14> " + "<color=\""+happyColor+"\">" + happyNumber;
@@ -128,6 +128,10 @@ public class MaslowMeter : MonoBehaviour {
     }
 
     private void OnTriggerEnter( Collider other ) {
+        // Judges don't influence others
+        if ( tag == "Judge" )
+            return;
+
         if ( other.tag == "Villager" || other.tag == "PlayerBubble" ) {
             if ( !peopleThisPersonInfluenced.Contains( other.transform.parent ) ) {
                 peopleThisPersonInfluenced.Add( other.transform.parent );

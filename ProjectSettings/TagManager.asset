@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Villager
   - PlayerBubble
+  - House
+  - Judge
   layers:
   - Default
   - TransparentFX

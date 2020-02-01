@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent( typeof( CharacterMove ) )]
 [RequireComponent( typeof( Rigidbody ) )]
 public class NPC : MonoBehaviour {
+    [SerializeField] bool judge = false;
+    [SerializeField] Color judgeColor = Color.white;
     private MeshCollider region;
     private CharacterMove moveController;
 
@@ -16,15 +18,24 @@ public class NPC : MonoBehaviour {
         InvokeRepeating( "WalkTowardsSpotInRegion", 0, timeBetweenPaths );
     }
 
+    private void Start() {
+        if ( judge ) {
+            Vector3 destination = GameObject.Find( "HouseRegion" ).transform.position;
+            moveController = GetComponent<CharacterMove>();
+            moveController.move.speed /= 2;
+            moveController.move.SetAutoMovePosition( destination );
+
+            var visual = transform.GetChild( 0 ).GetChild( 0 ).GetComponent<MeshRenderer>();
+            UnityEngine.Assertions.Assert.IsNotNull( visual );
+
+            var newMat = new Material( transform.GetChild( 0 ).GetChild( 0 ).GetComponent<MeshRenderer>().material);
+            visual.material = newMat;
+            visual.material.color = judgeColor;
+        }
+    }
+
     private void WalkTowardsSpotInRegion() {
         Vector3 position = NPCSpawner.GetRandomPointWithinMeshRegion( region );
         moveController.move.SetAutoMovePosition( position );
-
-        //Debug.Log( "Path!" );
-        //CharacterMove.ClickToMoveDetails moveCommand = new CharacterMove.ClickToMoveDetails();
-        //moveCommand.targetPosition =
-        //moveCommand.isNPC = true;
-        //moveController.ClickToMove = true;
-        //moveController.move.clickToMove = moveCommand;
     }
 }
