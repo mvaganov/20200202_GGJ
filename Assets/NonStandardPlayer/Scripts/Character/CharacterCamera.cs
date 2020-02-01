@@ -6,6 +6,8 @@ public class CharacterCamera : MonoBehaviour
 	public Transform target;
 	public float keypressRotateSpeed = 90;
 	public SingleJoystick joystick;
+	[Tooltip("if true, do a ray cast to prevent the camera from going through walls")]
+	public bool wallClip = true;
 
 	public void UpdateRotationWithUserInput(ref float rotH, ref float rotV, ref float zoom, System.Action onMouseLookStart, System.Action onMouseLookStop) {
 		if (joystick != null && rotH == 0 && rotV == 0)
@@ -73,7 +75,15 @@ public class CharacterCamera : MonoBehaviour
 	{
 		if(target != null)
 		{
-			transform.position = target.position - transform.forward * targetDistance;
+			Vector3 targetPosition = target.position - transform.forward * targetDistance;
+			if (wallClip)
+			{
+				RaycastHit rh = new RaycastHit();
+				if(Physics.Raycast(target.position, -transform.forward, out rh, targetDistance)) {
+					targetPosition = rh.point;
+				}
+			}
+			transform.position = targetPosition;
 		}
 	}
 }
