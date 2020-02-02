@@ -5,9 +5,11 @@ using UnityEngine;
 public class NPCSpawner : MonoBehaviour {
     [SerializeField] NPC prefabNPC;
     [SerializeField] Transform parentOfRegions;
+    [SerializeField] Transform spawnedNPCs;
     int kNumPeopleToSpawn = 12;
 
     private void Start() {
+        UnityEngine.Assertions.Assert.IsNotNull( spawnedNPCs );
         UnityEngine.Assertions.Assert.IsNotNull( prefabNPC );
         UnityEngine.Assertions.Assert.IsNotNull( parentOfRegions );
         Spawn();
@@ -48,7 +50,7 @@ public class NPCSpawner : MonoBehaviour {
             for ( int j = 0; j < kNumPeopleToSpawn; j++ ) {
                 // Spawn people within region bounds
                 Vector3 randomPositionInBounds = GetRandomPointWithinMeshRegion( currRegionBounds );
-                NPC cloneNPC = Instantiate(prefabNPC);
+                NPC cloneNPC = Instantiate(prefabNPC, spawnedNPCs);
                 cloneNPC.transform.position = randomPositionInBounds;
                 cloneNPC.BeginPathing( currRegionBounds );
 

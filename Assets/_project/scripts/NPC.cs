@@ -1,4 +1,5 @@
 ﻿// http://codegiraffe.com/unity/NonStandardPlayer.unitypackage
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,18 +9,20 @@ using UnityEngine;
 public class NPC : MonoBehaviour {
     [SerializeField] bool judge = false;
     [SerializeField] Color judgeColor = Color.white;
+    [SerializeField] TMPro.TextMeshProUGUI txtVote;
     private MeshCollider region;
     private CharacterMove moveController;
 
     public void BeginPathing( MeshCollider boundingRegion ) {
         moveController = GetComponent<CharacterMove>();
         region = boundingRegion;
-        float timeBetweenPaths = Random.Range(5, 10);
+        float timeBetweenPaths = UnityEngine.Random.Range(5, 10);
         InvokeRepeating( "WalkTowardsSpotInRegion", 0, timeBetweenPaths );
     }
 
     private void Start() {
         if ( judge ) {
+            UnityEngine.Assertions.Assert.IsNotNull( txtVote );
             Vector3 destination = GameObject.Find( "HouseRegion" ).transform.position;
             moveController = GetComponent<CharacterMove>();
             moveController.move.speed /= 2;
@@ -37,5 +40,14 @@ public class NPC : MonoBehaviour {
     private void WalkTowardsSpotInRegion() {
         Vector3 position = NPCSpawner.GetRandomPointWithinMeshRegion( region );
         moveController.move.SetAutoMovePosition( position );
+    }
+
+    internal void Vote( bool positive ) {
+        UnityEngine.Assertions.Assert.IsTrue( judge );
+        txtVote.text = positive ? "+" : "-";
+    }
+
+    internal void ReEvalInfluences() {
+
     }
 }
