@@ -3173,6 +3173,7 @@ MonoBehaviour:
     layer: 0
     color: {r: 1, g: 0, b: 0, a: 0.5}
     value: 0.5
+    maslow: {fileID: 0}
     lossPerSecond: 0.01
     gainPerClick: 0.1
     ui: {fileID: 0}
@@ -3225,6 +3226,7 @@ MonoBehaviour:
     layer: 0
     color: {r: 1, g: 0.7, b: 0, a: 0.5}
     value: 0.5
+    maslow: {fileID: 0}
     lossPerSecond: 0.008
     gainPerClick: 0.1
     ui: {fileID: 0}
@@ -3277,6 +3279,7 @@ MonoBehaviour:
     layer: 0
     color: {r: 0.5, g: 1, b: 0, a: 0.5}
     value: 0.5
+    maslow: {fileID: 0}
     lossPerSecond: 0.006
     gainPerClick: 0.1
     ui: {fileID: 0}
@@ -3329,6 +3332,7 @@ MonoBehaviour:
     layer: 0
     color: {r: 0, g: 1, b: 1, a: 0.5}
     value: 0.5
+    maslow: {fileID: 0}
     lossPerSecond: 0.004
     gainPerClick: 0.1
     ui: {fileID: 0}
@@ -3381,6 +3385,7 @@ MonoBehaviour:
     layer: 0
     color: {r: 0, g: 0.5, b: 1, a: 0.5}
     value: 0.5
+    maslow: {fileID: 0}
     lossPerSecond: 0.002
     gainPerClick: 0.1
     ui: {fileID: 0}
@@ -3451,6 +3456,7 @@ MonoBehaviour:
   distance: 0
   headScreenUI: {fileID: 6727000786539286132}
   headWorldUI: {fileID: 7092308839710740664}
+  happinessBar: {fileID: 4909381511635230873}
   meeting: 0
   departing: 0
   departTime: 0

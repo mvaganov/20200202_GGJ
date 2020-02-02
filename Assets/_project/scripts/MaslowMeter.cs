@@ -102,10 +102,13 @@ public class MaslowMeter : MonoBehaviour {
         txtStatus.color = newColor;
     }
 
-private int blinkRate = 99;
-private float lastBlink = 0f;
-private float blinkLength = 1f;
-private bool blinked = false;
+    private int blinkRate = 99;
+    private float lastBlink = 0f;
+    private float blinkLength = 1f;
+    private bool blinked = false;
+
+    public Happiness happinessBar;
+    private static float influencerHappyPerSecond = 0.05f;
     private void UpdateHapiness()
     {
         if(headScreenUI != null && headWorldUI != null)
@@ -141,6 +144,22 @@ private bool blinked = false;
                 happyInt = 0;
             }
             
+            if (influencer) happy += Time.deltaTime / influencerHappyPerSecond;
+            if (happinessBar == null)
+            {
+                happinessBar = GetComponentInChildren<Happiness>();
+            }
+            if(happy>0f)
+            {
+                happinessBar.happinessPosition = happy / maxNeedValue;
+            }
+            else
+            {
+                happinessBar.happinessPosition = 0f;
+
+            }
+            
+            // Show world happy face close or screen happy face from afar
             if (distance > distanceToUIifyFace  )
             {
                 //headScreenUI.gameObject.SetActive(true);
@@ -175,32 +194,32 @@ private bool blinked = false;
     public static float maxHabitValue = 100f;
     public void GenerateHabits()
     {
-        if (UnityEngine.Random.Range(0,100) < 90)
+        if (UnityEngine.Random.Range(0,100) < 80)
         {
             needs[(int)Habits.Layer.physiology].habitPrimary = RandomHabit(Habits.Layer.physiology);
             needs[(int)Habits.Layer.physiology].habitPrimaryValue = maxHabitValue;
             //Debug.Log("physiology habit is " + needs[(int)Habits.Layer.physiology].habitPrimary.name);
 
-            if (UnityEngine.Random.Range(0,100) < 75)
+            if (UnityEngine.Random.Range(0,100) < 60)
             {
                 needs[(int)Habits.Layer.safety].habitPrimary = RandomHabit(Habits.Layer.safety);
                 needs[(int)Habits.Layer.safety].habitPrimaryValue = maxHabitValue;
                 //Debug.Log("safety habit is " + needs[(int)Habits.Layer.safety].habitPrimary.name);
 
 
-                if (UnityEngine.Random.Range(0,100) < 55)
+                if (UnityEngine.Random.Range(0,100) < 50)
                 {
                     needs[(int)Habits.Layer.belonging].habitPrimary = RandomHabit(Habits.Layer.belonging);
                     needs[(int)Habits.Layer.belonging].habitPrimaryValue = maxHabitValue;
 
-                    if (UnityEngine.Random.Range(0,100) < 25)
+                    if (UnityEngine.Random.Range(0,100) < 30)
                     {
                         needs[(int)Habits.Layer.esteem].habitPrimary = RandomHabit(Habits.Layer.esteem);
                         needs[(int)Habits.Layer.esteem].habitPrimaryValue = maxHabitValue;
 
                         influencer = true;
-                        
                         influencerHabit = RandomNeedPrimaryHabit();
+                        needs[(int)Habits.Layer.actualization].habitPrimary = influencerHabit;
                     }
                 }
             }
@@ -465,6 +484,7 @@ private bool blinked = false;
                 receivedNeed.habitSecondary = influencerNeed.habitPrimary;
                 receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
                 receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
+                
             }
             // or nothing is there to gain
             else
@@ -539,10 +559,14 @@ private bool blinked = false;
             safety = -10;
         }
         else {
-            happy = UnityEngine.Random.Range( -7.0f, 7.0f );
-            safety = UnityEngine.Random.Range( -7.0f, 7.0f );
+            happy = UnityEngine.Random.Range( minNeedValue, maxNeedRandomValue);
+            safety = UnityEngine.Random.Range( minNeedValue, maxNeedRandomValue);
         }
 	}
+
+    public static float  minNeedValue = 0f;
+    public static float maxNeedValue = 10f;
+    public static float maxNeedRandomValue = 7f;
     void Update() {
         
         // Update needs simulations

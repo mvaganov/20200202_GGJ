@@ -76,18 +76,32 @@ using UnityEngine;
             }
 		}
 		public void Click() {
+            GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
+            MaslowMeter playerMaslow = playerGO.GetComponentInChildren<MaslowMeter>();
+
 			if (clickToIncrease)
 			{
 				value += gainPerClick;
 			}
+            // If we click another maslow's habit to get it
             if (!maslow.isPlayer)
             {
-                GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
-                Debug.Log(playerGO);
-                MaslowMeter playerMaslow = playerGO.GetComponentInChildren<MaslowMeter>();
-                Debug.Log(playerMaslow);
-                Debug.Log("layer:"+layer.ToString() );
+                //then influence player
                 playerMaslow.InfluenceMaslow(maslow,layer,maslow.happy,maslow.safety,maslow.safety);
+            }
+            // else we clicked the player's habits to influence our interactingWith partner
+            else
+            {
+                if(maslow.interactingWith != null)
+                {
+                    Debug.Log("Interacting with " + maslow.interactingWith.happy);
+                    // If we clicked ourselves, we try to influence the other person we are meeting with.
+                    maslow.interactingWith.InfluenceMaslow(playerMaslow,layer,playerMaslow.happy,playerMaslow.safety,playerMaslow.safety);
+                }
+                else
+                {
+                    Debug.Log("Not interacting with anyone to send to.");
+                }
             }
 		}
 
