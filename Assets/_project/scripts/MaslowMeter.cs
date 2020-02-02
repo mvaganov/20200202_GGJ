@@ -220,40 +220,47 @@ public class MaslowMeter : MonoBehaviour {
     public static float maxHabitValue = 100f;
     public void GenerateHabits()
     {
-        if (UnityEngine.Random.Range(0,100) < 80)
+        if (tag != "Judge")
         {
-            needs[(int)Habits.Layer.physiology].habitPrimary = RandomHabit(Habits.Layer.physiology);
-            needs[(int)Habits.Layer.physiology].habitPrimaryValue = maxHabitValue;
-            highestLayer = 0;
-            //Debug.Log("physiology habit is " + needs[(int)Habits.Layer.physiology].habitPrimary.name);
-
-            if (UnityEngine.Random.Range(0,100) < 60)
+            if (UnityEngine.Random.Range(0,100) < 80)
             {
-                highestLayer = 1;
-                needs[(int)Habits.Layer.safety].habitPrimary = RandomHabit(Habits.Layer.safety);
-                needs[(int)Habits.Layer.safety].habitPrimaryValue = maxHabitValue;
-                //Debug.Log("safety habit is " + needs[(int)Habits.Layer.safety].habitPrimary.name);
+                needs[(int)Habits.Layer.physiology].habitPrimary = RandomHabit(Habits.Layer.physiology);
+                needs[(int)Habits.Layer.physiology].habitPrimaryValue = maxHabitValue;
+                highestLayer = 0;
+                //Debug.Log("physiology habit is " + needs[(int)Habits.Layer.physiology].habitPrimary.name);
 
-
-                if (UnityEngine.Random.Range(0,100) < 50)
+                if (UnityEngine.Random.Range(0,100) < 60)
                 {
-                    highestLayer = 2;
-                    needs[(int)Habits.Layer.belonging].habitPrimary = RandomHabit(Habits.Layer.belonging);
-                    needs[(int)Habits.Layer.belonging].habitPrimaryValue = maxHabitValue;
+                    highestLayer = 1;
+                    needs[(int)Habits.Layer.safety].habitPrimary = RandomHabit(Habits.Layer.safety);
+                    needs[(int)Habits.Layer.safety].habitPrimaryValue = maxHabitValue;
+                    //Debug.Log("safety habit is " + needs[(int)Habits.Layer.safety].habitPrimary.name);
 
-                    if (UnityEngine.Random.Range(0,100) < 30)
+
+                    if (UnityEngine.Random.Range(0,100) < 50)
                     {
-                        highestLayer = 3;
-                        needs[(int)Habits.Layer.esteem].habitPrimary = RandomHabit(Habits.Layer.esteem);
-                        needs[(int)Habits.Layer.esteem].habitPrimaryValue = maxHabitValue;
+                        highestLayer = 2;
+                        needs[(int)Habits.Layer.belonging].habitPrimary = RandomHabit(Habits.Layer.belonging);
+                        needs[(int)Habits.Layer.belonging].habitPrimaryValue = maxHabitValue;
 
-                        highestLayer = 4;
-                        influencer = true;
-                        influencerHabit = RandomNeedPrimaryHabit();
-                        needs[(int)Habits.Layer.actualization].habitPrimary = influencerHabit;
+                        if (UnityEngine.Random.Range(0,100) < 30)
+                        {
+                            highestLayer = 3;
+                            needs[(int)Habits.Layer.esteem].habitPrimary = RandomHabit(Habits.Layer.esteem);
+                            needs[(int)Habits.Layer.esteem].habitPrimaryValue = maxHabitValue;
+
+                            highestLayer = 4;
+                            influencer = true;
+                            influencerHabit = RandomNeedPrimaryHabit();
+                            needs[(int)Habits.Layer.actualization].habitPrimary = influencerHabit;
+                        }
                     }
                 }
             }
+        }
+        else
+        {
+            highestLayer=-1;
         }
         
         
@@ -534,7 +541,8 @@ public bool goodBlinking = false;
         influencer.RestoreInteractingWithColor();
 
         influencer.interactingWith = this;
-        interactingWith.RestoreInteractingWithColor();
+        if(interactingWith!=null)
+        {interactingWith.RestoreInteractingWithColor();}
 
         interactingWith = influencer;
 
