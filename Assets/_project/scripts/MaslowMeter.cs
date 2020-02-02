@@ -680,7 +680,12 @@ public bool goodBlinking = false;
     public static float  minNeedValue = 0f;
     public static float maxNeedValue = 10f;
     public static float maxNeedRandomValue = 7f;
-    void Update() {
+
+	bool VoteForEarth() {
+		return happy >= 5 && actualization >= 5;
+	}
+
+    void FixedUpdate() {
         
         // Update needs simulations
 		System.Array.ForEach(needs, (need) => need.Update(Time.deltaTime));
@@ -688,81 +693,82 @@ public bool goodBlinking = false;
         UpdateMeetings();
         UpdateHighest();
 		UpdateTriangleUI();
-        SetTransBasedOnPlayerDist();
+		//SetTransBasedOnPlayerDist();
+		votingPositive = VoteForEarth();
 
-        if ( dirty && txtStatus.gameObject.activeInHierarchy ) {
-            string happyColor = "white";
-            string safetyColor = "white";
-            string foodColor = "white";
+        //if ( dirty && txtStatus.gameObject.activeInHierarchy ) {
+        //    string happyColor = "white";
+        //    string safetyColor = "white";
+        //    string foodColor = "white";
 
-            int netResult = 0;
+        //    int netResult = 0;
 
-            if ( happy >= 5f ) {
-                happyColor = "green";
-                netResult += 1;
-            }
+        //    if ( happy >= 5f ) {
+        //        happyColor = "green";
+        //        netResult += 1;
+        //    }
 
-            if ( happy <= -5f ) {
-                happyColor = "red";
-                netResult -= 1;
-            }
+        //    if ( happy <= -5f ) {
+        //        happyColor = "red";
+        //        netResult -= 1;
+        //    }
 
-            if ( safety >= 5f ) {
-                safetyColor = "green";
-                netResult += 1;
-            }
+        //    if ( safety >= 5f ) {
+        //        safetyColor = "green";
+        //        netResult += 1;
+        //    }
 
-            if ( safety <= -5f ) {
-                safetyColor = "red";
-                netResult -= 1;
-            }
+        //    if ( safety <= -5f ) {
+        //        safetyColor = "red";
+        //        netResult -= 1;
+        //    }
 
-            if ( health >= 5f ) {
-                foodColor = "green";
-                netResult += 1;
-            }
+        //    if ( health >= 5f ) {
+        //        foodColor = "green";
+        //        netResult += 1;
+        //    }
 
-            if ( health <= -5f ) {
-                foodColor = "red";
-                netResult -= 1;
-            }
+        //    if ( health <= -5f ) {
+        //        foodColor = "red";
+        //        netResult -= 1;
+        //    }
 
-            if ( netResult > 0 ) {
-                votingPositive = true;
-                //innerGlow.material = matGreen;
-            }
-            else if ( netResult < 0 ) {
-                votingPositive = false;
-                //innerGlow.material = matRed;
-            }
-            else {
-                votingPositive = false;
-                //innerGlow.material = matWhite;
-            }
+        //    if ( netResult > 0 ) {
+        //        votingPositive = true;
+        //        //innerGlow.material = matGreen;
+        //    }
+        //    else if ( netResult < 0 ) {
+        //        votingPositive = false;
+        //        //innerGlow.material = matRed;
+        //    }
+        //    else {
+        //        votingPositive = false;
+        //        //innerGlow.material = matWhite;
+        //    }
 
-            string happyNumber = happy.ToString() + "         ";
-            string safetyNumber = safety.ToString()+ "         ";
-            string foodNumber = health.ToString()+ "         ";
+        //    string happyNumber = happy.ToString() + "         ";
+        //    string safetyNumber = safety.ToString()+ "         ";
+        //    string foodNumber = health.ToString()+ "         ";
 
-            happyNumber = happyNumber.Substring( 0, 4 );
-            safetyNumber  = safetyNumber.Substring( 0, 4 );
-            foodNumber = foodNumber.Substring( 0, 4 );
+        //    happyNumber = happyNumber.Substring( 0, 4 );
+        //    safetyNumber  = safetyNumber.Substring( 0, 4 );
+        //    foodNumber = foodNumber.Substring( 0, 4 );
 
-            happyNumber = happyNumber.Contains( "-" ) ? happyNumber : "+"+happyNumber;
-            safetyNumber = safetyNumber.Contains( "-" ) ? safetyNumber : "+"+safetyNumber;
-            foodNumber = foodNumber.Contains( "-" ) ? foodNumber : "+"+foodNumber;
+        //    happyNumber = happyNumber.Contains( "-" ) ? happyNumber : "+"+happyNumber;
+        //    safetyNumber = safetyNumber.Contains( "-" ) ? safetyNumber : "+"+safetyNumber;
+        //    foodNumber = foodNumber.Contains( "-" ) ? foodNumber : "+"+foodNumber;
 
-            happyNumber = happyNumber.Substring( 0, 3 ).Replace( ".", " " );
-            safetyNumber = safetyNumber.Substring( 0, 3 ).Replace( ".", " " );
-            foodNumber = foodNumber.Substring( 0, 3 ).Replace( ".", " " );
+        //    happyNumber = happyNumber.Substring( 0, 3 ).Replace( ".", " " );
+        //    safetyNumber = safetyNumber.Substring( 0, 3 ).Replace( ".", " " );
+        //    foodNumber = foodNumber.Substring( 0, 3 ).Replace( ".", " " );
 
-            txtStatus.text = "";
-            txtStatus.text +=    "<sprite=14> " + "<color=\""+happyColor+"\">" + happyNumber;
-            txtStatus.text +=  "\n<sprite=2> "  + "<color=\""+safetyColor+"\">" + safetyNumber;
-            txtStatus.text +=  "\n<sprite=11> " + "<color=\""+foodColor+"\">" + foodNumber;
+        //    txtStatus.text = "";
+        //    txtStatus.text +=    "<sprite=14> " + "<color=\""+happyColor+"\">" + happyNumber;
+        //    txtStatus.text +=  "\n<sprite=2> "  + "<color=\""+safetyColor+"\">" + safetyNumber;
+        //    txtStatus.text +=  "\n<sprite=11> " + "<color=\""+foodColor+"\">" + foodNumber;
 
-            dirty = false;
-        }
+        //    dirty = false;
+        //}
     }
 
 	public MaslowMeter GetMaslowMeter(GameObject other) {
@@ -784,13 +790,13 @@ public bool goodBlinking = false;
 	private void OnTriggerEnter( Collider other ) {
         if ( tag == "Judge" && other.tag == "House" ) {
             // Judges don't influence others, only the city hall
-            var npc = GetComponent<NPC>();
+            var npc = GetComponent<NPCWithBoxes>();
             UnityEngine.Assertions.Assert.IsNotNull( npc );
             npc.Vote( votingPositive );
-			Debug.Log("JUDGE!");
+			Debug.Log("JUDGED!");
             return;
         }
-        else if ( other.tag == "Villager" || other.tag == "PlayerBubble" ) {
+        else if ( other.tag == "Villager" || other.tag == "Judge" || other.tag == "PlayerBubble" ) {
 			MaslowMeter otherMaslow = GetMaslowMeter(other.gameObject);
 			if (other.tag == "Player") {
 				//showTriangleDuration = showTriangleLength;
@@ -816,8 +822,8 @@ public bool goodBlinking = false;
                 peopleThisPersonInfluenced.Add( other.transform.parent );
                 //Debug.Log( gameObject.name + "Influenced " + other.gameObject.name );
 
-                MaslowMeter otherMeter = other.gameObject.transform.parent.GetComponent<MaslowMeter>();
-                UnityEngine.Assertions.Assert.IsNotNull( otherMeter );
+                //MaslowMeter otherMeter = other.gameObject.transform.parent.GetComponent<MaslowMeter>();
+                //UnityEngine.Assertions.Assert.IsNotNull( otherMeter );
                 //otherMeter.InfluenceMaslow( this, this.happy, safety, health );
                 // TODO: Influence should happen during the meeting instead
             }
