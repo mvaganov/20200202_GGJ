@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 4780873372299134619}
   - component: {fileID: 1593009185}
   - component: {fileID: 114117165501282482}
+  - component: {fileID: 3633929247637204706}
   m_Layer: 0
   m_Name: NPC for broken steps
   m_TagString: Untagged
@@ -490,6 +491,20 @@ MonoBehaviour:
   judgeColor: {r: 1, g: 1, b: 1, a: 1}
   skin: {fileID: 4780873372643401402}
   skinColor: 0
+--- !u!114 &3633929247637204706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4780873372299134618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a13df429ecb9ce34dadb4ee479b33666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1301997978648683386, guid: ac252817058b7684db87deed72d865f6, type: 3}
+  activated: 1
 --- !u!1 &4780873372488770998
 GameObject:
   m_ObjectHideFlags: 0
