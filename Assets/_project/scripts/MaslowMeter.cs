@@ -152,6 +152,24 @@ private bool blinked = false;
         }
     }
 
+    #region Generation
+
+    public void GenerateHabits()
+    {
+        foreach (Need need in needs)
+        {
+            need.habitPrimary = RandomHabit(need);
+        }
+    }
+
+    public Habits.Habit RandomHabit(Need need)
+    {
+        Habits.Habit newHabit= new Habits.Habit();
+        return newHabit;
+    }
+    #endregion
+
+
     /// <summary>
     /// Based on input numbers [-10, 10] this person's numbers are influenced to change by the influencer
     /// </summary>
