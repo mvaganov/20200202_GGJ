@@ -12,6 +12,9 @@ public class NeedsTriangle : MonoBehaviour
 	public MaslowMeter maslow;
 	public NeedUI[] triangleLayers;
 
+	private static int maxAboveHeads = 2;
+	private static List<NeedsTriangle> aboveHeads = new List<NeedsTriangle>();
+
 	public enum Show { inChest, playerUI, aboveHead }
 	public Show triangleShow = Show.inChest;
 	private Rigidbody2D rb;
@@ -46,6 +49,16 @@ public class NeedsTriangle : MonoBehaviour
 				if (rb != null) { rb.simulated = true; isColliding = false; }
 				placeTobe = ui.Find("maslowanchor");
 				SetTextVisible(true);
+				// keep just 2 on the screen at any given time, always giving preference to Player triangles.
+				if(aboveHeads.Count >= maxAboveHeads) {
+					for(int i = aboveHeads.Count-1; i >= 0 && aboveHeads.Count >= maxAboveHeads; --i) {
+						if(aboveHeads[i].maslow.tag != "Player") {
+							aboveHeads[i].SetShow(Show.inChest);
+							aboveHeads.RemoveAt(i);
+						}
+					}
+				}
+				aboveHeads.Add(this);
 				break;
 		}
 		//if (maslowTransform.parent != placeTobe)

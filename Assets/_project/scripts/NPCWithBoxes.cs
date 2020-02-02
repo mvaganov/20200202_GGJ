@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent( typeof( CharacterMove ) )]
 [RequireComponent( typeof( Rigidbody ) )]
 public class NPCWithBoxes : MonoBehaviour {
-    [SerializeField] bool judge = false;
+    [SerializeField] bool politician = false;
     [SerializeField] Color judgeColor = Color.white;
     private BoxCollider region;
     private CharacterMove moveController;
@@ -45,7 +45,7 @@ public class NPCWithBoxes : MonoBehaviour {
 			skinColor = (SkinColors)Random.Range(1, skinColors.Length);
 		}
 		RefreshSkinColor();
-		if ( judge ) {
+		if ( politician ) {
             Vector3 destination = GameObject.Find( "HouseRegion" ).transform.position;
             moveController = GetComponent<CharacterMove>();
             moveController.move.speed /= 2;
@@ -57,6 +57,8 @@ public class NPCWithBoxes : MonoBehaviour {
             var newMat = new Material( transform.GetChild( 0 ).GetChild( 0 ).GetComponent<MeshRenderer>().material);
             visual.material = newMat;
             visual.material.color = judgeColor;
+
+			NS.Lines.MakeArrow(ref line, transform.position, destination, Color.black, 1, 1);
         }
     }
 
