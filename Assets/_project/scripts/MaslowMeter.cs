@@ -84,7 +84,7 @@ public class MaslowMeter : MonoBehaviour {
     public CharacterMove characterMove;
 
     public float distance = 0f;
-    private float distanceToUIifyFace = 20f;
+    private float distanceToUIifyFace = 30f;
     public Transform headScreenUI;
     public Transform headWorldUI;
 
