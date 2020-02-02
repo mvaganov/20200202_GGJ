@@ -1,0 +1,228 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4679176035503989676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4679176035503989678}
+  - component: {fileID: 4679176035503989679}
+  m_Layer: 0
+  m_Name: Noisy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4679176035503989678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4679176035503989676}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.20000076, y: 69.78, z: -16.91132}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4679176035503989679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4679176035503989676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f6f7eb465c65bc4ea964d9a1f296336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noises:
+  - name: BG Music
+    sounds:
+    - {fileID: 8300000, guid: 8b9fa9bdb711096438e77de10d6b5038, type: 3}
+    volumeReduce: 0.74
+    backgroundMusic: 1
+    playOnStart: 1
+    is2D: 0
+    followsObject: 0
+    loop: 1
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Mood Increased
+    sounds:
+    - {fileID: 8300000, guid: 3d3ff71df32a8504bb127ee925e9617d, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Mood Decreased
+    sounds:
+    - {fileID: 8300000, guid: 0fc1179ea245f3b418cb4ce2b828d91e, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Judge made bad choice
+    sounds:
+    - {fileID: 8300000, guid: 2999f20777461a943b0ee64df9d1d46b, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Judge made good choice
+    sounds:
+    - {fileID: 8300000, guid: c0fe37fb6269d544eb5fd511ea45c685, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Hi bad
+    sounds:
+    - {fileID: 8300000, guid: 5fd40e4a78f10b4478a04ecaa19a718d, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Hi good
+    sounds:
+    - {fileID: 8300000, guid: 42e1e4cc3b883bd40882c460a588f510, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Lose game
+    sounds:
+    - {fileID: 8300000, guid: 9c49c5529f285404da58f0d207d99a06, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Win game
+    sounds:
+    - {fileID: 8300000, guid: c0fe37fb6269d544eb5fd511ea45c685, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Menu click
+    sounds:
+    - {fileID: 8300000, guid: 943819f4fa5841a47932c77e40abeca5, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Invalid action
+    sounds:
+    - {fileID: 8300000, guid: bbb0e3f89fc7b5045989c1ec58df3c4d, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Actualized
+    sounds:
+    - {fileID: 8300000, guid: 3d3ff71df32a8504bb127ee925e9617d, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Unactualized
+    sounds:
+    - {fileID: 8300000, guid: 6f586cda75b71484a8f7d4c0f0e5fe1d, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}

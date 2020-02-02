@@ -345,7 +345,6 @@ public class MaslowMeter : MonoBehaviour {
     /// <param name="psafety"></param>
     /// <param name="pfood"></param>
     private void Influence( float phappy, float psafety, float pfood ) {
-        
 
         // Right now influence is always +/- 1 or 0 
         if ( Math.Abs( phappy ) >= 5 ) {
@@ -536,7 +535,16 @@ public bool goodBlinking = false;
     }
 
     public void InfluenceMaslow( MaslowMeter influencer, Habits.Layer influenceLayer, float phappy, float psafety, float pfood ) {
-        
+
+        if (phappy > 0)
+        {
+            Noisy.PlaySound("Mood Increased");
+        }
+        else if (phappy < 0)
+        {
+            Noisy.PlaySound("Mood Decreased");
+        }
+
         // Assign the persons interacting with each other to facilitate animation during exchange
         influencer.RestoreInteractingWithColor();
 
