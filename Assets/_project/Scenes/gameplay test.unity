@@ -4766,16 +4766,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystickStaysInFixedPosition: 1
   inputAxis:
-  - name: right click strafe
-    horizontalAxis: Horizontal
-    verticalAxis: 
-    sensitivityMultiplier: 0
-    notNormalized: 0
-    modifiers:
-    - key: 324
-      notPressedExplicitly: 0
   - name: normal
-    horizontalAxis: 
+    horizontalAxis: Horizontal
     verticalAxis: Vertical
     sensitivityMultiplier: 0
     notNormalized: 0
@@ -7858,6 +7850,11 @@ PrefabInstance:
       propertyPath: cameraToBillboardFor
       value: 
       objectReference: {fileID: 1586721841}
+    - target: {fileID: 8833481274431304765, guid: 49fa3863ef9461743a7eba2e6419dc98,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -86.4
+      objectReference: {fileID: 0}
     - target: {fileID: 6743277141680390961, guid: 49fa3863ef9461743a7eba2e6419dc98,
         type: 3}
       propertyPath: cameraToBillboardFor

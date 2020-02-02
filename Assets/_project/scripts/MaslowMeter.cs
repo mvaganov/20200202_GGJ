@@ -393,18 +393,27 @@ private bool blinked = false;
             departing = false;
         }
     }
+	private GameObject faceToTriangle_line;
 	private void UpdateTriangleUI()
 	{
-		if (showTriangle > 0 && triangle.triangleShow == NeedsTriangle.Show.aboveHead) {
-			showTriangle -= Time.deltaTime;
-			if (showTriangle <= 0) {
-				if (transform.tag != "Player")
-				{ // player UI is always in the player UI area. never go back to chest.
-					//Debug.Log(name+" TRIANGLE OFF!");
-					triangle.SetShow(NeedsTriangle.Show.inChest);
+		if (triangle.triangleShow == NeedsTriangle.Show.aboveHead) {
+			RectTransform rt = headScreenUI.GetComponent<CanvasUIElement>().GetUI();
+			Transform faceTransform = rt.transform.GetChild(1);
+			LineUI.Create(ref faceToTriangle_line, triangle.transform, faceTransform, new Vector2(0, -100), Vector2.zero, new Color(1,1,1,.5f), 10);
+			faceToTriangle_line.transform.SetParent(triangle.transform.parent);
+			faceToTriangle_line.transform.localScale = Vector3.one;
+			faceToTriangle_line.SetActive(true);
+			if (showTriangle > 0) {
+				showTriangle -= Time.deltaTime;
+				if (showTriangle <= 0) {
+					if (transform.tag != "Player")
+					{ // player UI is always in the player UI area. never go back to chest.
+						//Debug.Log(name+" TRIANGLE OFF!");
+						triangle.SetShow(NeedsTriangle.Show.inChest);
+					}
 				}
 			}
-		}
+		} else if(faceToTriangle_line != null) { faceToTriangle_line.SetActive(false); }
 	}
 
     private static float secondaryInfluenceAmount = 25f;
