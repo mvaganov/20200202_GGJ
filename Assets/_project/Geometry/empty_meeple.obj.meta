@@ -5,12 +5,24 @@ ModelImporter:
   fileIDToRecycleName:
     100000: //RootNode
     100002: group_0_undefined
+    100004: group_0_14541540
+    100006: group_0_40919
     400000: //RootNode
     400002: group_0_undefined
+    400004: group_0_14541540
+    400006: group_0_40919
     2100000: group_0_undefinedMat
+    2100002: group_0_14541540Mat
+    2100004: group_0_40919Mat
     2300000: group_0_undefined
+    2300002: group_0_14541540
+    2300004: group_0_40919
     3300000: group_0_undefined
+    3300002: group_0_14541540
+    3300004: group_0_40919
     4300000: group_0_undefined
+    4300002: group_0_14541540
+    4300004: group_0_40919
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
