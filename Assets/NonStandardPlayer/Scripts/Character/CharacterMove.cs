@@ -8,6 +8,7 @@ using UnityEngine;
 public class CharacterMove : MonoBehaviour {
     Rigidbody rb;
     public CharacterFaceMouse head;
+    public Vector3 startPosition = Vector3.zero;
 
     void Start() {
         rb = GetComponent<Rigidbody>();
@@ -15,6 +16,7 @@ public class CharacterMove : MonoBehaviour {
         if ( move.cameraOfPlayer != null && move.clickToMove.eventSystem == null ) {
             move.clickToMove.eventSystem = KeyCodeRoute.GetEventSystem();
         }
+        startPosition = transform.position;
     }
     public float Jump { get; set; }
     public bool ClickToMove { get { return move.enableClickToMove; } set { move.enableClickToMove = value; } }
