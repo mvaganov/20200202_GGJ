@@ -88,5 +88,21 @@ public class NPCWithBoxes : MonoBehaviour {
 		{
 			voteSlot.sprite = voteSprite;
 		}
+		int totalVotes = noVoteCount + yesVoteCount;
+		Debug.Log("VOTES: " + totalVotes);
+		if (noVoteCount >= 3 || 
+			(totalVotes == 5 && noVoteCount >= 3))
+		{
+			Noisy.PlaySound("");
+		}
+		if (yesVoteCount >= 3 || 
+			(totalVotes == 5 && yesVoteCount >= 3))
+		{
+			Noisy.PlaySound("");
+		}
+		if(totalVotes == 5) {
+			CharacterMove[] cms = FindObjectsOfType<CharacterMove>();
+			System.Array.ForEach(cms, cm => { cm.transform.position = cm.startPosition; });
+		}
 	}
 }
