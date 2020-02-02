@@ -207,7 +207,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=1,
         mood=2,
-        earth=-1},
+        earth=-1,
+		layer=Habits.Layer.safety},
         new Habit{
         name="scooter",
         id=2069,
@@ -219,7 +220,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=0,
         mood=0,
-        earth=1},
+        earth=1,
+		layer=Habits.Layer.safety},
         new Habit{
         name="airplane",
         id=3065,
@@ -231,7 +233,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=0,
         mood=-1,
-        earth=-2},
+        earth=-2,
+		layer=Habits.Layer.safety},
         new Habit{
         name="bus",
         id=1915,
@@ -243,7 +246,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=-1,
         mood=-2,
-        earth=1},
+        earth=1,
+		layer=Habits.Layer.safety},
         new Habit{
         name="going out for drinks",
         id=418,
@@ -268,7 +272,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=-2,
         mood=0,
-        earth=-1},
+        earth=-1,
+		layer=Habits.Layer.belonging},
         new Habit{
         name="skiing",
         id=3041,
@@ -280,7 +285,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=2,
         mood=2,
-        earth=-2},
+        earth=-2,
+		layer=Habits.Layer.belonging},
         new Habit{
         name="social dancing",
         id=1370,
@@ -292,7 +298,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=2,
         mood=2,
-        earth=2},
+        earth=2,
+		layer=Habits.Layer.belonging},
         new Habit{
         name="volleyball",
         id=595,
@@ -304,7 +311,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=1,
         mood=1,
-        earth=1},
+        earth=1,
+		layer=Habits.Layer.belonging},
         new Habit{
         name="camping",
         id=3061,
@@ -343,7 +351,7 @@ public class Habits : MonoBehaviour
         actualization=1,
         mood=1,
         earth=-1,
-		layer=Habits.Layer.belonging},
+		layer=Habits.Layer.esteem},
         new Habit{
         name="yoga",
         id=2763,
@@ -355,7 +363,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=-2,
         mood=2,
-        earth=1},
+        earth=1,
+		layer=Habits.Layer.esteem},
         new Habit{
         name="cat ownership",
         id=652,
@@ -367,7 +376,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=1,
         mood=2,
-        earth=-1},
+        earth=-1,
+		layer=Habits.Layer.esteem},
         new Habit{
         name="gardening",
         id=345,
@@ -379,7 +389,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=0,
         mood=1,
-        earth=2},
+        earth=2,
+		layer=Habits.Layer.esteem},
         new Habit{
         name="going on a cruise",
         id=2068,
@@ -391,7 +402,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=-1,
         mood=0,
-        earth=-2},
+        earth=-2,
+		layer=Habits.Layer.esteem},
         new Habit{
         name="getting a degree",
         id=447,

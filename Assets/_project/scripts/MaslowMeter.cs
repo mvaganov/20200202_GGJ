@@ -160,29 +160,34 @@ private bool blinked = false;
 
     #region Generation
 
+    private float maxHabitValue = 10f;
     public void GenerateHabits()
     {
         if (UnityEngine.Random.Range(0,100) < 90)
         {
             needs[(int)Habits.Layer.physiology].habitPrimary = RandomHabit(Habits.Layer.physiology);
-            needs[(int)Habits.Layer.physiology].habitPrimaryValue = 100f;
+            needs[(int)Habits.Layer.physiology].habitPrimaryValue = maxHabitValue;
+            Debug.Log("physiology habit is " + needs[(int)Habits.Layer.physiology].habitPrimary.name);
 
             if (UnityEngine.Random.Range(0,100) < 75)
             {
                 needs[(int)Habits.Layer.safety].habitPrimary = RandomHabit(Habits.Layer.safety);
-                needs[(int)Habits.Layer.safety].habitPrimaryValue = 100f;
+                needs[(int)Habits.Layer.safety].habitPrimaryValue = maxHabitValue;
+                Debug.Log("safety habit is " + needs[(int)Habits.Layer.safety].habitPrimary.name);
+
 
                 if (UnityEngine.Random.Range(0,100) < 55)
                 {
                     needs[(int)Habits.Layer.belonging].habitPrimary = RandomHabit(Habits.Layer.belonging);
-                    needs[(int)Habits.Layer.belonging].habitPrimaryValue = 100f;
+                    needs[(int)Habits.Layer.belonging].habitPrimaryValue = maxHabitValue;
 
                     if (UnityEngine.Random.Range(0,100) < 25)
                     {
                         needs[(int)Habits.Layer.esteem].habitPrimary = RandomHabit(Habits.Layer.esteem);
-                        needs[(int)Habits.Layer.esteem].habitPrimaryValue = 100f;
+                        needs[(int)Habits.Layer.esteem].habitPrimaryValue = maxHabitValue;
 
                         influencer = true;
+                        
                         influencerHabit = RandomNeedPrimaryHabit();
                     }
                 }
@@ -227,6 +232,7 @@ private bool blinked = false;
             // If this habit matches the randomly picked habit
             if (eachHabit.layer == layer)
             {
+                //Debug.Log("randomizing list includes " + eachHabit.name);
                 matchingHabits.Add(eachHabit);
             }
         }
