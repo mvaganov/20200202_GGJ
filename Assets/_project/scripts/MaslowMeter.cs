@@ -84,7 +84,7 @@ public class MaslowMeter : MonoBehaviour {
     public CharacterMove characterMove;
 
     public float distance = 0f;
-    private float distanceToUIifyFace = 20f;
+    private float distanceToUIifyFace = 30f;
     public Transform headScreenUI;
     public Transform headWorldUI;
 
@@ -107,6 +107,10 @@ public class MaslowMeter : MonoBehaviour {
     private float blinkLength = 1f;
     private bool blinked = false;
 
+    /// <summary>
+    /// The highest layer you've reached, starting at -1 when you have no layers. Indicates which layer you need next or can give someone.
+    /// </summary>
+    public int highestLayer =  -1; 
     public Happiness happinessBar;
     private static float influencerHappyPerSecond = 0.05f;
     private void UpdateHapiness()
@@ -144,7 +148,29 @@ public class MaslowMeter : MonoBehaviour {
                 happyInt = 0;
             }
             
-            if (influencer) happy += Time.deltaTime / influencerHappyPerSecond;
+            float happyChange = 0f;
+            if (needs[0].habitPrimary != null) {
+                happyChange += influencerHappyPerSecond;
+            }
+            if (needs[1].habitPrimary != null) {
+                happyChange += influencerHappyPerSecond;
+            }
+            if (needs[2].habitPrimary != null) {
+                happyChange += influencerHappyPerSecond;
+            }
+            if (needs[3].habitPrimary != null) {
+                happyChange += influencerHappyPerSecond;
+            }
+            if (influencer) happy += Time.deltaTime * happyChange;
+            if (happy > maxNeedValue)
+            {
+                happy = maxNeedValue;
+            }
+            if (happy <= minNeedValue)
+            {
+                happy = minNeedValue;
+            }
+
             if (happinessBar == null)
             {
                 happinessBar = GetComponentInChildren<Happiness>();
@@ -513,6 +539,7 @@ public class MaslowMeter : MonoBehaviour {
 
         }
 
+        /*
         // Right now influence is always +/- 1 or 0 
         if ( Math.Abs( phappy ) >= 5 ) {
             happy += phappy / Math.Abs( phappy );
@@ -527,7 +554,7 @@ public class MaslowMeter : MonoBehaviour {
         if ( Math.Abs( pfood ) >= 5 ) {
             health += pfood / Math.Abs( pfood );
             health = Mathf.Clamp( health, -10, 10 );
-        }
+        }*/
 
         dirty = true;
     }
