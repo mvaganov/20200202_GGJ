@@ -886,12 +886,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343887443}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!224 &350141780 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-    type: 3}
-  m_PrefabInstance: {fileID: 716950302}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &397367150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1586,245 +1580,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713582278}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &716950302
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1608131141}
-    m_Modifications:
-    - target: {fileID: 4476291282304098381, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_Name
-      value: player psychology
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098381, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 386.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -67.501
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 383
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282304098382, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291280820930762, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291280820930762, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291280820930762, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291280820930762, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291281578592965, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291281578592965, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291281578592965, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291281578592965, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291281578592965, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291281554982140, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291281554982140, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291281554982140, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291281554982140, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282522945653, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282522945653, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282522945653, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282522945653, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282522945653, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282265786102, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282265786102, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282265786102, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282265786102, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4476291282265786102, guid: b4544426ef6494d46ab424c57c906d5a,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b4544426ef6494d46ab424c57c906d5a, type: 3}
 --- !u!1 &718874692
 GameObject:
   m_ObjectHideFlags: 0
@@ -5459,7 +5214,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 1301997978648683386, guid: ac252817058b7684db87deed72d865f6, type: 3}
+  ui: {fileID: 0}
   activated: 1
+  hideIfDeactivated: 1
 --- !u!1 &1586366257
 GameObject:
   m_ObjectHideFlags: 0
@@ -6396,7 +6153,7 @@ RectTransform:
   - {fileID: 1608200333}
   - {fileID: 1608212909}
   - {fileID: 1608204257}
-  - {fileID: 350141780}
+  - {fileID: 4476291281925057360}
   - {fileID: 3913163196483721083}
   - {fileID: 1469917301}
   m_Father: {fileID: 1586200147}
@@ -8005,6 +7762,21 @@ PrefabInstance:
       propertyPath: move.cameraOfPlayer
       value: 
       objectReference: {fileID: 1586721841}
+    - target: {fileID: 1706636865691211758, guid: 49fa3863ef9461743a7eba2e6419dc98,
+        type: 3}
+      propertyPath: headScreenUI
+      value: 
+      objectReference: {fileID: 4780873374054151090}
+    - target: {fileID: 1706636865691211758, guid: 49fa3863ef9461743a7eba2e6419dc98,
+        type: 3}
+      propertyPath: headWorldUI
+      value: 
+      objectReference: {fileID: 4780873374054151090}
+    - target: {fileID: 1706636865691211758, guid: 49fa3863ef9461743a7eba2e6419dc98,
+        type: 3}
+      propertyPath: characterMove
+      value: 
+      objectReference: {fileID: 4780873374380714901}
     - target: {fileID: 1706636865719579551, guid: 49fa3863ef9461743a7eba2e6419dc98,
         type: 3}
       propertyPath: cameraToBillboardFor
@@ -8202,11 +7974,91 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &4476291281925057360
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4476291281925057363}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1608131141}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 386.5, y: -67.501}
+  m_SizeDelta: {x: 300, y: 383}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4476291281925057361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4476291281925057363}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!1 &4476291281925057363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4476291281925057360}
+  - component: {fileID: 4476291281925057374}
+  - component: {fileID: 4476291281925057361}
+  m_Layer: 5
+  m_Name: player psychology
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!222 &4476291281925057374
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4476291281925057363}
+  m_CullTransparentMesh: 0
 --- !u!4 &4780873372672269006 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3309616778906926697, guid: 1397a6c80f69fb94aa935bf2b02ab4e1,
     type: 3}
   m_PrefabInstance: {fileID: 8049918168210760871}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4780873374054151090 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6194175923397832051, guid: 49fa3863ef9461743a7eba2e6419dc98,
+    type: 3}
+  m_PrefabInstance: {fileID: 1706636865202380481}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &4780873374380714896 stripped
 Transform:
@@ -8214,6 +8066,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1706636865202380481}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4780873374380714901 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6194175923607876948, guid: 49fa3863ef9461743a7eba2e6419dc98,
+    type: 3}
+  m_PrefabInstance: {fileID: 1706636865202380481}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9946da85399cde7459691bf4813d6c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4993993725157839935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8524,23 +8388,44 @@ MonoBehaviour:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     habitSecondary:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     habitOld:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     clickToIncrease: 0
   - name: safety
     color: {r: 1, g: 0.7, b: 0, a: 0.5}
@@ -8552,23 +8437,44 @@ MonoBehaviour:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     habitSecondary:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     habitOld:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     clickToIncrease: 0
   - name: belonging
     color: {r: 0.5, g: 1, b: 0, a: 0.5}
@@ -8580,23 +8486,44 @@ MonoBehaviour:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     habitSecondary:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     habitOld:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     clickToIncrease: 0
   - name: esteem
     color: {r: 0, g: 1, b: 1, a: 0.5}
@@ -8608,23 +8535,44 @@ MonoBehaviour:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     habitSecondary:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     habitOld:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     clickToIncrease: 0
   - name: actualization
     color: {r: 0, g: 0.5, b: 1, a: 0.5}
@@ -8636,24 +8584,70 @@ MonoBehaviour:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     habitSecondary:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     habitOld:
       name: 
       id: 0
       sprite: {fileID: 0}
-      needLevel: 0
-      effects: []
-      strength: 0
+      satisfaction: 0
+      decay: 0
+      physiology: 0
+      safety: 0
+      belonging: 0
+      esteem: 0
+      actualization: 0
+      mood: 0
+      earth: 0
+      layer: 0
     clickToIncrease: 0
+  interactingWith: {fileID: 0}
+  meeting_line: {fileID: 0}
+  influencer: 0
+  InfluencerHabit:
+    name: 
+    id: 0
+    sprite: {fileID: 0}
+    satisfaction: 0
+    decay: 0
+    physiology: 0
+    safety: 0
+    belonging: 0
+    esteem: 0
+    actualization: 0
+    mood: 0
+    earth: 0
+    layer: 0
+  characterMove: {fileID: 0}
+  distance: 0
+  headScreenUI: {fileID: 0}
+  headWorldUI: {fileID: 0}
+  meeting: 0
+  departing: 0
+  departTime: 0
+  meetTime: 0
 --- !u!114 &7483158714719405597
 MonoBehaviour:
   m_ObjectHideFlags: 0

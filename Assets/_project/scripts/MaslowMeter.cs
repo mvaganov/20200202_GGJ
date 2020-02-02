@@ -50,7 +50,7 @@ public class MaslowMeter : MonoBehaviour {
 /// When a Maslow meets another maslow they may start interacting with each other.
 /// </summary>
  public MaslowMeter interactingWith = null;
- 
+	public GameObject meeting_line;
  /// <summary>
  /// When a Maslow actualizes their 4 base needs with habits, they pick a top habit as their actualization habit to promote.
  /// </summary>
@@ -198,7 +198,8 @@ private bool blinked = false;
     {
         // TODO: Look at whoever you met
         meeting = true;
-        departing = false;
+		departing = false;
+		interactingWith = metMaslow;
         characterMove.move.speed = 0f;
         meetTime = Time.time;
     }
@@ -207,7 +208,8 @@ private bool blinked = false;
     {
         // TODO: Look at whoever you met
         meeting = true;
-        departing = false;
+		departing = false;
+		interactingWith = meeter;
         meetTime = Time.time;
         meetLength = 5f + UnityEngine.Random.Range(0f,5f);
     }
@@ -232,6 +234,11 @@ private bool blinked = false;
 
     private void UpdateMeetings()
     {
+		if (meeting) {
+			Vector3 delta = interactingWith.transform.position - transform.position;
+			Vector3 midpoint = transform.position + delta / 2;
+			NS.Lines.MakeArrow(ref meeting_line, transform.position, midpoint, Color.black);
+		}
         if (meeting && Time.time - meetTime > meetLength)
         {
             Depart(interactingWith);
@@ -375,6 +382,17 @@ private bool blinked = false;
         }
     }
 
+	public MaslowMeter GetMaslowMeter(GameObject other) {
+		MaslowMeter mm = other.GetComponent<MaslowMeter>();
+		if(mm == null) {
+			mm = other.transform.parent.GetComponent<MaslowMeter>();
+		}
+		if (mm == null) {
+			Debug.Log("CAN'T FIND MASLOWMETER FOR " + other);
+		}
+		return mm;
+	}
+
     private void OnTriggerEnter( Collider other ) {
         if ( tag == "Judge" && other.tag == "House" ) {
             // Judges don't influence others, only the city hall
@@ -394,7 +412,7 @@ private bool blinked = false;
                 }
                 else
                 {
-                    Meet(other.GetComponent<MaslowMeter>());
+                    Meet(GetMaslowMeter(other.gameObject));
                 }
                 peopleThisPersonInfluenced.Add( other.transform.parent );
                 Debug.Log( gameObject.name + "Influenced " + other.gameObject.name );
