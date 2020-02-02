@@ -146,9 +146,11 @@ private bool blinked = false;
                 //headScreenUI.gameObject.SetActive(true);
                 headScreenUI.GetComponent<CanvasUIElement>().GetUI().gameObject.SetActive(true);
                 headScreenUI.GetComponent<CanvasUIElement>().activated = true;
+				//headWorldUI.GetComponent<CanvasUIElement>().GetUI().GetComponent<Image>().enabled = true;
 
 				RectTransform rt = headScreenUI.GetComponent<CanvasUIElement>().GetUI();
 				Transform t = rt.transform.GetChild(1);
+				t.gameObject.SetActive(true);
 				t.GetComponent<Image>().sprite = MaslowManager.Instance.happies[happyInt];
 
 				//headScreenUI.GetComponent<CanvasUIElement>().GetUI().transform.GetChild(1).GetComponent<Image>().sprite = MaslowManager.Instance.happies[happyInt];
@@ -157,11 +159,15 @@ private bool blinked = false;
             else
             {
                 headWorldUI.GetComponent<Image>().sprite = MaslowManager.Instance.happies[happyInt];
-                headScreenUI.GetComponent<CanvasUIElement>().activated = false;
-                headScreenUI.GetComponent<CanvasUIElement>().GetUI().gameObject.SetActive(false);
-                headWorldUI.gameObject.SetActive(true);
-            }
-        }
+				//headScreenUI.GetComponent<CanvasUIElement>().activated = false;
+				//headScreenUI.GetComponent<CanvasUIElement>().GetUI().gameObject.SetActive(false);
+				RectTransform rt = headScreenUI.GetComponent<CanvasUIElement>().GetUI();
+				Transform t = rt.transform.GetChild(1);
+				t.gameObject.SetActive(false);
+
+				headWorldUI.gameObject.SetActive(true);
+			}
+		}
     }
 
     #region Generation
@@ -315,7 +321,7 @@ private bool blinked = false;
     public float meetTime = 0f;
     private float departLength = 1f;
     private float meetLength = 5f;
-	private const float showTriangleLength = 2f;
+	private const float showTriangleLength = 5f;
 	private float showTriangle;
 
     public void Meet(MaslowMeter metMaslow)
