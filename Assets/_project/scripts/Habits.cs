@@ -39,6 +39,7 @@ public class Habits : MonoBehaviour
         public Layer layer;
     }
 
+	
     public static Habit[] habits = {
         new Habit{
         name="plant-based diet",
@@ -51,7 +52,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=-1,
         mood=-1,
-        earth=1},
+        earth=1,
+		layer=Habits.Layer.physiology},
         new Habit{
         name="meat-heavy diet",
         id=380,
@@ -63,7 +65,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=0,
         mood=1,
-        earth=-2},
+        earth=-2,
+		layer=Habits.Layer.physiology},
         new Habit{
         name="sushi",
         id=394,
@@ -75,7 +78,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=1,
         mood=1,
-        earth=-1},
+        earth=-1,
+		layer=Habits.Layer.physiology},
         new Habit{
         name="cupcakes",
         id=2473,
@@ -99,7 +103,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=2,
         mood=2,
-        earth=-2},
+        earth=-2,
+		layer=Habits.Layer.physiology},
         new Habit{
         name="eat your veggies",
         id=2349,
@@ -111,7 +116,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=-2,
         mood=-2,
-        earth=2},
+        earth=2,
+		layer=Habits.Layer.physiology},
         new Habit{
         name="takeout",
         id=2344,
@@ -123,7 +129,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=0,
         mood=1,
-        earth=-1},
+        earth=-1,
+		layer=Habits.Layer.physiology},
         new Habit{
         name="home cooking",
         id=986,
@@ -135,7 +142,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=1,
         mood=1,
-        earth=1},
+        earth=1,
+		layer=Habits.Layer.physiology},
         new Habit{
         name="motorcycle",
         id=592,
@@ -147,7 +155,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=0,
         mood=2,
-        earth=-1},
+        earth=-1,
+		layer=Habits.Layer.safety},
         new Habit{
         name="bicycle",
         id=1969,
@@ -159,7 +168,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=0,
         mood=-1,
-        earth=2},
+        earth=2,
+		layer=Habits.Layer.safety},
         new Habit{
         name="train",
         id=1909,
@@ -171,7 +181,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=0,
         mood=-1,
-        earth=2},
+        earth=2,
+		layer=Habits.Layer.safety},
         new Habit{
         name="car",
         id=1926,
@@ -183,7 +194,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=0,
         mood=1,
-        earth=-2},
+        earth=-2,
+		layer=Habits.Layer.safety},
         new Habit{
         name="electric moped",
         id=2070,
@@ -243,7 +255,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=2,
         mood=2,
-        earth=1},
+        earth=1,
+		layer=Habits.Layer.belonging},
         new Habit{
         name="watching TV",
         id=1535,
@@ -303,7 +316,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=0,
         mood=-1,
-        earth=2},
+        earth=2,
+		layer=Habits.Layer.belonging},
         new Habit{
         name="smoking",
         id=1963,
@@ -315,7 +329,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=-1,
         mood=1,
-        earth=-2},
+        earth=-2,
+		layer=Habits.Layer.belonging},
         new Habit{
         name="shopping",
         id=2056,
@@ -327,7 +342,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=1,
         mood=1,
-        earth=-1},
+        earth=-1,
+		layer=Habits.Layer.belonging},
         new Habit{
         name="yoga",
         id=2763,
@@ -387,7 +403,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=2,
         mood=-1,
-        earth=0},
+        earth=0,
+		layer=Habits.Layer.esteem},
         new Habit{
         name="champagne room",
         id=421,
@@ -399,7 +416,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=1,
         mood=1,
-        earth=-1},
+        earth=-1,
+		layer=Habits.Layer.esteem},
         new Habit{
         name="bubble baths",
         id=2039,
@@ -411,7 +429,8 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=0,
         mood=1,
-        earth=-1},
+        earth=-1,
+		layer=Habits.Layer.esteem},
         new Habit{
         name="cleaning the house",
         id=2900,
@@ -423,14 +442,20 @@ public class Habits : MonoBehaviour
         esteem=0,
         actualization=1,
         mood=-2,
-        earth=2}
+        earth=2,
+		layer=Habits.Layer.esteem
+		}
+		
     };
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-
+		foreach (Habit habit in habits)
+		{
+			habit.sprite = MaslowManager.Instance.emojiSprites[habit.id];
+		}
     }
 
     // Update is called once per frame

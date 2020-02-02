@@ -8,6 +8,9 @@ using UnityEngine;
 		public string name;
         public Habits.Layer layer;
 		public Color color;
+        /// <summary>
+        /// How met is the need? Not the same as the strength of the habits feeding it.
+        /// </summary>
 		public float value;
 		public float lossPerSecond;
 		public float gainPerClick;
@@ -26,7 +29,16 @@ using UnityEngine;
 		/// <summary>
 		/// A former habit for meeting the need that has reached zero. TODO: Could be displayed grayed out.
 		/// </summary>
+        /// public       
 		public Habits.Habit habitOld;
+        /// <summary>
+        /// Strength of the primary habit. They should add up to 100 currently.
+        /// </summary>
+        public float habitPrimaryValue = 100f;
+        /// <summary>
+        /// Strength of the secondary habit. They should add up to 100 currently.
+        /// </summary>
+        public float habitSecondaryValue = 0f;
 		/// <summary>
 		/// The need below it that limits its maximum.
 		/// </summary>

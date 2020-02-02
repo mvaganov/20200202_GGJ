@@ -44,6 +44,10 @@ public class MaslowMeter : MonoBehaviour {
 		new Need{color = new Color(0.0f,1.0f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00004f, gainPerClick = .1f, name = "esteem" },
 		new Need{color = new Color(0.0f,0.5f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00002f, gainPerClick = .1f, name = "actualization" },
  };
+    if (!isPlayer)
+    {
+        GenerateHabits();
+    }
  }
 
 /// <summary>
@@ -58,7 +62,7 @@ public class MaslowMeter : MonoBehaviour {
  /// <summary>
  /// The habit the influencer is promoting.
  /// </summary>
- public Habits.Habit InfluencerHabit;
+ public Habits.Habit influencerHabit;
 
     //public float food = 0;
     /// <summary>
@@ -70,6 +74,8 @@ public class MaslowMeter : MonoBehaviour {
 /// Reference to the player used for non-NPC peoples to calculate distances for hide/showing things
 /// </summary>
     GameObject player;
+    public bool isPlayer = false;
+    
     float kTransparencyRange = 5;
     bool votingPositive = false;
 
@@ -156,20 +162,101 @@ private bool blinked = false;
 
     public void GenerateHabits()
     {
+        if (UnityEngine.Random.Range(0,100) < 90)
+        {
+            needs[(int)Habits.Layer.physiology].habitPrimary = RandomHabit(Habits.Layer.physiology);
+            needs[(int)Habits.Layer.physiology].habitPrimaryValue = 100f;
+
+            if (UnityEngine.Random.Range(0,100) < 75)
+            {
+                needs[(int)Habits.Layer.safety].habitPrimary = RandomHabit(Habits.Layer.safety);
+                needs[(int)Habits.Layer.safety].habitPrimaryValue = 100f;
+
+                if (UnityEngine.Random.Range(0,100) < 55)
+                {
+                    needs[(int)Habits.Layer.belonging].habitPrimary = RandomHabit(Habits.Layer.belonging);
+                    needs[(int)Habits.Layer.belonging].habitPrimaryValue = 100f;
+
+                    if (UnityEngine.Random.Range(0,100) < 25)
+                    {
+                        needs[(int)Habits.Layer.esteem].habitPrimary = RandomHabit(Habits.Layer.esteem);
+                        needs[(int)Habits.Layer.esteem].habitPrimaryValue = 100f;
+
+                        influencer = true;
+                        influencerHabit = RandomNeedPrimaryHabit();
+                    }
+                }
+            }
+        }
+        
+        
+        
+        
+        /*
         foreach (Need need in needs)
         {
             need.habitPrimary = RandomHabit(need);
         }
+        */
     }
 
-    public Habits.Habit RandomHabit(Need need)
+    // By default, return only the first 4 layers.
+    public Habits.Layer RandomLayer()
+    {
+        return RandomLayer(3);
+    }
+
+    public Habits.Layer RandomLayer(int maxLayer)
+    {
+        int randomIndex = UnityEngine.Random.Range(0,maxLayer);
+        if (randomIndex <= 6)
+        {
+            return (Habits.Layer)randomIndex;
+        }
+        else
+        {
+            return (Habits.Layer)0;
+        }
+    }
+    public Habits.Habit RandomHabit(Habits.Layer layer)
     {
         Habits.Habit newHabit= new Habits.Habit();
+        List<Habits.Habit> matchingHabits = new List<Habits.Habit>();
         foreach ( Habits.Habit eachHabit in Habits.habits)
         {
-            if (eachHabit.layer == Need.layer)
-
+            // If this habit matches the randomly picked habit
+            if (eachHabit.layer == layer)
+            {
+                matchingHabits.Add(eachHabit);
+            }
         }
+        if(matchingHabits.Count <= 0)
+        {
+            Debug.LogWarning("No matching random habits found for that layer " + layer.ToString() + ".");
+        }
+        newHabit = matchingHabits[UnityEngine.Random.Range(0,matchingHabits.Count-1)];
+        
+        return newHabit;
+    }
+
+/// <summary>
+/// Returns one of the person's primary habits.
+/// </summary>
+/// <returns></returns>
+    public Habits.Habit RandomNeedPrimaryHabit()
+    {
+        Habits.Habit newHabit= new Habits.Habit();
+        List<Habits.Habit> matchingHabits = new List<Habits.Habit>();
+        foreach ( Need eachNeed in needs)
+        {
+            matchingHabits.Add(eachNeed.habitPrimary);
+        }
+        if(matchingHabits.Count <= 0)
+        {
+            Debug.LogWarning("No matching random habits found for needs.");
+        }
+        newHabit = matchingHabits[UnityEngine.Random.Range(0,matchingHabits.Count-1)];
+        
         return newHabit;
     }
     #endregion
@@ -299,6 +386,10 @@ private bool blinked = false;
 #region MonoBehaviour Methods
  private void Awake() {
     {
+        if(gameObject.tag == "Player")
+        {
+            isPlayer = true;
+        }
         characterMove = GetComponent<CharacterMove>();
 
         InitNeeds();
