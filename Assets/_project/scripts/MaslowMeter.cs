@@ -20,6 +20,7 @@ public class MaslowMeter : MonoBehaviour {
 
     GameObject player;
     float kTransparencyRange = 5;
+    bool votingPositive = false;
 
     void Start() {
         player = GameObject.Find( "player" );
@@ -93,12 +94,15 @@ public class MaslowMeter : MonoBehaviour {
             }
 
             if ( netResult > 0 ) {
+                votingPositive = true;
                 innerGlow.material = matGreen;
             }
             else if ( netResult < 0 ) {
+                votingPositive = false;
                 innerGlow.material = matRed;
             }
             else {
+                votingPositive = false;
                 innerGlow.material = matWhite;
             }
 
@@ -128,11 +132,14 @@ public class MaslowMeter : MonoBehaviour {
     }
 
     private void OnTriggerEnter( Collider other ) {
-        // Judges don't influence others
-        if ( tag == "Judge" )
+        if ( tag == "Judge" && other.tag == "House" ) {
+            // Judges don't influence others, only the city hall
+            var npc = GetComponent<NPC>();
+            UnityEngine.Assertions.Assert.IsNotNull( npc );
+            npc.Vote( votingPositive );
             return;
-
-        if ( other.tag == "Villager" || other.tag == "PlayerBubble" ) {
+        }
+        else if ( other.tag == "Villager" || other.tag == "PlayerBubble" ) {
             if ( !peopleThisPersonInfluenced.Contains( other.transform.parent ) ) {
                 peopleThisPersonInfluenced.Add( other.transform.parent );
                 Debug.Log( gameObject.name + "Influenced " + other.gameObject.name );
