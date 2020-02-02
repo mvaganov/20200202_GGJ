@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2226295939675410555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2226295939675410553}
+  - component: {fileID: 2226295939675410552}
+  m_Layer: 0
+  m_Name: MaslowManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2226295939675410553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2226295939675410555}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.4147654, y: 71.043, z: -20.714725}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2226295939675410552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2226295939675410555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9cd20198c766428b9a876e5cea8abf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  happies:
+  - {fileID: 21302190, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21300062, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21301182, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21301070, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21301898, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21303098, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21305766, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21304990, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21303980, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21304092, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  sickies:
+  - {fileID: 21305198, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21302204, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21305452, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21304668, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  - {fileID: 21303758, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  death: {fileID: 21305198, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  physiology: {fileID: 21306306, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  safety: {fileID: 21305094, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  belonging: {fileID: 21305760, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  esteem: {fileID: 21306270, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  actualization: {fileID: 21306308, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  sick: {fileID: 21305452, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  scared: {fileID: 21305702, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  lonely: {fileID: 21306340, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  shame: {fileID: 21305290, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  apathy: {fileID: 21301294, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  burning: {fileID: 21300952, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}
+  cooling: {fileID: 21303818, guid: 2134aa207cadb774cb192d22ff3de5ee, type: 3}

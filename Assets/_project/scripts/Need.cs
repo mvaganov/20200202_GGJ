@@ -6,6 +6,7 @@ using UnityEngine;
 	[System.Serializable]
 	public class Need {
 		public string name;
+        public Habits.Layer layer;
 		public Color color;
 		public float value;
 		public float lossPerSecond;
@@ -36,14 +37,6 @@ using UnityEngine;
 		/// </summary>
 		public bool clickToIncrease = false;
 
-public enum NeedLevelEnum
-	{
-		Physiology,
-		Safety,
-		Belonging,
-		Esteem,
-		Actualization
-	}
 		public void Update(float deltaTime) {
 			value -= lossPerSecond * deltaTime;
 			if (value < 0) { value = 0; }

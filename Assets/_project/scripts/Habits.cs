@@ -39,7 +39,7 @@ public class Habits : MonoBehaviour
         public Layer layer;
     }
 
-    public Habit[] habits = {
+    public static Habit[] habits = {
         new Habit{
         name="plant-based diet",
         id=2328,

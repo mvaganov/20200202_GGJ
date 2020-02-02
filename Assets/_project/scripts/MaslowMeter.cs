@@ -165,7 +165,11 @@ private bool blinked = false;
     public Habits.Habit RandomHabit(Need need)
     {
         Habits.Habit newHabit= new Habits.Habit();
-        
+        foreach ( Habits.Habit eachHabit in Habits.habits)
+        {
+            if (eachHabit.layer == Need.layer)
+
+        }
         return newHabit;
     }
     #endregion
@@ -267,7 +271,7 @@ private bool blinked = false;
             departing = false;
         }
     }
-    private void InfluenceMaslow( MaslowMeter influencer, Need.NeedLevelEnum needLevelEnum, float phappy, float psafety, float pfood ) {
+    private void InfluenceMaslow( MaslowMeter influencer, Habits.Layer influenceLayer, float phappy, float psafety, float pfood ) {
         
         // Assign the persons interacting with each other to facilitate animation during exchange
         influencer.interactingWith = this;
