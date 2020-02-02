@@ -24,7 +24,8 @@ public class CharacterMove : MonoBehaviour {
 
     [System.Serializable]
     public struct ClickToMoveDetails {
-        public bool isNPC;
+		private GameObject target_line;
+		public bool isNPC;
         public UnityEngine.EventSystems.EventSystem eventSystem;
         [Tooltip("To enable click-to-move with left-click, make this value \"Mouse 0\"")]
         public KeyCode clickToMoveKey;
@@ -40,7 +41,8 @@ public class CharacterMove : MonoBehaviour {
                     Ray ray = move.cameraOfPlayer.ScreenPointToRay(Input.mousePosition);
                     RaycastHit rh = new RaycastHit();
                     if ( Physics.Raycast( ray, out rh ) ) {
-                        targetPosition = rh.point;
+						targetPosition = rh.point;
+						NS.Lines.MakeCircle(ref target_line, rh.point, rh.normal, Color.white);
                     }
                 }
             }
