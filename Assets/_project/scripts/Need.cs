@@ -86,6 +86,7 @@ using UnityEngine;
                 Debug.Log(playerGO);
                 MaslowMeter playerMaslow = playerGO.GetComponentInChildren<MaslowMeter>();
                 Debug.Log(playerMaslow);
+                Debug.Log("layer:"+layer.ToString() );
                 playerMaslow.InfluenceMaslow(maslow,layer,maslow.happy,maslow.safety,maslow.safety);
             }
 		}
