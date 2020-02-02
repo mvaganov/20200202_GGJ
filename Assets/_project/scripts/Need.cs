@@ -57,9 +57,6 @@ using UnityEngine;
 		public bool clickToIncrease = false;
 
 		public void Update(float deltaTime) {
-            
-            
-
             if (habitPrimary == null)
             {
                 value = 0f;

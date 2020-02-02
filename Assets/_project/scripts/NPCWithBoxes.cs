@@ -67,4 +67,26 @@ public class NPCWithBoxes : MonoBehaviour {
         moveController.move.SetAutoMovePosition( position );
 		//NS.Lines.Make(ref line, transform.position, position, Color.black);
     }
+
+	private static int[] noVotes = { 147, 642, 1762 };
+	private static int[] yesVotes = { 1853, 1909 };
+
+	public UnityEngine.UI.Image voteSlot;
+	private static int yesVoteCount = 0;
+	private static int noVoteCount = 0;
+
+	public void Vote(bool positive) {
+		Sprite voteSprite = null;
+		if (positive) {
+			voteSprite = MaslowManager.Instance.emojiSprites[yesVotes[Random.Range(0, yesVotes.Length)]];
+			++yesVoteCount;
+		} else {
+			voteSprite = MaslowManager.Instance.emojiSprites[noVotes[Random.Range(0, noVotes.Length)]];
+			++noVoteCount;
+		}
+		if(voteSprite != null)
+		{
+			voteSlot.sprite = voteSprite;
+		}
+	}
 }
