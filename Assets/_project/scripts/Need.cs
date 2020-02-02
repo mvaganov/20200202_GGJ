@@ -126,8 +126,12 @@ using UnityEngine;
         
 		public void Use(NeedUI ui, Need dependency) {
 			this.dependency = dependency;
+            string uiText = "";
 			this.ui = ui;
-            string uiText = "<sprite=" + MaslowManager.Instance.GetEmojiSpriteIndex(GetNeedSprite()) + ">";
+            if (GetNeedSprite()!=null)
+            {
+                uiText = uiText + "<sprite=" + MaslowManager.Instance.GetEmojiSpriteIndex(GetNeedSprite()) + ">";
+            }
             
             if (habitPrimary != null)
             {
@@ -151,7 +155,7 @@ using UnityEngine;
 			ui.text.text = uiText; // no longer name
             if(habitPrimary == null)
             {
-                ui.progressbar.color = new Color(0f,0f,0f,0.1f);
+                ui.progressbar.color = new Color(0f,0f,0f,0.05f);
                 habitPrimaryValue = 0f;
             }
             else

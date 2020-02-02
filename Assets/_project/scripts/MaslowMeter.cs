@@ -426,44 +426,51 @@ private bool blinked = false;
         interactingWith = influencer;
 
         Need receivedNeed = needs[(int)influenceLayer];
-        // If we have no primary, get us started at max
-        if (receivedNeed.habitPrimary == null)
+        Need influencerNeed =  influencer.needs[(int)influenceLayer];
+        if(influencerNeed.habitPrimary != null)
         {
-            // TODO: Make a way to share someone's secondary needs with yourself, otehrwise just always ask for their primary.
-            receivedNeed.habitPrimary = influencer.needs[(int)influenceLayer].habitPrimary;
-            receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
-        }
-        // otherwise check if its the primary we already have being boosted to max again
-        else if (receivedNeed.habitPrimary.name != influencer.needs[(int)influenceLayer].habitPrimary.name)
-        {
-            receivedNeed.habitSecondary = influencer.needs[(int)influenceLayer].habitPrimary;
-            receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
-        }
-        // or its our first secondary
-        else if (receivedNeed.habitSecondary.name == null)
-        {
-            receivedNeed.habitSecondary = influencer.needs[(int)influenceLayer].habitPrimary;
-            receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
-            receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
-            
-        }
-        // or a secondary we do have
-        else if (receivedNeed.habitSecondary.name == influencer.needs[(int)influenceLayer].habitPrimary.name)
-        {
-            receivedNeed.habitSecondary = influencer.needs[(int)influenceLayer].habitPrimary;
-            receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
-        }
-        // or a secondary different from ours replaces our secondary
-        else if (receivedNeed.habitSecondary.name != influencer.needs[(int)influenceLayer].habitPrimary.name)
-        {
-            receivedNeed.habitSecondary = influencer.needs[(int)influenceLayer].habitPrimary;
-            receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
-            receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
-        }
-        // or nothing is there to gain
-        else
-        {
-            UnityEngine.Debug.Log("Nothing to gain.");
+            // If we have no primary, get us started at max
+            if (receivedNeed.habitPrimary == null)
+            {
+                
+                    // TODO: Make a way to share someone's secondary needs with yourself, otehrwise just always ask for their primary.
+                    receivedNeed.habitPrimary = influencerNeed.habitPrimary;
+                    receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+                
+                
+            }
+            // otherwise check if its the primary we already have being boosted to max again
+            else if (receivedNeed.habitPrimary.name != influencerNeed.habitPrimary.name)
+            {
+                receivedNeed.habitSecondary = influencerNeed.habitPrimary;
+                receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+            }
+            // or its our first secondary
+            else if (receivedNeed.habitSecondary.name == null)
+            {
+                receivedNeed.habitSecondary = influencerNeed.habitPrimary;
+                receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
+                receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
+                
+            }
+            // or a secondary we do have
+            else if (receivedNeed.habitSecondary.name == influencerNeed.name)
+            {
+                receivedNeed.habitSecondary = influencerNeed.habitPrimary;
+                receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+            }
+            // or a secondary different from ours replaces our secondary
+            else if (receivedNeed.habitSecondary.name != influencerNeed.habitPrimary.name)
+            {
+                receivedNeed.habitSecondary = influencerNeed.habitPrimary;
+                receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
+                receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
+            }
+            // or nothing is there to gain
+            else
+            {
+                UnityEngine.Debug.Log("Nothing to gain.");
+            }
         }
         receivedNeed.Use(receivedNeed.ui,receivedNeed);
 
