@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class MaslowMeter : MonoBehaviour {
     [SerializeField] TMPro.TextMeshProUGUI txtStatus;
-    [SerializeField] MeshRenderer innerGlow;
+    //[SerializeField] MeshRenderer innerGlow;
     [SerializeField] Material matGreen;
     [SerializeField] Material matRed;
     [SerializeField] Material matWhite;
@@ -276,7 +276,9 @@ private bool blinked = false;
 }
     void Start() {
         player = GameObject.Find( "player" );
-        UnityEngine.Assertions.Assert.IsNotNull( txtStatus );
+		if(player == null) { throw new System.Exception("NEED SOMETHING NAMED \"player\""); }
+		if (player.tag != "Player") { throw new System.Exception("\"player\" needs to be tagged \"Player\""); }
+		UnityEngine.Assertions.Assert.IsNotNull( txtStatus );
         if ( tag == "Player" ) {
             // No change since last generation
         }
@@ -337,15 +339,15 @@ private bool blinked = false;
 
             if ( netResult > 0 ) {
                 votingPositive = true;
-                innerGlow.material = matGreen;
+                //innerGlow.material = matGreen;
             }
             else if ( netResult < 0 ) {
                 votingPositive = false;
-                innerGlow.material = matRed;
+                //innerGlow.material = matRed;
             }
             else {
                 votingPositive = false;
-                innerGlow.material = matWhite;
+                //innerGlow.material = matWhite;
             }
 
             string happyNumber = happy.ToString() + "         ";

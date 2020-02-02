@@ -32,6 +32,20 @@ public class NeedsTriangle : MonoBehaviour
 		{
 			triangleLayers = GetComponentsInChildren<NeedUI>();
 		}
+		if(maslow == null) {
+			Debug.LogError(transform.root.name+" does not have Maslow set");
+			Transform t = transform;
+			while(t != null)
+			{
+				Debug.Log(t.name);
+				maslow = t.gameObject.GetComponent<MaslowMeter>();
+				if(maslow != null) {
+					Debug.Log("found a MaslowMeter!");
+					break;
+				}
+				t = t.parent;
+			}
+		}
 		if (maslow.needs.Length > triangleLayers.Length) { 
 			throw new System.Exception("need at least "+ maslow.needs.Length+" layers in the pyramid"); 
 		}
@@ -52,10 +66,16 @@ public class NeedsTriangle : MonoBehaviour
 		);
 	}
 	
+	public void SetTextVisible(bool visible) {
+		for(int i = 0; i < triangleLayers.Length; ++i) {
+			triangleLayers[i].text.gameObject.SetActive(visible);
+		}
+	}
 
 	void Start()
     {
 		ConnectButtonsToNeeds();
+		SetTextVisible(false);
 	}
 
 	void Update()

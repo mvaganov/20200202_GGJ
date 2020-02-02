@@ -35,9 +35,12 @@ public class NPCWithBoxes : MonoBehaviour {
         region = boundingRegion;
         float timeBetweenPaths = Random.Range(5, 10);
         InvokeRepeating( "WalkTowardsSpotInRegion", 0, timeBetweenPaths );
-    }
+		moveController.move.clickToMove.whatToDoWhenTargetIsReached = () => {
+			WalkTowardsSpotInRegion();
+		};
+	}
 
-    private void Start() {
+	private void Start() {
 		if(skinColor == SkinColors.random) {
 			skinColor = (SkinColors)Random.Range(1, skinColors.Length);
 		}
@@ -60,6 +63,6 @@ public class NPCWithBoxes : MonoBehaviour {
     private void WalkTowardsSpotInRegion() {
 		Vector3 position = NPCSpawnerForBoxes.RandomPointInBounds(region);// GetRandomPointWithinMeshRegion( region );
         moveController.move.SetAutoMovePosition( position );
-		NS.Lines.Make(ref line, transform.position, position, Color.black);
+		//NS.Lines.Make(ref line, transform.position, position, Color.black);
     }
 }
