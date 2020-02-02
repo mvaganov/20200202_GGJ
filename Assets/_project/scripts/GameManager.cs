@@ -26,11 +26,11 @@ public class GameManager : MonoBehaviour {
         intermissionText.transform.parent.gameObject.SetActive( true );
         intermissionText.text = "<size=50%>Generation completed!" + "\n\n"
             + ( won ? "Politicians has voted to save society, you win!" : "Politicians have NOT voted to help." )
-            + ( ( roundnumber == kMaxRounds ) ? "\n\nThe End" : "\n\n" + ( kMaxRounds - roundnumber ) + " generations remain..." );
+            + ( ( roundnumber == kMaxRounds || won ) ? "\n\nThe End" : "\n\n" + ( kMaxRounds - roundnumber ) + " generations remain..." );
         if ( water.waterTooHigh() ) {
             intermissionText.text += "Water became too high and everyone drowned =(";
         }
-        if ( won ) {
+        if ( roundnumber == kMaxRounds || won ) {
             water.Reset();
             roundnumber = 0;
         }
@@ -43,8 +43,9 @@ public class GameManager : MonoBehaviour {
         }
 
         intermissionText.transform.parent.gameObject.SetActive( false );
-        roundnumber = ( roundnumber == kMaxRounds ) ? 0 : roundnumber + 1;
         StartRound();
+
+        roundnumber = ( roundnumber == kMaxRounds ) ? 0 : roundnumber + 1;
         water.ChangeGoalHeight( 4 );
     }
 
@@ -95,6 +96,6 @@ public class GameManager : MonoBehaviour {
         }
         string secondsLeft =  (numSecondsRemaining.ToString()+"  ").Substring(0,2);
         txtStatus.text = "Generation: " + roundnumber + " of " + kMaxRounds
-        +"\nTime until next: " + secondsLeft;
+        +"\nTime until next: " + secondsLeft.Replace( ".", "" );
     }
 }

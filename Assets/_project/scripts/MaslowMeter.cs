@@ -93,7 +93,7 @@ public class MaslowMeter : MonoBehaviour {
                 innerGlow.material = matRed;
             }
             else {
-                votingPositive = false;
+                votingPositive = true;
                 innerGlow.material = matWhite;
             }
 
@@ -140,9 +140,9 @@ public class MaslowMeter : MonoBehaviour {
                 food = -5;
             }
             else {
-                happy = UnityEngine.Random.Range( -7.0f, 6.0f );
-                safety = UnityEngine.Random.Range( -7.0f, 7.0f );
-                food = UnityEngine.Random.Range( -7.0f, 8.0f );
+                happy = UnityEngine.Random.Range( -6.0f, 6.0f );
+                safety = UnityEngine.Random.Range( -6.0f, 8.0f );
+                food = UnityEngine.Random.Range( -6.0f, 9.0f );
             }
         }
         else {
@@ -154,8 +154,15 @@ public class MaslowMeter : MonoBehaviour {
                 // No change since last generation
             }
             else {
-                float low = -7 + historicalInfluence;
+                float low = -6 + historicalInfluence;
                 float high = 7 + historicalInfluence;
+
+                // 1/3 chance pure random
+                if ( UnityEngine.Random.Range( 0, 100 ) < 30 ) {
+                    low = -10;
+                    high = 10;
+                }
+
                 // New sentiment is halfway between last and random
                 happy = ( happy + UnityEngine.Random.Range( low, high ) );
                 safety = ( safety + UnityEngine.Random.Range( low, high ) );
@@ -179,12 +186,16 @@ public class MaslowMeter : MonoBehaviour {
                 return;
             }
         }
-        else if ( other.tag == "Villager" || other.tag == "PlayerBubble" ) {
+        else if ( other.tag == "Villager" || other.tag == "PlayerBubble" || other.tag == "Judge" ) {
             if ( !peopleThisPersonInfluenced.Contains( other.transform.parent ) ) {
                 peopleThisPersonInfluenced.Add( other.transform.parent );
                 Debug.Log( gameObject.name + " influenced " + other.transform.parent.gameObject.name );
 
                 MaslowMeter otherMeter = other.gameObject.transform.parent.GetComponent<MaslowMeter>();
+
+                if ( otherMeter == null )
+                    otherMeter = other.gameObject.transform.GetComponent<MaslowMeter>();
+
                 UnityEngine.Assertions.Assert.IsNotNull( otherMeter );
                 otherMeter.Influence( happy, safety, food );
 
