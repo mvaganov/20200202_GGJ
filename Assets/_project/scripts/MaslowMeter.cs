@@ -224,10 +224,12 @@ public class MaslowMeter : MonoBehaviour {
         {
             needs[(int)Habits.Layer.physiology].habitPrimary = RandomHabit(Habits.Layer.physiology);
             needs[(int)Habits.Layer.physiology].habitPrimaryValue = maxHabitValue;
+            highestLayer = 0;
             //Debug.Log("physiology habit is " + needs[(int)Habits.Layer.physiology].habitPrimary.name);
 
             if (UnityEngine.Random.Range(0,100) < 60)
             {
+                highestLayer = 1;
                 needs[(int)Habits.Layer.safety].habitPrimary = RandomHabit(Habits.Layer.safety);
                 needs[(int)Habits.Layer.safety].habitPrimaryValue = maxHabitValue;
                 //Debug.Log("safety habit is " + needs[(int)Habits.Layer.safety].habitPrimary.name);
@@ -235,14 +237,17 @@ public class MaslowMeter : MonoBehaviour {
 
                 if (UnityEngine.Random.Range(0,100) < 50)
                 {
+                    highestLayer = 2;
                     needs[(int)Habits.Layer.belonging].habitPrimary = RandomHabit(Habits.Layer.belonging);
                     needs[(int)Habits.Layer.belonging].habitPrimaryValue = maxHabitValue;
 
                     if (UnityEngine.Random.Range(0,100) < 30)
                     {
+                        highestLayer = 3;
                         needs[(int)Habits.Layer.esteem].habitPrimary = RandomHabit(Habits.Layer.esteem);
                         needs[(int)Habits.Layer.esteem].habitPrimaryValue = maxHabitValue;
 
+                        highestLayer = 4;
                         influencer = true;
                         influencerHabit = RandomNeedPrimaryHabit();
                         needs[(int)Habits.Layer.actualization].habitPrimary = influencerHabit;
@@ -465,6 +470,18 @@ public class MaslowMeter : MonoBehaviour {
     private static float secondaryInfluenceAmount = 25f;
     private static float minHabitValue = 0f;
 
+    public void UpdateHighest()
+    {
+        /*
+        if(needs[0].habitPrimary == null || needs[0].habitPrimary.name != "") { highestLayer = -1;}
+        if(needs[1].habitPrimary != null || needs[1].habitPrimary.name != "") { highestLayer = 0;}
+        if(needs[2].habitPrimary != null || needs[2].habitPrimary.name != "") { highestLayer = 1;}
+        if(needs[3].habitPrimary != null || needs[3].habitPrimary.name != "") { highestLayer = 2;}
+        if(needs[4].habitPrimary != null || needs[4].habitPrimary.name != "") { highestLayer = 3;}
+        //if(needs[5].habitPrimary != null) { highestLayer = 4;}
+*/
+    }
+
     public void InfluenceMaslow( MaslowMeter influencer, Habits.Layer influenceLayer, float phappy, float psafety, float pfood ) {
         
         // Assign the persons interacting with each other to facilitate animation during exchange
@@ -473,86 +490,94 @@ public class MaslowMeter : MonoBehaviour {
 
         Need receivedNeed = needs[(int)influenceLayer];
         Need influencerNeed =  influencer.needs[(int)influenceLayer];
-        if(influencerNeed.habitPrimary != null)
+        if ( (int)influencerNeed.layer <= highestLayer + 1 ) 
         {
-            // If we have no primary, get us started at max
-            if (receivedNeed.habitPrimary == null)
+            if(influencerNeed.habitPrimary != null)
             {
-                
+                // If we have no primary, get us started at max
+                if (receivedNeed.habitPrimary == null)
+                {
+                    Debug.Log("isPlayer:"+isPlayer);
+                    Debug.Log("highestLayer:"  + highestLayer);
+                    highestLayer ++;
+                    Debug.Log("highestLayer:"  + highestLayer);
+
                     // TODO: Make a way to share someone's secondary needs with yourself, otehrwise just always ask for their primary.
                     receivedNeed.habitPrimary = influencerNeed.habitPrimary;
                     receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
-                
-                
+                    if (highestLayer + 1 == (int) receivedNeed.layer)
+                    {
+                        //highestLayer ++;
+                    }
+                }
+                // otherwise check if its the primary we already have being boosted to max again
+                else if (receivedNeed.habitPrimary.name != influencerNeed.habitPrimary.name)
+                {
+                    receivedNeed.habitSecondary = influencerNeed.habitPrimary;
+                    receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+                }
+                // or its our first secondary
+                else if (receivedNeed.habitSecondary == null)
+                {
+                    receivedNeed.habitSecondary = influencerNeed.habitPrimary;
+                    receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
+                    receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
+                    
+                }
+                // or a secondary we do have
+                else if (receivedNeed.habitSecondary.name == influencerNeed.name)
+                {
+                    receivedNeed.habitSecondary = influencerNeed.habitPrimary;
+                    receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+                }
+                // or a secondary different from ours replaces our secondary
+                else if (receivedNeed.habitSecondary.name != influencerNeed.habitPrimary.name)
+                {
+                    receivedNeed.habitSecondary = influencerNeed.habitPrimary;
+                    receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
+                    receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
+                    
+                }
+                // or nothing is there to gain
+                else
+                {
+                    UnityEngine.Debug.Log("Nothing to gain.");
+                }
             }
-            // otherwise check if its the primary we already have being boosted to max again
-            else if (receivedNeed.habitPrimary.name != influencerNeed.habitPrimary.name)
+            receivedNeed.Use(receivedNeed.ui,receivedNeed);
+
+            // If our secondary beat our primary, bin the old and in with the new
+            if(secondaryInfluenceAmount >= maxHabitValue)
             {
-                receivedNeed.habitSecondary = influencerNeed.habitPrimary;
-                receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+                receivedNeed.habitOld = receivedNeed.habitPrimary;
+                receivedNeed.habitPrimary = receivedNeed.habitSecondary;
+                receivedNeed.habitPrimaryValue = maxHabitValue;
+                receivedNeed.habitSecondaryValue = minHabitValue;
             }
-            // or its our first secondary
-            else if (receivedNeed.habitSecondary == null)
-            {
-                receivedNeed.habitSecondary = influencerNeed.habitPrimary;
-                receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
-                receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
-                
-            }
-            // or a secondary we do have
-            else if (receivedNeed.habitSecondary.name == influencerNeed.name)
-            {
-                receivedNeed.habitSecondary = influencerNeed.habitPrimary;
-                receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
-            }
-            // or a secondary different from ours replaces our secondary
-            else if (receivedNeed.habitSecondary.name != influencerNeed.habitPrimary.name)
-            {
-                receivedNeed.habitSecondary = influencerNeed.habitPrimary;
-                receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
-                receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
-                
-            }
-            // or nothing is there to gain
+            
+            // else 
             else
             {
-                UnityEngine.Debug.Log("Nothing to gain.");
+
             }
-        }
-        receivedNeed.Use(receivedNeed.ui,receivedNeed);
 
-        // If our secondary beat our primary, bin the old and in with the new
-        if(secondaryInfluenceAmount >= maxHabitValue)
-        {
-            receivedNeed.habitOld = receivedNeed.habitPrimary;
-            receivedNeed.habitPrimary = receivedNeed.habitSecondary;
-            receivedNeed.habitPrimaryValue = maxHabitValue;
-            receivedNeed.habitSecondaryValue = minHabitValue;
-        }
-        
-        // else 
-        else
-        {
+            /*
+            // Right now influence is always +/- 1 or 0 
+            if ( Math.Abs( phappy ) >= 5 ) {
+                happy += phappy / Math.Abs( phappy );
+                happy = Mathf.Clamp( happy, -10, 10 );
+            }
 
-        }
+            if ( Math.Abs( psafety ) >= 5 ) {
+                safety += psafety / Math.Abs( psafety );
+                safety = Mathf.Clamp( safety, -10, 10 );
+            }
 
-        /*
-        // Right now influence is always +/- 1 or 0 
-        if ( Math.Abs( phappy ) >= 5 ) {
-            happy += phappy / Math.Abs( phappy );
-            happy = Mathf.Clamp( happy, -10, 10 );
-        }
-
-        if ( Math.Abs( psafety ) >= 5 ) {
-            safety += psafety / Math.Abs( psafety );
-            safety = Mathf.Clamp( safety, -10, 10 );
-        }
-
-        if ( Math.Abs( pfood ) >= 5 ) {
-            health += pfood / Math.Abs( pfood );
-            health = Mathf.Clamp( health, -10, 10 );
-        }*/
-
+            if ( Math.Abs( pfood ) >= 5 ) {
+                health += pfood / Math.Abs( pfood );
+                health = Mathf.Clamp( health, -10, 10 );
+            }*/
+        } // end if not higher than next higher layer
         dirty = true;
     }
 
@@ -601,6 +626,7 @@ public class MaslowMeter : MonoBehaviour {
 		System.Array.ForEach(needs, (need) => need.Update(Time.deltaTime));
         UpdateHapiness();
         UpdateMeetings();
+        UpdateHighest();
 		UpdateTriangleUI();
         SetTransBasedOnPlayerDist();
 
