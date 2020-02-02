@@ -374,11 +374,22 @@ public class MaslowMeter : MonoBehaviour {
 	private const float showTriangleLength = 5f;
 	private float showTriangleDuration;
 
+    public void RestoreInteractingWithColor()
+    {
+        if (interactingWith != null)
+        {
+            if(interactingWith.highestLayer>-1)
+            {
+            interactingWith.needs[interactingWith.highestLayer].ui.background.color = interactingWith.needs[interactingWith.highestLayer].color;
+            }
+        }
+    }
     public void Meet(MaslowMeter metMaslow)
     {
         // TODO: Look at whoever you met
         meeting = true;
 		departing = false;
+        RestoreInteractingWithColor();
 		interactingWith = metMaslow;
 		//if (metMaslow.tag == "Player")
 		//{
@@ -396,6 +407,7 @@ public class MaslowMeter : MonoBehaviour {
         meeting = true;
 		departing = false;
         characterMove.move.speed = 0.05f;
+        RestoreInteractingWithColor();
 		interactingWith = meeter;
 		//if (meeter.tag == "Player")
 		//{
@@ -431,16 +443,16 @@ public bool goodBlinking = false;
     public int blinkingLayer = 0;
     private void UpdateMeetings()
     {
-        if (interactingWith != null && highestLayer > interactingWith.highestLayer )
+        if (interactingWith != null && highestLayer > interactingWith.highestLayer  && (isPlayer || interactingWith.isPlayer))
         {
-            blinkingLayer = interactingWith.highestLayer;
+            blinkingLayer = interactingWith.highestLayer+1;
             goodBlinking = true;
             if (Time.time - goodBlinkLast > goodBlinkSpeed)
             {
                 goodBlinkLast = Time.time;
-                if (needs[interactingWith.highestLayer+1].ui.background.color == needs[highestLayer].color)
+                if (needs[blinkingLayer].ui.background.color == needs[highestLayer].color)
                 {
-                    needs[interactingWith.highestLayer+1].ui.background.color = blinkColorGood;
+                    needs[blinkingLayer].ui.background.color = blinkColorGood;
                 }
                 else
                 {
@@ -459,6 +471,8 @@ public bool goodBlinking = false;
 			if (interactingWith.interactingWith != this) {
 				//NS.Lines.MakeArrow(ref meeting_line, transform.position, midpoint, Color.red);
 				if (meeting_line != null) { meeting_line.SetActive(false); }
+                        RestoreInteractingWithColor();
+
 				interactingWith = null;
 				meeting = false;
 			} else {
@@ -517,7 +531,11 @@ public bool goodBlinking = false;
     public void InfluenceMaslow( MaslowMeter influencer, Habits.Layer influenceLayer, float phappy, float psafety, float pfood ) {
         
         // Assign the persons interacting with each other to facilitate animation during exchange
+        influencer.RestoreInteractingWithColor();
+
         influencer.interactingWith = this;
+        interactingWith.RestoreInteractingWithColor();
+
         interactingWith = influencer;
 
         Need receivedNeed = needs[(int)influenceLayer];
