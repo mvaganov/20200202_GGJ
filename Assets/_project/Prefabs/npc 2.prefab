@@ -3524,6 +3524,7 @@ MonoBehaviour:
   distance: 0
   headScreenUI: {fileID: 6727000786539286132}
   headWorldUI: {fileID: 7092308839710740664}
+  highestLayer: -1
   happinessBar: {fileID: 4909381511635230873}
   meeting: 0
   departing: 0
@@ -3866,7 +3867,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 64, y: 64}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6665433502834737365
 Canvas:

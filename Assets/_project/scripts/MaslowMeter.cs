@@ -220,35 +220,47 @@ public class MaslowMeter : MonoBehaviour {
     public static float maxHabitValue = 100f;
     public void GenerateHabits()
     {
-        if (UnityEngine.Random.Range(0,100) < 80)
+        if (tag != "Judge")
         {
-            needs[(int)Habits.Layer.physiology].habitPrimary = RandomHabit(Habits.Layer.physiology);
-            needs[(int)Habits.Layer.physiology].habitPrimaryValue = maxHabitValue;
-            //Debug.Log("physiology habit is " + needs[(int)Habits.Layer.physiology].habitPrimary.name);
-
-            if (UnityEngine.Random.Range(0,100) < 60)
+            if (UnityEngine.Random.Range(0,100) < 80)
             {
-                needs[(int)Habits.Layer.safety].habitPrimary = RandomHabit(Habits.Layer.safety);
-                needs[(int)Habits.Layer.safety].habitPrimaryValue = maxHabitValue;
-                //Debug.Log("safety habit is " + needs[(int)Habits.Layer.safety].habitPrimary.name);
+                needs[(int)Habits.Layer.physiology].habitPrimary = RandomHabit(Habits.Layer.physiology);
+                needs[(int)Habits.Layer.physiology].habitPrimaryValue = maxHabitValue;
+                highestLayer = 0;
+                //Debug.Log("physiology habit is " + needs[(int)Habits.Layer.physiology].habitPrimary.name);
 
-
-                if (UnityEngine.Random.Range(0,100) < 50)
+                if (UnityEngine.Random.Range(0,100) < 60)
                 {
-                    needs[(int)Habits.Layer.belonging].habitPrimary = RandomHabit(Habits.Layer.belonging);
-                    needs[(int)Habits.Layer.belonging].habitPrimaryValue = maxHabitValue;
+                    highestLayer = 1;
+                    needs[(int)Habits.Layer.safety].habitPrimary = RandomHabit(Habits.Layer.safety);
+                    needs[(int)Habits.Layer.safety].habitPrimaryValue = maxHabitValue;
+                    //Debug.Log("safety habit is " + needs[(int)Habits.Layer.safety].habitPrimary.name);
 
-                    if (UnityEngine.Random.Range(0,100) < 30)
+
+                    if (UnityEngine.Random.Range(0,100) < 50)
                     {
-                        needs[(int)Habits.Layer.esteem].habitPrimary = RandomHabit(Habits.Layer.esteem);
-                        needs[(int)Habits.Layer.esteem].habitPrimaryValue = maxHabitValue;
+                        highestLayer = 2;
+                        needs[(int)Habits.Layer.belonging].habitPrimary = RandomHabit(Habits.Layer.belonging);
+                        needs[(int)Habits.Layer.belonging].habitPrimaryValue = maxHabitValue;
 
-                        influencer = true;
-                        influencerHabit = RandomNeedPrimaryHabit();
-                        needs[(int)Habits.Layer.actualization].habitPrimary = influencerHabit;
+                        if (UnityEngine.Random.Range(0,100) < 30)
+                        {
+                            highestLayer = 3;
+                            needs[(int)Habits.Layer.esteem].habitPrimary = RandomHabit(Habits.Layer.esteem);
+                            needs[(int)Habits.Layer.esteem].habitPrimaryValue = maxHabitValue;
+
+                            highestLayer = 4;
+                            influencer = true;
+                            influencerHabit = RandomNeedPrimaryHabit();
+                            needs[(int)Habits.Layer.actualization].habitPrimary = influencerHabit;
+                        }
                     }
                 }
             }
+        }
+        else
+        {
+            highestLayer=-1;
         }
         
         
@@ -368,11 +380,22 @@ public class MaslowMeter : MonoBehaviour {
 	private const float showTriangleLength = 5f;
 	private float showTriangleDuration;
 
+    public void RestoreInteractingWithColor()
+    {
+        if (interactingWith != null)
+        {
+            if(interactingWith.highestLayer>-1)
+            {
+            interactingWith.needs[interactingWith.highestLayer].ui.background.color = interactingWith.needs[interactingWith.highestLayer].color;
+            }
+        }
+    }
     public void Meet(MaslowMeter metMaslow)
     {
         // TODO: Look at whoever you met
         meeting = true;
 		departing = false;
+        RestoreInteractingWithColor();
 		interactingWith = metMaslow;
 		//if (metMaslow.tag == "Player")
 		//{
@@ -390,6 +413,7 @@ public class MaslowMeter : MonoBehaviour {
         meeting = true;
 		departing = false;
         characterMove.move.speed = 0.05f;
+        RestoreInteractingWithColor();
 		interactingWith = meeter;
 		//if (meeter.tag == "Player")
 		//{
@@ -415,15 +439,46 @@ public class MaslowMeter : MonoBehaviour {
         characterMove.move.speed = originalSpeed;
         departTime = Time.time;
     }
+public float goodBlinkSpeed = 0.1f;
+public float goodBlinkLast = 0f;
+public bool goodBlinking = false;
 
+    private Color blinkColorOriginal;
+    private Color blinkColorGood = Color.green;
+    private Color blinkColorBad = Color.red;
+    public int blinkingLayer = 0;
     private void UpdateMeetings()
     {
+        if (interactingWith != null && highestLayer > interactingWith.highestLayer  && (isPlayer || interactingWith.isPlayer))
+        {
+            blinkingLayer = interactingWith.highestLayer+1;
+            goodBlinking = true;
+            if (Time.time - goodBlinkLast > goodBlinkSpeed)
+            {
+                goodBlinkLast = Time.time;
+                if (needs[blinkingLayer].ui.background.color == needs[highestLayer].color)
+                {
+                    needs[blinkingLayer].ui.background.color = blinkColorGood;
+                }
+                else
+                {
+                    needs[highestLayer].ui.background.color = needs[highestLayer].color;
+                }
+            }
+        }
+        else
+        {
+            goodBlinking = false;
+        }
+
 		if (interactingWith != null) {
 			Vector3 delta = interactingWith.transform.position - transform.position;
 			Vector3 midpoint = transform.position + delta / 2;
 			if (interactingWith.interactingWith != this) {
 				//NS.Lines.MakeArrow(ref meeting_line, transform.position, midpoint, Color.red);
 				if (meeting_line != null) { meeting_line.SetActive(false); }
+                        RestoreInteractingWithColor();
+
 				interactingWith = null;
 				meeting = false;
 			} else {
@@ -467,6 +522,18 @@ public class MaslowMeter : MonoBehaviour {
     private static float secondaryInfluenceAmount = 25f;
     private static float minHabitValue = 0f;
 
+    public void UpdateHighest()
+    {
+        /*
+        if(needs[0].habitPrimary == null || needs[0].habitPrimary.name != "") { highestLayer = -1;}
+        if(needs[1].habitPrimary != null || needs[1].habitPrimary.name != "") { highestLayer = 0;}
+        if(needs[2].habitPrimary != null || needs[2].habitPrimary.name != "") { highestLayer = 1;}
+        if(needs[3].habitPrimary != null || needs[3].habitPrimary.name != "") { highestLayer = 2;}
+        if(needs[4].habitPrimary != null || needs[4].habitPrimary.name != "") { highestLayer = 3;}
+        //if(needs[5].habitPrimary != null) { highestLayer = 4;}
+*/
+    }
+
     public void InfluenceMaslow( MaslowMeter influencer, Habits.Layer influenceLayer, float phappy, float psafety, float pfood ) {
 
         if (phappy > 0)
@@ -479,91 +546,106 @@ public class MaslowMeter : MonoBehaviour {
         }
 
         // Assign the persons interacting with each other to facilitate animation during exchange
+        influencer.RestoreInteractingWithColor();
+
         influencer.interactingWith = this;
+        if(interactingWith!=null)
+        {interactingWith.RestoreInteractingWithColor();}
+
         interactingWith = influencer;
 
         Need receivedNeed = needs[(int)influenceLayer];
         Need influencerNeed =  influencer.needs[(int)influenceLayer];
-        if(influencerNeed.habitPrimary != null)
+        if ( (int)influencerNeed.layer <= highestLayer + 1 ) 
         {
-            // If we have no primary, get us started at max
-            if (receivedNeed.habitPrimary == null)
+            if(influencerNeed.habitPrimary != null)
             {
-                
+                // If we have no primary, get us started at max
+                if (receivedNeed.habitPrimary == null)
+                {
+                    Debug.Log("isPlayer:"+isPlayer);
+                    Debug.Log("highestLayer:"  + highestLayer);
+                    highestLayer ++;
+                    happy+=2f;
+                    interactingWith.happy +=2f;
+                    Debug.Log("highestLayer:"  + highestLayer);
+
                     // TODO: Make a way to share someone's secondary needs with yourself, otehrwise just always ask for their primary.
                     receivedNeed.habitPrimary = influencerNeed.habitPrimary;
                     receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
-                
-                
+                    if (highestLayer + 1 == (int) receivedNeed.layer)
+                    {
+                        //highestLayer ++;
+                    }
+                }
+                // otherwise check if its the primary we already have being boosted to max again
+                else if (receivedNeed.habitPrimary.name != influencerNeed.habitPrimary.name)
+                {
+                    receivedNeed.habitSecondary = influencerNeed.habitPrimary;
+                    receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+                }
+                // or its our first secondary
+                else if (receivedNeed.habitSecondary == null)
+                {
+                    receivedNeed.habitSecondary = influencerNeed.habitPrimary;
+                    receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
+                    receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
+                    
+                }
+                // or a secondary we do have
+                else if (receivedNeed.habitSecondary.name == influencerNeed.name)
+                {
+                    receivedNeed.habitSecondary = influencerNeed.habitPrimary;
+                    receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+                }
+                // or a secondary different from ours replaces our secondary
+                else if (receivedNeed.habitSecondary.name != influencerNeed.habitPrimary.name)
+                {
+                    receivedNeed.habitSecondary = influencerNeed.habitPrimary;
+                    receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
+                    receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
+                    
+                }
+                // or nothing is there to gain
+                else
+                {
+                    UnityEngine.Debug.Log("Nothing to gain.");
+                }
             }
-            // otherwise check if its the primary we already have being boosted to max again
-            else if (receivedNeed.habitPrimary.name != influencerNeed.habitPrimary.name)
+            receivedNeed.Use(receivedNeed.ui,receivedNeed);
+
+            // If our secondary beat our primary, bin the old and in with the new
+            if(secondaryInfluenceAmount >= maxHabitValue)
             {
-                receivedNeed.habitSecondary = influencerNeed.habitPrimary;
-                receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+                receivedNeed.habitOld = receivedNeed.habitPrimary;
+                receivedNeed.habitPrimary = receivedNeed.habitSecondary;
+                receivedNeed.habitPrimaryValue = maxHabitValue;
+                receivedNeed.habitSecondaryValue = minHabitValue;
             }
-            // or its our first secondary
-            else if (receivedNeed.habitSecondary == null)
-            {
-                receivedNeed.habitSecondary = influencerNeed.habitPrimary;
-                receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
-                receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
-                
-            }
-            // or a secondary we do have
-            else if (receivedNeed.habitSecondary.name == influencerNeed.name)
-            {
-                receivedNeed.habitSecondary = influencerNeed.habitPrimary;
-                receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
-            }
-            // or a secondary different from ours replaces our secondary
-            else if (receivedNeed.habitSecondary.name != influencerNeed.habitPrimary.name)
-            {
-                receivedNeed.habitSecondary = influencerNeed.habitPrimary;
-                receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
-                receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
-                
-            }
-            // or nothing is there to gain
+            
+            // else 
             else
             {
-                UnityEngine.Debug.Log("Nothing to gain.");
+
             }
-        }
-        receivedNeed.Use(receivedNeed.ui,receivedNeed);
 
-        // If our secondary beat our primary, bin the old and in with the new
-        if(secondaryInfluenceAmount >= maxHabitValue)
-        {
-            receivedNeed.habitOld = receivedNeed.habitPrimary;
-            receivedNeed.habitPrimary = receivedNeed.habitSecondary;
-            receivedNeed.habitPrimaryValue = maxHabitValue;
-            receivedNeed.habitSecondaryValue = minHabitValue;
-        }
-        
-        // else 
-        else
-        {
+            /*
+            // Right now influence is always +/- 1 or 0 
+            if ( Math.Abs( phappy ) >= 5 ) {
+                happy += phappy / Math.Abs( phappy );
+                happy = Mathf.Clamp( happy, -10, 10 );
+            }
 
-        }
+            if ( Math.Abs( psafety ) >= 5 ) {
+                safety += psafety / Math.Abs( psafety );
+                safety = Mathf.Clamp( safety, -10, 10 );
+            }
 
-        /*
-        // Right now influence is always +/- 1 or 0 
-        if ( Math.Abs( phappy ) >= 5 ) {
-            happy += phappy / Math.Abs( phappy );
-            happy = Mathf.Clamp( happy, -10, 10 );
-        }
-
-        if ( Math.Abs( psafety ) >= 5 ) {
-            safety += psafety / Math.Abs( psafety );
-            safety = Mathf.Clamp( safety, -10, 10 );
-        }
-
-        if ( Math.Abs( pfood ) >= 5 ) {
-            health += pfood / Math.Abs( pfood );
-            health = Mathf.Clamp( health, -10, 10 );
-        }*/
-
+            if ( Math.Abs( pfood ) >= 5 ) {
+                health += pfood / Math.Abs( pfood );
+                health = Mathf.Clamp( health, -10, 10 );
+            }*/
+        } // end if not higher than next higher layer
         dirty = true;
     }
 
@@ -606,88 +688,95 @@ public class MaslowMeter : MonoBehaviour {
     public static float  minNeedValue = 0f;
     public static float maxNeedValue = 10f;
     public static float maxNeedRandomValue = 7f;
-    void Update() {
+
+	bool VoteForEarth() {
+		return happy >= 5 && actualization >= 5;
+	}
+
+    void FixedUpdate() {
         
         // Update needs simulations
 		System.Array.ForEach(needs, (need) => need.Update(Time.deltaTime));
         UpdateHapiness();
         UpdateMeetings();
+        UpdateHighest();
 		UpdateTriangleUI();
-        SetTransBasedOnPlayerDist();
+		//SetTransBasedOnPlayerDist();
+		votingPositive = VoteForEarth();
 
-        if ( dirty && txtStatus.gameObject.activeInHierarchy ) {
-            string happyColor = "white";
-            string safetyColor = "white";
-            string foodColor = "white";
+        //if ( dirty && txtStatus.gameObject.activeInHierarchy ) {
+        //    string happyColor = "white";
+        //    string safetyColor = "white";
+        //    string foodColor = "white";
 
-            int netResult = 0;
+        //    int netResult = 0;
 
-            if ( happy >= 5f ) {
-                happyColor = "green";
-                netResult += 1;
-            }
+        //    if ( happy >= 5f ) {
+        //        happyColor = "green";
+        //        netResult += 1;
+        //    }
 
-            if ( happy <= -5f ) {
-                happyColor = "red";
-                netResult -= 1;
-            }
+        //    if ( happy <= -5f ) {
+        //        happyColor = "red";
+        //        netResult -= 1;
+        //    }
 
-            if ( safety >= 5f ) {
-                safetyColor = "green";
-                netResult += 1;
-            }
+        //    if ( safety >= 5f ) {
+        //        safetyColor = "green";
+        //        netResult += 1;
+        //    }
 
-            if ( safety <= -5f ) {
-                safetyColor = "red";
-                netResult -= 1;
-            }
+        //    if ( safety <= -5f ) {
+        //        safetyColor = "red";
+        //        netResult -= 1;
+        //    }
 
-            if ( health >= 5f ) {
-                foodColor = "green";
-                netResult += 1;
-            }
+        //    if ( health >= 5f ) {
+        //        foodColor = "green";
+        //        netResult += 1;
+        //    }
 
-            if ( health <= -5f ) {
-                foodColor = "red";
-                netResult -= 1;
-            }
+        //    if ( health <= -5f ) {
+        //        foodColor = "red";
+        //        netResult -= 1;
+        //    }
 
-            if ( netResult > 0 ) {
-                votingPositive = true;
-                //innerGlow.material = matGreen;
-            }
-            else if ( netResult < 0 ) {
-                votingPositive = false;
-                //innerGlow.material = matRed;
-            }
-            else {
-                votingPositive = false;
-                //innerGlow.material = matWhite;
-            }
+        //    if ( netResult > 0 ) {
+        //        votingPositive = true;
+        //        //innerGlow.material = matGreen;
+        //    }
+        //    else if ( netResult < 0 ) {
+        //        votingPositive = false;
+        //        //innerGlow.material = matRed;
+        //    }
+        //    else {
+        //        votingPositive = false;
+        //        //innerGlow.material = matWhite;
+        //    }
 
-            string happyNumber = happy.ToString() + "         ";
-            string safetyNumber = safety.ToString()+ "         ";
-            string foodNumber = health.ToString()+ "         ";
+        //    string happyNumber = happy.ToString() + "         ";
+        //    string safetyNumber = safety.ToString()+ "         ";
+        //    string foodNumber = health.ToString()+ "         ";
 
-            happyNumber = happyNumber.Substring( 0, 4 );
-            safetyNumber  = safetyNumber.Substring( 0, 4 );
-            foodNumber = foodNumber.Substring( 0, 4 );
+        //    happyNumber = happyNumber.Substring( 0, 4 );
+        //    safetyNumber  = safetyNumber.Substring( 0, 4 );
+        //    foodNumber = foodNumber.Substring( 0, 4 );
 
-            happyNumber = happyNumber.Contains( "-" ) ? happyNumber : "+"+happyNumber;
-            safetyNumber = safetyNumber.Contains( "-" ) ? safetyNumber : "+"+safetyNumber;
-            foodNumber = foodNumber.Contains( "-" ) ? foodNumber : "+"+foodNumber;
+        //    happyNumber = happyNumber.Contains( "-" ) ? happyNumber : "+"+happyNumber;
+        //    safetyNumber = safetyNumber.Contains( "-" ) ? safetyNumber : "+"+safetyNumber;
+        //    foodNumber = foodNumber.Contains( "-" ) ? foodNumber : "+"+foodNumber;
 
-            happyNumber = happyNumber.Substring( 0, 3 ).Replace( ".", " " );
-            safetyNumber = safetyNumber.Substring( 0, 3 ).Replace( ".", " " );
-            foodNumber = foodNumber.Substring( 0, 3 ).Replace( ".", " " );
+        //    happyNumber = happyNumber.Substring( 0, 3 ).Replace( ".", " " );
+        //    safetyNumber = safetyNumber.Substring( 0, 3 ).Replace( ".", " " );
+        //    foodNumber = foodNumber.Substring( 0, 3 ).Replace( ".", " " );
 
-            txtStatus.text = "";
-            txtStatus.text +=    "<sprite=14> " + "<color=\""+happyColor+"\">" + happyNumber;
-            txtStatus.text +=  "\n<sprite=2> "  + "<color=\""+safetyColor+"\">" + safetyNumber;
-            txtStatus.text +=  "\n<sprite=11> " + "<color=\""+foodColor+"\">" + foodNumber;
+        //    txtStatus.text = "";
+        //    txtStatus.text +=    "<sprite=14> " + "<color=\""+happyColor+"\">" + happyNumber;
+        //    txtStatus.text +=  "\n<sprite=2> "  + "<color=\""+safetyColor+"\">" + safetyNumber;
+        //    txtStatus.text +=  "\n<sprite=11> " + "<color=\""+foodColor+"\">" + foodNumber;
 
-            dirty = false;
-        }
+        //    dirty = false;
+        //}
     }
 
 	public MaslowMeter GetMaslowMeter(GameObject other) {
@@ -709,13 +798,13 @@ public class MaslowMeter : MonoBehaviour {
 	private void OnTriggerEnter( Collider other ) {
         if ( tag == "Judge" && other.tag == "House" ) {
             // Judges don't influence others, only the city hall
-            var npc = GetComponent<NPC>();
+            var npc = GetComponent<NPCWithBoxes>();
             UnityEngine.Assertions.Assert.IsNotNull( npc );
             npc.Vote( votingPositive );
-			Debug.Log("JUDGE!");
+			Debug.Log("JUDGED!");
             return;
         }
-        else if ( other.tag == "Villager" || other.tag == "PlayerBubble" ) {
+        else if ( other.tag == "Villager" || other.tag == "Judge" || other.tag == "PlayerBubble" ) {
 			MaslowMeter otherMaslow = GetMaslowMeter(other.gameObject);
 			if (other.tag == "Player") {
 				//showTriangleDuration = showTriangleLength;
@@ -741,8 +830,8 @@ public class MaslowMeter : MonoBehaviour {
                 peopleThisPersonInfluenced.Add( other.transform.parent );
                 //Debug.Log( gameObject.name + "Influenced " + other.gameObject.name );
 
-                MaslowMeter otherMeter = other.gameObject.transform.parent.GetComponent<MaslowMeter>();
-                UnityEngine.Assertions.Assert.IsNotNull( otherMeter );
+                //MaslowMeter otherMeter = other.gameObject.transform.parent.GetComponent<MaslowMeter>();
+                //UnityEngine.Assertions.Assert.IsNotNull( otherMeter );
                 //otherMeter.InfluenceMaslow( this, this.happy, safety, health );
                 // TODO: Influence should happen during the meeting instead
             }
