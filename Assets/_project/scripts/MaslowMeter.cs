@@ -171,13 +171,13 @@ private bool blinked = false;
         {
             needs[(int)Habits.Layer.physiology].habitPrimary = RandomHabit(Habits.Layer.physiology);
             needs[(int)Habits.Layer.physiology].habitPrimaryValue = maxHabitValue;
-            Debug.Log("physiology habit is " + needs[(int)Habits.Layer.physiology].habitPrimary.name);
+            //Debug.Log("physiology habit is " + needs[(int)Habits.Layer.physiology].habitPrimary.name);
 
             if (UnityEngine.Random.Range(0,100) < 75)
             {
                 needs[(int)Habits.Layer.safety].habitPrimary = RandomHabit(Habits.Layer.safety);
                 needs[(int)Habits.Layer.safety].habitPrimaryValue = maxHabitValue;
-                Debug.Log("safety habit is " + needs[(int)Habits.Layer.safety].habitPrimary.name);
+                //Debug.Log("safety habit is " + needs[(int)Habits.Layer.safety].habitPrimary.name);
 
 
                 if (UnityEngine.Random.Range(0,100) < 55)
@@ -414,6 +414,7 @@ private bool blinked = false;
         }
         characterMove = GetComponent<CharacterMove>();
 
+        Habits.InitSprites();
         InitNeeds();
 			if(chestCanvas == null) {
 				Debug.LogWarning("Missing chest canvas!");

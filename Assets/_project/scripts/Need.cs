@@ -65,10 +65,66 @@ using UnityEngine;
 				value += gainPerClick;
 			}
 		}
+
+        Sprite needSprite;
+        int needSpriteIndex = 0;
+
+        public Sprite GetNeedSprite()
+        {
+            switch (name){
+                case "physiology":     
+                    needSprite = MaslowManager.Instance.physiology;
+                    break;
+                case "safety":     
+                    needSprite = MaslowManager.Instance.safety;
+                    break;
+                case "belonging":     
+                    needSprite = MaslowManager.Instance.belonging;
+                    break;
+                case "esteem":     
+                    needSprite = MaslowManager.Instance.esteem;
+                    break;
+                case "actualization":     
+                    needSprite = MaslowManager.Instance.actualization;
+                    break;
+                case "happy":     
+                    needSprite = MaslowManager.Instance.happies[9];
+                    break;
+                case "earth":     
+                    needSprite = MaslowManager.Instance.cooling;
+                    break;
+                default:
+                    needSprite = MaslowManager.Instance.cooling;
+                    break;
+            }
+            return needSprite;
+        }
+        
 		public void Use(NeedUI ui, Need dependency) {
 			this.dependency = dependency;
 			this.ui = ui;
-			ui.text.text = name;
+            string uiText = "<sprite=" + MaslowManager.Instance.GetEmojiSpriteIndex(GetNeedSprite()) + ">";
+            
+            if (habitPrimary != null)
+            {
+                Debug.Log("Use primary name:" + habitPrimary.name);
+                Debug.Log("Use sprite:" + habitPrimary.sprite);
+
+                uiText = "<sprite=" + MaslowManager.Instance.GetEmojiSpriteIndex(habitPrimary.sprite) + "> " + uiText;
+            }
+            else
+            {
+                uiText =  "    " + uiText;
+            }
+            if (habitSecondary != null)
+            {
+                uiText = uiText + " <sprite=" + MaslowManager.Instance.GetEmojiSpriteIndex(habitSecondary.sprite) + ">";
+            }
+            else
+            {
+                uiText = uiText + "    ";
+            }
+			ui.text.text = uiText; // no longer name
 			ui.progressbar.color = color;
 		}
 	}
