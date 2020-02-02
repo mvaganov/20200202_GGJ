@@ -52,6 +52,7 @@ public class NeedsTriangle : MonoBehaviour
 				// keep just 2 on the screen at any given time, always giving preference to Player triangles.
 				if(aboveHeads.Count >= maxAboveHeads) {
 					for(int i = aboveHeads.Count-1; i >= 0 && aboveHeads.Count >= maxAboveHeads; --i) {
+						if (aboveHeads[i] == this) break;
 						if(aboveHeads[i].maslow.tag != "Player") {
 							aboveHeads[i].SetShow(Show.inChest);
 							aboveHeads.RemoveAt(i);
@@ -134,7 +135,6 @@ public class NeedsTriangle : MonoBehaviour
 	void Start()
     {
 		ConnectButtonsToNeeds();
-		SetTextVisible(false);
 		rb = GetComponent<Rigidbody2D>();
 		UpdateTriangleUIParent(triangleShow);
 	}
