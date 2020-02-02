@@ -421,9 +421,38 @@ public class MaslowMeter : MonoBehaviour {
         characterMove.move.speed = originalSpeed;
         departTime = Time.time;
     }
+public float goodBlinkSpeed = 0.1f;
+public float goodBlinkLast = 0f;
+public bool goodBlinking = false;
 
+    private Color blinkColorOriginal;
+    private Color blinkColorGood = Color.green;
+    private Color blinkColorBad = Color.red;
+    public int blinkingLayer = 0;
     private void UpdateMeetings()
     {
+        if (interactingWith != null && highestLayer > interactingWith.highestLayer )
+        {
+            blinkingLayer = interactingWith.highestLayer;
+            goodBlinking = true;
+            if (Time.time - goodBlinkLast > goodBlinkSpeed)
+            {
+                goodBlinkLast = Time.time;
+                if (needs[interactingWith.highestLayer+1].ui.background.color == needs[highestLayer].color)
+                {
+                    needs[interactingWith.highestLayer+1].ui.background.color = blinkColorGood;
+                }
+                else
+                {
+                    needs[highestLayer].ui.background.color = needs[highestLayer].color;
+                }
+            }
+        }
+        else
+        {
+            goodBlinking = false;
+        }
+
 		if (interactingWith != null) {
 			Vector3 delta = interactingWith.transform.position - transform.position;
 			Vector3 midpoint = transform.position + delta / 2;
