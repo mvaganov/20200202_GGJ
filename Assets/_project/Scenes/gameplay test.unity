@@ -940,7 +940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddbd9de910f15a24a9c843d5e1476f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabNPC: {fileID: 6991835598562501265, guid: 4cf60f6ed936c5c4d9391dfc7b940997,
+  prefabNPC: {fileID: 6991835598562501265, guid: e8f30c5b282d9514f8e9ee014f8b6609,
     type: 3}
   parentOfRegions: {fileID: 397367151}
 --- !u!1 &399594854

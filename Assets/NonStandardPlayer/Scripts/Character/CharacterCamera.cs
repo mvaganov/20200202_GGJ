@@ -45,7 +45,6 @@ public class CharacterCamera : MonoBehaviour
 		yaw = Vector3.Angle(Vector3.forward, straightForward);
 		if (Vector3.Dot(straightForward, Vector3.right) < 0) { yaw *= -1; }
 		if (Vector3.Dot(Vector3.up, transform.forward) > 0) { pitch *= -1; }
-		Debug.Log(targetDistance);
 	}
 
 	void Update()

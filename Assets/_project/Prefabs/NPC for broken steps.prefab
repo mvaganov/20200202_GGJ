@@ -57,8 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 21440830041051430, guid: 9a910ef499c01a54a9377d855f3a04c6,
-    type: 2}
+  m_Material: {fileID: 2103686, guid: c41005c129ba4d66911b75229fd70b45, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -67,10 +66,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_spriteAsset: {fileID: 11400000, guid: 9a910ef499c01a54a9377d855f3a04c6, type: 2}
+  m_spriteAsset: {fileID: 11400000, guid: c41005c129ba4d66911b75229fd70b45, type: 2}
   m_material: {fileID: 0}
-  m_sharedMaterial: {fileID: 21440830041051430, guid: 9a910ef499c01a54a9377d855f3a04c6,
-    type: 2}
+  m_sharedMaterial: {fileID: 2103686, guid: c41005c129ba4d66911b75229fd70b45, type: 2}
   m_isDefaultMaterial: 1
   m_padding: 0
   m_canvasRenderer: {fileID: 144125185837237864}
@@ -358,8 +356,8 @@ GameObject:
   - component: {fileID: 4780873372299134621}
   - component: {fileID: 4780873372299134620}
   - component: {fileID: 4780873372299134619}
+  - component: {fileID: 6991835598562501265}
   - component: {fileID: 1593009185}
-  - component: {fileID: 4443980465560715833}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -454,6 +452,18 @@ MonoBehaviour:
     maxJumps: 1
     jumpIcon: {fileID: 0}
     PressJump: 0
+--- !u!114 &6991835598562501265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4780873372299134618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac59570a1dedc4449c246c2d6abc514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1593009185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,20 +484,6 @@ MonoBehaviour:
   happy: 0
   safety: 0
   food: 0
---- !u!114 &4443980465560715833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4780873372299134618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bac59570a1dedc4449c246c2d6abc514, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  judge: 0
-  judgeColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &4780873372488770998
 GameObject:
   m_ObjectHideFlags: 0
