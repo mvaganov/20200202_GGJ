@@ -21,6 +21,8 @@ public class MaslowMeter : MonoBehaviour {
     public float esteem = 5;
     public float actualization = 5;
 
+	private float originalSpeed = 10;
+
 /// <summary>
 /// The view UI the maslowmeter is connected to when a UI is visible.
 /// </summary>
@@ -171,13 +173,13 @@ private bool blinked = false;
         {
             needs[(int)Habits.Layer.physiology].habitPrimary = RandomHabit(Habits.Layer.physiology);
             needs[(int)Habits.Layer.physiology].habitPrimaryValue = maxHabitValue;
-            Debug.Log("physiology habit is " + needs[(int)Habits.Layer.physiology].habitPrimary.name);
+            //Debug.Log("physiology habit is " + needs[(int)Habits.Layer.physiology].habitPrimary.name);
 
             if (UnityEngine.Random.Range(0,100) < 75)
             {
                 needs[(int)Habits.Layer.safety].habitPrimary = RandomHabit(Habits.Layer.safety);
                 needs[(int)Habits.Layer.safety].habitPrimaryValue = maxHabitValue;
-                Debug.Log("safety habit is " + needs[(int)Habits.Layer.safety].habitPrimary.name);
+                //Debug.Log("safety habit is " + needs[(int)Habits.Layer.safety].habitPrimary.name);
 
 
                 if (UnityEngine.Random.Range(0,100) < 55)
@@ -313,6 +315,8 @@ private bool blinked = false;
     public float meetTime = 0f;
     private float departLength = 1f;
     private float meetLength = 5f;
+	private const float showTriangleLength = 2f;
+	private float showTriangle;
 
     public void Meet(MaslowMeter metMaslow)
     {
@@ -320,8 +324,14 @@ private bool blinked = false;
         meeting = true;
 		departing = false;
 		interactingWith = metMaslow;
-        characterMove.move.speed = 0f;
-        meetTime = Time.time;
+		if (metMaslow.tag == "Player")
+		{
+			triangle.SetShow(NeedsTriangle.Show.aboveHead);
+			//Debug.LogError(name + " met Player "+triangle.triangleShow+" "+triangle.transform.parent.parent.parent);
+		}
+		characterMove.move.speed = 0f;
+		//metMaslow.Met(this);
+		meetTime = Time.time;
     }
 
     public void Met(MaslowMeter meeter)
@@ -330,10 +340,6 @@ private bool blinked = false;
         meeting = true;
 		departing = false;
 		interactingWith = meeter;
-		if (meeter.tag == "Player")
-		{
-			triangle.SetShow(NeedsTriangle.Show.aboveHead);
-		}
 		meetTime = Time.time;
         meetLength = 5f + UnityEngine.Random.Range(0f,5f);
     }
@@ -342,9 +348,8 @@ private bool blinked = false;
     {
         meeting = false;
         departing = true;
-		triangle.SetShow(NeedsTriangle.Show.inChest);
 		// TODO: Look away from whoever you're departing
-		characterMove.move.speed = 2f;
+		characterMove.move.speed = originalSpeed;
         metMaslow.Departed(this);
         departTime = Time.time;
     } 
@@ -353,7 +358,7 @@ private bool blinked = false;
         meeting = false;
         departing = true;
         // TODO: Look away from whoever you're departing
-        characterMove.move.speed = 2f;
+        characterMove.move.speed = originalSpeed;
         departTime = Time.time;
     }
 
@@ -369,6 +374,7 @@ private bool blinked = false;
 				meeting = false;
 			} else {
 				NS.Lines.MakeArrow(ref meeting_line, transform.position, midpoint, Color.black);
+				showTriangle = showTriangleLength;
 			}
 		}
 		if (meeting && Time.time - meetTime > meetLength)
@@ -380,6 +386,19 @@ private bool blinked = false;
             departing = false;
         }
     }
+	private void UpdateTriangleUI()
+	{
+		if (showTriangle > 0 && triangle.triangleShow == NeedsTriangle.Show.aboveHead) {
+			showTriangle -= Time.deltaTime;
+			if (showTriangle <= 0) {
+				if (transform.tag != "Player")
+				{ // player UI is always in the player UI area. never go back to chest.
+					//Debug.Log(name+" TRIANGLE OFF!");
+					triangle.SetShow(NeedsTriangle.Show.inChest);
+				}
+			}
+		}
+	}
     private void InfluenceMaslow( MaslowMeter influencer, Habits.Layer influenceLayer, float phappy, float psafety, float pfood ) {
         
         // Assign the persons interacting with each other to facilitate animation during exchange
@@ -421,7 +440,8 @@ private bool blinked = false;
     }
 }
     void Start() {
-        player = GameObject.Find( "player" );
+		originalSpeed = characterMove.move.speed;
+		player = GameObject.Find( "player" );
 		if(player == null) { throw new System.Exception("NEED SOMETHING NAMED \"player\""); }
 		if (player.tag != "Player") { throw new System.Exception("\"player\" needs to be tagged \"Player\""); }
 		UnityEngine.Assertions.Assert.IsNotNull( txtStatus );
@@ -437,13 +457,14 @@ private bool blinked = false;
             happy = UnityEngine.Random.Range( -7.0f, 7.0f );
             safety = UnityEngine.Random.Range( -7.0f, 7.0f );
         }
-    }
+	}
     void Update() {
         
         // Update needs simulations
 		System.Array.ForEach(needs, (need) => need.Update(Time.deltaTime));
         UpdateHapiness();
         UpdateMeetings();
+		UpdateTriangleUI();
         SetTransBasedOnPlayerDist();
 
         if ( dirty && txtStatus.gameObject.activeInHierarchy ) {
@@ -541,8 +562,9 @@ private bool blinked = false;
             return;
         }
         else if ( other.tag == "Villager" || other.tag == "PlayerBubble" ) {
-            // If this is someone we haven't exchanged with before, we could meet with them
-            if ( !peopleThisPersonInfluenced.Contains( other.transform.parent ) ) {
+			showTriangle = showTriangleLength;
+			// If this is someone we haven't exchanged with before, we could meet with them
+			if ( !peopleThisPersonInfluenced.Contains( other.transform.parent ) ) {
                 if (departing || meeting)
                 {
                     // TODO: What happens if you're already meeting or departing, like a "sorry not now" eye roll face?
@@ -554,7 +576,7 @@ private bool blinked = false;
                     Meet(GetMaslowMeter(other.gameObject));
                 }
                 peopleThisPersonInfluenced.Add( other.transform.parent );
-                Debug.Log( gameObject.name + "Influenced " + other.gameObject.name );
+                //Debug.Log( gameObject.name + "Influenced " + other.gameObject.name );
 
                 MaslowMeter otherMeter = other.gameObject.transform.parent.GetComponent<MaslowMeter>();
                 UnityEngine.Assertions.Assert.IsNotNull( otherMeter );
@@ -564,15 +586,7 @@ private bool blinked = false;
             // If not, just depart
             else
             {
-                // TODO: Make sure bumping into people you've met recently just results in mutual depart and not bulldozing
-                if (other.gameObject.GetComponent<MaslowMeter>()==null)
-                {
-                    Debug.Log(other.gameObject.name + " has no MaslowMeter");
-
-
-                    
-                }
-                Depart(other.gameObject.transform.parent.GetComponent<MaslowMeter>());
+                Depart(GetMaslowMeter(other.gameObject));
             }
         }
     }

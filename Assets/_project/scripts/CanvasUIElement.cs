@@ -12,12 +12,18 @@ public class CanvasUIElement : MonoBehaviour
 	public bool activated = false;
 	public bool hideIfDeactivated = true;
 	
+	public class CanvasUIElementElement : MonoBehaviour {
+		public CanvasUIElement owner;
+	}
 
 	public RectTransform GetUI() {
 		if(ui == null) {
 			CanvasForCanvasUIElement c = CanvasForCanvasUIElement.Instance();
 			ui = (Instantiate(prefab.gameObject) as GameObject).GetComponent<RectTransform>();
 			ui.SetParent(c.transform);
+			ui.name += ui.parent.childCount;
+			CanvasUIElementElement slave = ui.gameObject.AddComponent<CanvasUIElementElement>();
+			slave.owner = this;
 		}
 		return ui;
 	}

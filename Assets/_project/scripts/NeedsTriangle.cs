@@ -29,6 +29,7 @@ public class NeedsTriangle : MonoBehaviour
 			case Show.inChest:
 				if(maslow.chestCanvas == null) { Debug.Log("need to set chest canvas for "+maslow.gameObject+" ("+maslow.transform.root+")"); }
 				placeTobe = maslow.chestCanvas.transform;
+				SetTextVisible(false);
 				break;
 			case Show.playerUI:		placeTobe = CanvasForCanvasUIElement.Instance().transform.Find("maslowanchor"); break;
 			case Show.aboveHead:
@@ -38,15 +39,18 @@ public class NeedsTriangle : MonoBehaviour
 					//Debug.Log("waiting for UI to happen...");
 					return;
 				}
-				if (rb != null) { rb.simulated = true; }
+				if (rb != null) { rb.simulated = true; isColliding = false; }
 				placeTobe = ui.Find("maslowanchor");
+				SetTextVisible(true);
 				break;
 		}
-		if (maslowTransform.parent != placeTobe) {
+		//if (maslowTransform.parent != placeTobe)
+		{
 			if(placeTobe == null) { Debug.Log("no place to be when state is " + triangleShow); }
 			maslowTransform.SetParent(placeTobe);
 			maslowTransform.localScale = Vector3.one;
 			maslowTransform.localPosition = Vector3.zero;
+			maslowTransform.rotation = Quaternion.identity;
 		}
 	}
 
@@ -125,7 +129,14 @@ public class NeedsTriangle : MonoBehaviour
 
 		if(triangleShow == Show.aboveHead) {
 			RectTransform rt = GetComponent<RectTransform>();
-			rb.velocity = -rt.anchoredPosition;
+			if (!isColliding) {
+				rb.velocity = -rt.anchoredPosition;
+			} else {
+				rb.velocity += -rt.anchoredPosition * Time.deltaTime;
+			}
 		}
 	}
+	private bool isColliding = false;
+	private void OnCollisionStay2D(Collision2D collision) { isColliding = true; }
+	private void OnCollisionExit2D(Collision2D collision) { isColliding = false; }
 }
