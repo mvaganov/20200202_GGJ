@@ -46,10 +46,10 @@ MonoBehaviour:
   noises:
   - name: BG Music
     sounds:
-    - {fileID: 8300000, guid: 9c49c5529f285404da58f0d207d99a06, type: 3}
+    - {fileID: 8300000, guid: 8b9fa9bdb711096438e77de10d6b5038, type: 3}
     volumeReduce: 0.74
     backgroundMusic: 1
-    playOnStart: 0
+    playOnStart: 1
     is2D: 0
     followsObject: 0
     loop: 1
