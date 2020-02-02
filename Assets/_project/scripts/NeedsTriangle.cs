@@ -28,9 +28,7 @@ public class NeedsTriangle : MonoBehaviour
 		this.triangleShow = triangleShow;
 		switch (triangleShow) {
 			case Show.inChest:
-				if (lastState != Show.inChest) {
-					Debug.Log("bringing to chest from " + lastState);
-				}
+				//if (lastState != Show.inChest) { Debug.Log("bringing to chest from " + lastState); }
 				if(maslow.chestCanvas == null) {
 					Debug.Log("need to set chest canvas for "+maslow.gameObject+" ("+maslow.transform.root+")");
 				}

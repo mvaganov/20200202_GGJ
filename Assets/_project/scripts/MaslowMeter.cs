@@ -411,7 +411,7 @@ private bool blinked = false;
 			if (showTriangleDuration <= 0) {
 				if (transform.tag != "Player")
 				{ // player UI is always in the player UI area. never go back to chest.
-					Debug.Log(name+" TRIANGLE OFF!");
+					//Debug.Log(name+" TRIANGLE OFF!");
 					triangle.SetShow(NeedsTriangle.Show.inChest);
 				}
 			}
