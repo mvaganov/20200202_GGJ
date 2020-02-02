@@ -322,7 +322,7 @@ private bool blinked = false;
     private float departLength = 1f;
     private float meetLength = 5f;
 	private const float showTriangleLength = 5f;
-	private float showTriangle;
+	private float showTriangleDuration;
 
     public void Meet(MaslowMeter metMaslow)
     {
@@ -376,12 +376,14 @@ private bool blinked = false;
 			Vector3 midpoint = transform.position + delta / 2;
 			if (interactingWith.interactingWith != this)
 			{
-				NS.Lines.MakeArrow(ref meeting_line, transform.position, midpoint, Color.red);
+				//NS.Lines.MakeArrow(ref meeting_line, transform.position, midpoint, Color.red);
+				meeting_line.SetActive(false);
 				interactingWith = null;
 				meeting = false;
 			} else {
 				NS.Lines.MakeArrow(ref meeting_line, transform.position, midpoint, Color.black);
-				showTriangle = showTriangleLength;
+				meeting_line.SetActive(true);
+				showTriangleDuration = showTriangleLength;
 			}
 		}
 		if (meeting && Time.time - meetTime > meetLength)
@@ -403,17 +405,17 @@ private bool blinked = false;
 			faceToTriangle_line.transform.SetParent(triangle.transform.parent);
 			faceToTriangle_line.transform.localScale = Vector3.one;
 			faceToTriangle_line.SetActive(true);
-			if (showTriangle > 0) {
-				showTriangle -= Time.deltaTime;
-				if (showTriangle <= 0) {
-					if (transform.tag != "Player")
-					{ // player UI is always in the player UI area. never go back to chest.
-						//Debug.Log(name+" TRIANGLE OFF!");
-						triangle.SetShow(NeedsTriangle.Show.inChest);
-					}
+		} else if(faceToTriangle_line != null) { faceToTriangle_line.SetActive(false); }
+		if (showTriangleDuration > 0) {
+			showTriangleDuration -= Time.deltaTime;
+			if (showTriangleDuration <= 0) {
+				if (transform.tag != "Player")
+				{ // player UI is always in the player UI area. never go back to chest.
+					Debug.Log(name+" TRIANGLE OFF!");
+					triangle.SetShow(NeedsTriangle.Show.inChest);
 				}
 			}
-		} else if(faceToTriangle_line != null) { faceToTriangle_line.SetActive(false); }
+		}
 	}
 
     private static float secondaryInfluenceAmount = 25f;
@@ -647,7 +649,9 @@ private bool blinked = false;
             return;
         }
         else if ( other.tag == "Villager" || other.tag == "PlayerBubble" ) {
-			showTriangle = showTriangleLength;
+			if(other.tag == "Player") {
+				showTriangleDuration = showTriangleLength;
+			}
 			// If this is someone we haven't exchanged with before, we could meet with them
 			if ( !peopleThisPersonInfluenced.Contains( other.transform.parent ) ) {
                 if (departing || meeting)
