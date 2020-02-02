@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 7812232669214331850}
   - component: {fileID: 144088816715038408}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: 2d elements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -910,7 +910,7 @@ GameObject:
   - component: {fileID: 7285190205917999755}
   - component: {fileID: 6743277141680390961}
   m_Layer: 0
-  m_Name: Image
+  m_Name: chest area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
