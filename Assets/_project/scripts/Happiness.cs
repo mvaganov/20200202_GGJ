@@ -12,6 +12,7 @@ public class Happiness : MonoBehaviour
 	public Image happy;
 	public Image indicator;
 
+
 	void Start() {
         
     }

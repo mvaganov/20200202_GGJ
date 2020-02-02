@@ -5,8 +5,13 @@ using UnityEngine;
 public class CanvasUIElement : MonoBehaviour
 {
 	public RectTransform prefab;
-	private RectTransform ui;
+	/// <summary>
+	/// Made public to allow debugging.
+	/// </summary>
+	public RectTransform ui;
 	public bool activated = false;
+	public bool hideIfDeactivated = true;
+	
 
 	public RectTransform GetUI() {
 		if(ui == null) {
@@ -23,6 +28,10 @@ public class CanvasUIElement : MonoBehaviour
 			Vector2 position = c.uiCamera.WorldToScreenPoint(transform.position);
 			ui = GetUI();
 			ui.position = position;
+		}
+		else
+		{
+			ui.gameObject.SetActive(false);
 		}
     }
 }

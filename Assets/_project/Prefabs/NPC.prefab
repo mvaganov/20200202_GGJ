@@ -64,8 +64,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_spriteAsset: {fileID: 11400000, guid: 9a910ef499c01a54a9377d855f3a04c6, type: 2}
   m_material: {fileID: 0}
@@ -240,8 +238,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: " <sprite=14> 0.7\n <sprite=2> -0.5\n <sprite=11> 0.4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -429,6 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   head: {fileID: 4780873372643401401}
+  startPosition: {x: 0, y: 0, z: 0}
   move:
     speed: 5
     enableClickToMove: 0
@@ -472,8 +469,162 @@ MonoBehaviour:
   matRed: {fileID: 2100000, guid: 40f0002768332b44789149ffe38833cc, type: 2}
   matWhite: {fileID: 2100000, guid: efe2f575ce3cd344297662bac2d46ed0, type: 2}
   happy: 0
+  health: 5
   safety: 0
-  food: 0
+  belonging: 5
+  esteem: 5
+  actualization: 5
+  triangle: {fileID: 0}
+  needs:
+  - name: physiology
+    color: {r: 1, g: 0, b: 0, a: 0.5}
+    value: 0.5
+    lossPerSecond: 0.0001
+    gainPerClick: 0.1
+    ui: {fileID: 0}
+    habitPrimary:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    habitSecondary:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    habitOld:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    clickToIncrease: 0
+  - name: safety
+    color: {r: 1, g: 0.7, b: 0, a: 0.5}
+    value: 0.5
+    lossPerSecond: 0.00008
+    gainPerClick: 0.1
+    ui: {fileID: 0}
+    habitPrimary:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    habitSecondary:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    habitOld:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    clickToIncrease: 0
+  - name: belonging
+    color: {r: 0.5, g: 1, b: 0, a: 0.5}
+    value: 0.5
+    lossPerSecond: 0.00006
+    gainPerClick: 0.1
+    ui: {fileID: 0}
+    habitPrimary:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    habitSecondary:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    habitOld:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    clickToIncrease: 0
+  - name: esteem
+    color: {r: 0, g: 1, b: 1, a: 0.5}
+    value: 0.5
+    lossPerSecond: 0.00004
+    gainPerClick: 0.1
+    ui: {fileID: 0}
+    habitPrimary:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    habitSecondary:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    habitOld:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    clickToIncrease: 0
+  - name: actualization
+    color: {r: 0, g: 0.5, b: 1, a: 0.5}
+    value: 0.5
+    lossPerSecond: 0.00002
+    gainPerClick: 0.1
+    ui: {fileID: 0}
+    habitPrimary:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    habitSecondary:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    habitOld:
+      name: 
+      id: 0
+      sprite: {fileID: 0}
+      needLevel: 0
+      effects: []
+      strength: 0
+    clickToIncrease: 0
+  interactingWith: {fileID: 0}
+  influencer: 0
+  InfluencerHabit:
+    name: 
+    id: 0
+    sprite: {fileID: 0}
+    needLevel: 0
+    effects: []
+    strength: 0
 --- !u!114 &4443980465560715833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,6 +639,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   judge: 0
   judgeColor: {r: 1, g: 1, b: 1, a: 1}
+  txtVote: {fileID: 0}
 --- !u!1 &4780873372488770998
 GameObject:
   m_ObjectHideFlags: 0

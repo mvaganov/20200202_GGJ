@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class MaslowMeter : MonoBehaviour {
     [SerializeField] TMPro.TextMeshProUGUI txtStatus;
     [SerializeField] MeshRenderer innerGlow;
@@ -28,23 +28,37 @@ public class MaslowMeter : MonoBehaviour {
 
 
  public Need[] needs = new Need[] {
-		new Need{color = new Color(1.0f,0.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.010f, gainPerClick = .1f, name = "physiology" },
-		new Need{color = new Color(1.0f,0.7f,0.0f,0.5f), value = .5f, lossPerSecond = 0.008f, gainPerClick = .1f, name = "safety" },
-		new Need{color = new Color(0.5f,1.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.006f, gainPerClick = .1f, name = "belonging" },
-		new Need{color = new Color(0.0f,1.0f,1.0f,0.5f), value = .5f, lossPerSecond = 0.004f, gainPerClick = .1f, name = "esteem" },
-		new Need{color = new Color(0.0f,0.5f,1.0f,0.5f), value = .5f, lossPerSecond = 0.002f, gainPerClick = .1f, name = "actualization" },
+		new Need{color = new Color(1.0f,0.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00010f, gainPerClick = .1f, name = "physiology" },
+		new Need{color = new Color(1.0f,0.7f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00008f, gainPerClick = .1f, name = "safety" },
+		new Need{color = new Color(0.5f,1.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00006f, gainPerClick = .1f, name = "belonging" },
+		new Need{color = new Color(0.0f,1.0f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00004f, gainPerClick = .1f, name = "esteem" },
+		new Need{color = new Color(0.0f,0.5f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00002f, gainPerClick = .1f, name = "actualization" },
  };
 
  public void InitNeeds()
  {
      needs = new Need[] {
-		new Need{color = new Color(1.0f,0.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.010f, gainPerClick = .1f, name = "physiology" },
-		new Need{color = new Color(1.0f,0.7f,0.0f,0.5f), value = .5f, lossPerSecond = 0.008f, gainPerClick = .1f, name = "safety" },
-		new Need{color = new Color(0.5f,1.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.006f, gainPerClick = .1f, name = "belonging" },
-		new Need{color = new Color(0.0f,1.0f,1.0f,0.5f), value = .5f, lossPerSecond = 0.004f, gainPerClick = .1f, name = "esteem" },
-		new Need{color = new Color(0.0f,0.5f,1.0f,0.5f), value = .5f, lossPerSecond = 0.002f, gainPerClick = .1f, name = "actualization" },
+		new Need{color = new Color(1.0f,0.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00010f, gainPerClick = .1f, name = "physiology" },
+		new Need{color = new Color(1.0f,0.7f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00008f, gainPerClick = .1f, name = "safety" },
+		new Need{color = new Color(0.5f,1.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00006f, gainPerClick = .1f, name = "belonging" },
+		new Need{color = new Color(0.0f,1.0f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00004f, gainPerClick = .1f, name = "esteem" },
+		new Need{color = new Color(0.0f,0.5f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00002f, gainPerClick = .1f, name = "actualization" },
  };
  }
+
+/// <summary>
+/// When a Maslow meets another maslow they may start interacting with each other.
+/// </summary>
+ public MaslowMeter interactingWith = null;
+ 
+ /// <summary>
+ /// When a Maslow actualizes their 4 base needs with habits, they pick a top habit as their actualization habit to promote.
+ /// </summary>
+ public bool influencer = false;
+ /// <summary>
+ /// The habit the influencer is promoting.
+ /// </summary>
+ public Habits.Habit InfluencerHabit;
 
     //public float food = 0;
     /// <summary>
@@ -52,12 +66,211 @@ public class MaslowMeter : MonoBehaviour {
     /// </summary>
     bool dirty = true;
 
+/// <summary>
+/// Reference to the player used for non-NPC peoples to calculate distances for hide/showing things
+/// </summary>
     GameObject player;
     float kTransparencyRange = 5;
     bool votingPositive = false;
 
+    public CharacterMove characterMove;
+
+    public float distance = 0f;
+    private float distanceToUIifyFace = 20f;
+    public Transform headScreenUI;
+    public Transform headWorldUI;
+
+    /// <summary>
+    /// Fades out UI stuff on NPCs far away.
+    /// </summary>
+    private void SetTransBasedOnPlayerDist() {
+        float distToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        Color newColor = txtStatus.color;
+        newColor.a = kTransparencyRange/distToPlayer;
+        if ( tag == "Player" )
+        {
+            newColor.a = 1;
+        }
+        txtStatus.color = newColor;
+    }
+
+private int blinkRate = 99;
+private float lastBlink = 0f;
+private float blinkLength = 1f;
+private bool blinked = false;
+    private void UpdateHapiness()
+    {
+        if(headScreenUI != null && headWorldUI != null)
+        {
+            distance = Vector3.Distance(Camera.main.transform.position, transform.position);
+            int happyInt = Mathf.Abs((int)happy);
+            if (happyInt > 9)
+            {
+                happyInt = 9;
+            }
+
+            // if we just blinked
+            if (UnityEngine.Random.RandomRange(1,100)>=blinkRate)
+            {
+                happyInt -= 1;
+                lastBlink = Time.time;
+                blinkLength = UnityEngine.Random.RandomRange(0.5f,1f);
+                blinked = true;
+            }
+            // or we're continuing to blink
+            else if (blinked && Time.time - lastBlink <= blinkLength)
+            {
+                happyInt -=1;
+            }
+            // or we're not blinking or done blinking
+            else
+            {
+                blinked = false;
+            }
+
+            if (happyInt < 0)
+            {
+                happyInt = 0;
+            }
+            
+            if (distance > distanceToUIifyFace  )
+            {
+                //headScreenUI.gameObject.SetActive(true);
+                headScreenUI.GetComponent<CanvasUIElement>().GetUI().gameObject.SetActive(true);
+                headScreenUI.GetComponent<CanvasUIElement>().activated = true;
+
+                headScreenUI.GetComponent<CanvasUIElement>().GetUI().transform.GetChild(1).GetComponent<Image>().sprite = MaslowManager.Instance.happies[happyInt];
+                headWorldUI.gameObject.SetActive(false);
+            }
+            else
+            {
+                headWorldUI.GetComponent<Image>().sprite = MaslowManager.Instance.happies[happyInt];
+                headScreenUI.GetComponent<CanvasUIElement>().activated = false;
+                headScreenUI.GetComponent<CanvasUIElement>().GetUI().gameObject.SetActive(false);
+                headWorldUI.gameObject.SetActive(true);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Based on input numbers [-10, 10] this person's numbers are influenced to change by the influencer
+    /// </summary>
+    /// <param name="influencer"></param>
+    /// <param name="phappy"></param>
+    /// <param name="psafety"></param>
+    /// <param name="pfood"></param>
+    private void Influence( float phappy, float psafety, float pfood ) {
+        
+
+        // Right now influence is always +/- 1 or 0 
+        if ( Math.Abs( phappy ) >= 5 ) {
+            happy += phappy / Math.Abs( phappy );
+            happy = Mathf.Clamp( happy, -10, 10 );
+        }
+
+        if ( Math.Abs( psafety ) >= 5 ) {
+            safety += psafety / Math.Abs( psafety );
+            safety = Mathf.Clamp( safety, -10, 10 );
+        }
+
+        if ( Math.Abs( pfood ) >= 5 ) {
+            health += pfood / Math.Abs( pfood );
+            health = Mathf.Clamp( health, -10, 10 );
+        }
+
+        dirty = true;
+    }
+
+    /// <summary>
+    /// While meeting, don't move or meet someone else till someone departs the meeting
+    /// </summary>
+    public bool meeting = false;
+    /// <summary>
+    /// While departing, don't meet anyone for a short delay
+    /// </summary>
+    public bool departing = false;
+    public float departTime = 0f;
+    public float meetTime = 0f;
+    private float departLength = 1f;
+    private float meetLength = 5f;
+
+    public void Meet(MaslowMeter metMaslow)
+    {
+        // TODO: Look at whoever you met
+        meeting = true;
+        departing = false;
+        characterMove.move.speed = 0f;
+        meetTime = Time.time;
+    }
+
+    public void Met(MaslowMeter meeter)
+    {
+        // TODO: Look at whoever you met
+        meeting = true;
+        departing = false;
+        meetTime = Time.time;
+        meetLength = 5f + UnityEngine.Random.Range(0f,5f);
+    }
+
+    public void Depart(MaslowMeter metMaslow)
+    {
+        meeting = false;
+        departing = true;
+        // TODO: Look away from whoever you're departing
+        characterMove.move.speed = 2f;
+        metMaslow.Departed(this);
+        departTime = Time.time;
+    } 
+    public void Departed(MaslowMeter departed)
+    {
+        meeting = false;
+        departing = true;
+        // TODO: Look away from whoever you're departing
+        characterMove.move.speed = 2f;
+        departTime = Time.time;
+    }
+
+    private void UpdateMeetings()
+    {
+        if (meeting && Time.time - meetTime > meetLength)
+        {
+            Depart(interactingWith);
+        }
+        if (departing && Time.time - departTime > departLength)
+        {
+            departing = false;
+        }
+    }
+    private void InfluenceMaslow( MaslowMeter influencer, Need.NeedLevelEnum needLevelEnum, float phappy, float psafety, float pfood ) {
+        
+        // Assign the persons interacting with each other to facilitate animation during exchange
+        influencer.interactingWith = this;
+        interactingWith = influencer;
+
+        // Right now influence is always +/- 1 or 0 
+        if ( Math.Abs( phappy ) >= 5 ) {
+            happy += phappy / Math.Abs( phappy );
+            happy = Mathf.Clamp( happy, -10, 10 );
+        }
+
+        if ( Math.Abs( psafety ) >= 5 ) {
+            safety += psafety / Math.Abs( psafety );
+            safety = Mathf.Clamp( safety, -10, 10 );
+        }
+
+        if ( Math.Abs( pfood ) >= 5 ) {
+            health += pfood / Math.Abs( pfood );
+            health = Mathf.Clamp( health, -10, 10 );
+        }
+
+        dirty = true;
+    }
+
+#region MonoBehaviour Methods
  private void Awake() {
     {
+        characterMove = GetComponent<CharacterMove>();
+
         InitNeeds();
     }
 }
@@ -77,24 +290,12 @@ public class MaslowMeter : MonoBehaviour {
             safety = UnityEngine.Random.Range( -7.0f, 7.0f );
         }
     }
-
-    private void SetTransBasedOnPlayerDist() {
-        float distToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        Color newColor = txtStatus.color;
-        newColor.a = kTransparencyRange/distToPlayer;
-
-        if ( tag == "Player" )
-            newColor.a = 1;
-
-        txtStatus.color = newColor;
-    }
-
-
     void Update() {
         
         // Update needs simulations
 		System.Array.ForEach(needs, (need) => need.Update(Time.deltaTime));
-
+        UpdateHapiness();
+        UpdateMeetings();
         SetTransBasedOnPlayerDist();
 
         if ( dirty && txtStatus.gameObject.activeInHierarchy ) {
@@ -181,35 +382,42 @@ public class MaslowMeter : MonoBehaviour {
             return;
         }
         else if ( other.tag == "Villager" || other.tag == "PlayerBubble" ) {
+            // If this is someone we haven't exchanged with before, we could meet with them
             if ( !peopleThisPersonInfluenced.Contains( other.transform.parent ) ) {
+                if (departing || meeting)
+                {
+                    // TODO: What happens if you're already meeting or departing, like a "sorry not now" eye roll face?
+                    // TODO: To avoid bulldozing, turn around and go opposite way
+
+                }
+                else
+                {
+                    Meet(other.GetComponent<MaslowMeter>());
+                }
                 peopleThisPersonInfluenced.Add( other.transform.parent );
                 Debug.Log( gameObject.name + "Influenced " + other.gameObject.name );
 
                 MaslowMeter otherMeter = other.gameObject.transform.parent.GetComponent<MaslowMeter>();
                 UnityEngine.Assertions.Assert.IsNotNull( otherMeter );
-                otherMeter.Influence( happy, safety, health );
+                //otherMeter.InfluenceMaslow( this, this.happy, safety, health );
+                // TODO: Influence should happen during the meeting instead
+            }
+            // If not, just depart
+            else
+            {
+                // TODO: Make sure bumping into people you've met recently just results in mutual depart and not bulldozing
+                if (other.gameObject.GetComponent<MaslowMeter>()==null)
+                {
+                    Debug.Log(other.gameObject.name + " has no MaslowMeter");
+
+
+                    
+                }
+                Depart(other.gameObject.transform.parent.GetComponent<MaslowMeter>());
             }
         }
     }
+    #endregion
 
-    // Based on input numbers [-10, 10] this person's numbers are influenced to change
-    private void Influence( float phappy, float psafety, float pfood ) {
-        // Right now influence is always +/- 1 or 0 
-        if ( Math.Abs( phappy ) >= 5 ) {
-            happy += phappy / Math.Abs( phappy );
-            happy = Mathf.Clamp( happy, -10, 10 );
-        }
-
-        if ( Math.Abs( psafety ) >= 5 ) {
-            safety += psafety / Math.Abs( psafety );
-            safety = Mathf.Clamp( safety, -10, 10 );
-        }
-
-        if ( Math.Abs( pfood ) >= 5 ) {
-            health += pfood / Math.Abs( pfood );
-            health = Mathf.Clamp( health, -10, 10 );
-        }
-
-        dirty = true;
-    }
+    
 }
