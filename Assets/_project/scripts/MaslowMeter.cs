@@ -374,10 +374,9 @@ private bool blinked = false;
 		if (interactingWith != null) {
 			Vector3 delta = interactingWith.transform.position - transform.position;
 			Vector3 midpoint = transform.position + delta / 2;
-			if (interactingWith.interactingWith != this)
-			{
+			if (interactingWith.interactingWith != this) {
 				//NS.Lines.MakeArrow(ref meeting_line, transform.position, midpoint, Color.red);
-				meeting_line.SetActive(false);
+				if (meeting_line != null) { meeting_line.SetActive(false); }
 				interactingWith = null;
 				meeting = false;
 			} else {
