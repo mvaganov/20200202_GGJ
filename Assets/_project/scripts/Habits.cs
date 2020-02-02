@@ -460,14 +460,18 @@ public class Habits : MonoBehaviour
 		
     };
 
+public static void InitSprites()
+{
+	foreach (Habit habit in habits)
+		{
+			habit.sprite = MaslowManager.Instance.emojiSprites[habit.id];
+		}
+}
 
     // Start is called before the first frame update
     void Awake()
     {
-		foreach (Habit habit in habits)
-		{
-			habit.sprite = MaslowManager.Instance.emojiSprites[habit.id];
-		}
+		InitSprites();
     }
 
     // Update is called once per frame

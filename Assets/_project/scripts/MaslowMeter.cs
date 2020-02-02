@@ -433,6 +433,7 @@ private bool blinked = false;
         }
         characterMove = GetComponent<CharacterMove>();
 
+        Habits.InitSprites();
         InitNeeds();
 			if(chestCanvas == null) {
 				Debug.LogWarning("Missing chest canvas!");
