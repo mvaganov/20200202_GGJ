@@ -380,11 +380,10 @@ public class MaslowMeter : MonoBehaviour {
         meeting = true;
 		departing = false;
 		interactingWith = metMaslow;
-		if (metMaslow.tag == "Player")
-		{
-			triangle.SetShow(NeedsTriangle.Show.aboveHead);
-			//Debug.LogError(name + " met Player "+triangle.triangleShow+" "+triangle.transform.parent.parent.parent);
-		}
+		//if (metMaslow.tag == "Player")
+		//{
+		//	//Debug.LogError(name + " met Player "+triangle.triangleShow+" "+triangle.transform.parent.parent.parent);
+		//}
 		characterMove.move.speed = 0.05f;
 		metMaslow.Met(this);
 		meetTime = Time.time;
@@ -398,10 +397,14 @@ public class MaslowMeter : MonoBehaviour {
 		departing = false;
         characterMove.move.speed = 0.05f;
 		interactingWith = meeter;
+		//if (meeter.tag == "Player")
+		//{
+		//	triangle.SetShow(NeedsTriangle.Show.aboveHead);
+		//}
 		meetTime = Time.time;
-    }
+	}
 
-    public void Depart(MaslowMeter metMaslow)
+	public void Depart(MaslowMeter metMaslow)
     {
         meeting = false;
         departing = true;
@@ -716,30 +719,42 @@ public class MaslowMeter : MonoBehaviour {
 		return mm;
 	}
 
-    private void OnTriggerEnter( Collider other ) {
+	private static void ActivateTriangleUI(MaslowMeter mm) {
+		mm.triangle.SetShow(NeedsTriangle.Show.aboveHead);
+		mm.showTriangleDuration = showTriangleLength;
+	}
+
+	private void OnTriggerEnter( Collider other ) {
         if ( tag == "Judge" && other.tag == "House" ) {
             // Judges don't influence others, only the city hall
             var npc = GetComponent<NPC>();
             UnityEngine.Assertions.Assert.IsNotNull( npc );
             npc.Vote( votingPositive );
+			Debug.Log("JUDGE!");
             return;
         }
         else if ( other.tag == "Villager" || other.tag == "PlayerBubble" ) {
-			if(other.tag == "Player") {
-				showTriangleDuration = showTriangleLength;
+			MaslowMeter otherMaslow = GetMaslowMeter(other.gameObject);
+			if (other.tag == "Player") {
+				//showTriangleDuration = showTriangleLength;
+				ActivateTriangleUI(this);
+			}
+			if(tag == "Player" && otherMaslow != null) {
+				//otherMaslow.showTriangleDuration = showTriangleLength;
+				ActivateTriangleUI(otherMaslow);
 			}
 			// If this is someone we haven't exchanged with before, we could meet with them
 			if ( !peopleThisPersonInfluenced.Contains( other.transform.parent ) ) {
-                if (departing || meeting)
+				if (departing || meeting)
                 {
                     // TODO: What happens if you're already meeting or departing, like a "sorry not now" eye roll face?
                     // TODO: To avoid bulldozing, turn around and go opposite way
-                    Depart(GetMaslowMeter(other.gameObject));
+                    Depart(otherMaslow);
 
                 }
                 else
                 {
-                    Meet(GetMaslowMeter(other.gameObject));
+					Meet(otherMaslow);
                 }
                 peopleThisPersonInfluenced.Add( other.transform.parent );
                 //Debug.Log( gameObject.name + "Influenced " + other.gameObject.name );
