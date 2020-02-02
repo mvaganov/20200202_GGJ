@@ -31,7 +31,7 @@ public class MaslowMeter : MonoBehaviour {
 
  public Need[] needs = new Need[] {
 		new Need{color = new Color(1.0f,0.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00010f, gainPerClick = .1f, name = "physiology" },
-		new Need{color = new Color(1.0f,0.7f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00008f, gainPerClick = .1f, name = "safety" },
+		new Need{color = new Color(1.0f,0.7f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00008f, gainPerClick = .1f, name = "safety"},
 		new Need{color = new Color(0.5f,1.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00006f, gainPerClick = .1f, name = "belonging" },
 		new Need{color = new Color(0.0f,1.0f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00004f, gainPerClick = .1f, name = "esteem" },
 		new Need{color = new Color(0.0f,0.5f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00002f, gainPerClick = .1f, name = "actualization" },
@@ -40,11 +40,11 @@ public class MaslowMeter : MonoBehaviour {
  public void InitNeeds()
  {
      needs = new Need[] {
-		new Need{color = new Color(1.0f,0.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00010f, gainPerClick = .1f, name = "physiology" },
-		new Need{color = new Color(1.0f,0.7f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00008f, gainPerClick = .1f, name = "safety" },
-		new Need{color = new Color(0.5f,1.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00006f, gainPerClick = .1f, name = "belonging" },
-		new Need{color = new Color(0.0f,1.0f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00004f, gainPerClick = .1f, name = "esteem" },
-		new Need{color = new Color(0.0f,0.5f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00002f, gainPerClick = .1f, name = "actualization" },
+		new Need{color = new Color(1.0f,0.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00010f, gainPerClick = .1f, name = "physiology", maslow=this  },
+		new Need{color = new Color(1.0f,0.7f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00008f, gainPerClick = .1f, name = "safety", maslow=this  },
+		new Need{color = new Color(0.5f,1.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00006f, gainPerClick = .1f, name = "belonging", maslow=this  },
+		new Need{color = new Color(0.0f,1.0f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00004f, gainPerClick = .1f, name = "esteem", maslow=this  },
+		new Need{color = new Color(0.0f,0.5f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00002f, gainPerClick = .1f, name = "actualization", maslow=this  },
  };
     if (!isPlayer)
     {
@@ -172,7 +172,7 @@ private bool blinked = false;
 
     #region Generation
 
-    private float maxHabitValue = 10f;
+    public static float maxHabitValue = 100f;
     public void GenerateHabits()
     {
         if (UnityEngine.Random.Range(0,100) < 90)
@@ -335,9 +335,10 @@ private bool blinked = false;
 			triangle.SetShow(NeedsTriangle.Show.aboveHead);
 			//Debug.LogError(name + " met Player "+triangle.triangleShow+" "+triangle.transform.parent.parent.parent);
 		}
-		characterMove.move.speed = 0f;
-		//metMaslow.Met(this);
+		characterMove.move.speed = 0.05f;
+		metMaslow.Met(this);
 		meetTime = Time.time;
+        meetLength = 5f + UnityEngine.Random.Range(0f,5f);
     }
 
     public void Met(MaslowMeter meeter)
@@ -345,9 +346,9 @@ private bool blinked = false;
         // TODO: Look at whoever you met
         meeting = true;
 		departing = false;
+        characterMove.move.speed = 0.05f;
 		interactingWith = meeter;
 		meetTime = Time.time;
-        meetLength = 5f + UnityEngine.Random.Range(0f,5f);
     }
 
     public void Depart(MaslowMeter metMaslow)
@@ -405,11 +406,72 @@ private bool blinked = false;
 			}
 		}
 	}
-    private void InfluenceMaslow( MaslowMeter influencer, Habits.Layer influenceLayer, float phappy, float psafety, float pfood ) {
+
+    private static float secondaryInfluenceAmount = 25f;
+    private static float minHabitValue = 0f;
+
+    public void InfluenceMaslow( MaslowMeter influencer, Habits.Layer influenceLayer, float phappy, float psafety, float pfood ) {
         
         // Assign the persons interacting with each other to facilitate animation during exchange
         influencer.interactingWith = this;
         interactingWith = influencer;
+
+        Need receivedNeed = needs[(int)influenceLayer];
+        // If we have no primary, get us started at max
+        if (receivedNeed.habitPrimary == null)
+        {
+            // TODO: Make a way to share someone's secondary needs with yourself, otehrwise just always ask for their primary.
+            receivedNeed.habitPrimary = influencer.needs[(int)influenceLayer].habitPrimary;
+            receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+        }
+        // otherwise check if its the primary we already have being boosted to max again
+        else if (receivedNeed.habitPrimary.name != influencer.needs[(int)influenceLayer].habitPrimary.name)
+        {
+            receivedNeed.habitSecondary = influencer.needs[(int)influenceLayer].habitPrimary;
+            receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+        }
+        // or its our first secondary
+        else if (receivedNeed.habitSecondary.name == null)
+        {
+            receivedNeed.habitSecondary = influencer.needs[(int)influenceLayer].habitPrimary;
+            receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
+            receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
+            
+        }
+        // or a secondary we do have
+        else if (receivedNeed.habitSecondary.name == influencer.needs[(int)influenceLayer].habitPrimary.name)
+        {
+            receivedNeed.habitSecondary = influencer.needs[(int)influenceLayer].habitPrimary;
+            receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+        }
+        // or a secondary different from ours replaces our secondary
+        else if (receivedNeed.habitSecondary.name != influencer.needs[(int)influenceLayer].habitPrimary.name)
+        {
+            receivedNeed.habitSecondary = influencer.needs[(int)influenceLayer].habitPrimary;
+            receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
+            receivedNeed.habitSecondaryValue += secondaryInfluenceAmount;
+        }
+        // or nothing is there to gain
+        else
+        {
+            UnityEngine.Debug.Log("Nothing to gain.");
+        }
+        receivedNeed.Use(receivedNeed.ui,receivedNeed);
+
+        // If our secondary beat our primary, bin the old and in with the new
+        if(secondaryInfluenceAmount >= maxHabitValue)
+        {
+            receivedNeed.habitOld = receivedNeed.habitPrimary;
+            receivedNeed.habitPrimary = receivedNeed.habitSecondary;
+            receivedNeed.habitPrimaryValue = maxHabitValue;
+            receivedNeed.habitSecondaryValue = minHabitValue;
+        }
+        
+        // else 
+        else
+        {
+
+        }
 
         // Right now influence is always +/- 1 or 0 
         if ( Math.Abs( phappy ) >= 5 ) {
@@ -576,6 +638,7 @@ private bool blinked = false;
                 {
                     // TODO: What happens if you're already meeting or departing, like a "sorry not now" eye roll face?
                     // TODO: To avoid bulldozing, turn around and go opposite way
+                    Depart(GetMaslowMeter(other.gameObject));
 
                 }
                 else
@@ -593,7 +656,8 @@ private bool blinked = false;
             // If not, just depart
             else
             {
-                Depart(GetMaslowMeter(other.gameObject));
+                
+                //Depart(GetMaslowMeter(other.gameObject));
             }
         }
     }

@@ -12,6 +12,11 @@ using UnityEngine;
         /// How met is the need? Not the same as the strength of the habits feeding it.
         /// </summary>
 		public float value;
+        /// <summary>
+        /// A link to the parent maslow
+        /// </summary>
+        public MaslowMeter maslow;
+
 		public float lossPerSecond;
 		public float gainPerClick;
         /// <summary>
@@ -44,18 +49,29 @@ using UnityEngine;
 		/// </summary>
 		public Need dependency;
 
+        private static float habitValueMax = 100f;
+
 		/// <summary>
 		/// Debug mode click to increase needs for testing.
 		/// </summary>
 		public bool clickToIncrease = false;
 
 		public void Update(float deltaTime) {
-			value -= lossPerSecond * deltaTime;
+            if (habitPrimary == null)
+            {
+                value = 0f;
+            }
+            else
+            {
+                value = habitPrimaryValue / MaslowMeter.maxHabitValue;
+            }
+			//value -= lossPerSecond * deltaTime;
 			if (value < 0) { value = 0; }
-			float max = dependency != null ? dependency.value : 1;
+			//float max = dependency != null ? dependency.value : 1;
             if (ui != null)
             {
-                if (value > max) { value = max; }
+                //if (value > max) { value = max; }
+                
                 ui.progressbar.fillAmount = Mathf.Clamp(value, 0, 1);
             }
 		}
@@ -64,6 +80,14 @@ using UnityEngine;
 			{
 				value += gainPerClick;
 			}
+            if (!maslow.isPlayer)
+            {
+                GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
+                Debug.Log(playerGO);
+                MaslowMeter playerMaslow = playerGO.GetComponentInChildren<MaslowMeter>();
+                Debug.Log(playerMaslow);
+                playerMaslow.InfluenceMaslow(maslow,layer,maslow.happy,maslow.safety,maslow.safety);
+            }
 		}
 
         Sprite needSprite;
@@ -125,6 +149,14 @@ using UnityEngine;
                 uiText = uiText + "    ";
             }
 			ui.text.text = uiText; // no longer name
-			ui.progressbar.color = color;
+            if(habitPrimary == null)
+            {
+                ui.progressbar.color = new Color(0f,0f,0f,0.1f);
+                habitPrimaryValue = 0f;
+            }
+            else
+            {
+			    ui.progressbar.color = color;
+            }
 		}
 	}
