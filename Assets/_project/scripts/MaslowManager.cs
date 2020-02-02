@@ -5,13 +5,16 @@ using UnityEngine.UI;
 
 public class MaslowManager : MonoBehaviour
 {
-	public static MaslowManager _instance;
-	public static MaslowManager Instance {
-		get {
-			if(_instance == null) { _instance = FindObjectOfType<MaslowManager>(); }
-			return _instance;
-		}
-	}
+    public static MaslowManager Instance {
+        get{
+            if(m_Instance == null)
+            {
+                m_Instance = FindObjectOfType<MaslowManager>();
+            }
+            return m_Instance;
+        }
+    }
+    private static MaslowManager m_Instance;
     public Sprite[] happies = new Sprite[10];
     public Sprite[] sickies = new Sprite[3];
 
@@ -29,6 +32,15 @@ public class MaslowManager : MonoBehaviour
     public Sprite apathy;
     public Sprite burning;
     public Sprite cooling;
+
+    public Sprite[] emojiSprites;
+
+    // Start is called before the first frame update
+    void Awake()
+    {
+        m_Instance = this;
+        
+    }
 
     // Update is called once per frame
     void Update()
