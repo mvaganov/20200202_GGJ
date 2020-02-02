@@ -58,7 +58,7 @@ public class NPCWithBoxes : MonoBehaviour {
             visual.material = newMat;
             visual.material.color = judgeColor;
 
-			NS.Lines.MakeArrow(ref line, transform.position, destination, Color.black, 1, 1);
+			//NS.Lines.MakeArrow(ref line, transform.position, destination, Color.black, 1, 1);
         }
     }
 

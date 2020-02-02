@@ -94,13 +94,13 @@ using UnityEngine;
             {
                 if(maslow.interactingWith != null)
                 {
-                    Debug.Log("Interacting with " + maslow.interactingWith.happy);
+                    //Debug.Log("Interacting with " + maslow.interactingWith.happy);
                     // If we clicked ourselves, we try to influence the other person we are meeting with.
                     maslow.interactingWith.InfluenceMaslow(playerMaslow,layer,playerMaslow.happy,playerMaslow.safety,playerMaslow.safety);
                 }
                 else
                 {
-                    Debug.Log("Not interacting with anyone to send to.");
+                    //Debug.Log("Not interacting with anyone to send to.");
                 }
             }
 		}
