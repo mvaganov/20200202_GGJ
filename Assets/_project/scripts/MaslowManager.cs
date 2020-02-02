@@ -5,7 +5,13 @@ using UnityEngine.UI;
 
 public class MaslowManager : MonoBehaviour
 {
-    public static MaslowManager Instance;
+	public static MaslowManager _instance;
+	public static MaslowManager Instance {
+		get {
+			if(_instance == null) { _instance = FindObjectOfType<MaslowManager>(); }
+			return _instance;
+		}
+	}
     public Sprite[] happies = new Sprite[10];
     public Sprite[] sickies = new Sprite[3];
 
@@ -23,12 +29,6 @@ public class MaslowManager : MonoBehaviour
     public Sprite apathy;
     public Sprite burning;
     public Sprite cooling;
-
-    // Start is called before the first frame update
-    void Awake()
-    {
-        Instance = this;
-    }
 
     // Update is called once per frame
     void Update()

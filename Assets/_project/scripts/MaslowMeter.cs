@@ -25,7 +25,7 @@ public class MaslowMeter : MonoBehaviour {
 /// The view UI the maslowmeter is connected to when a UI is visible.
 /// </summary>
     public NeedsTriangle triangle;
-
+	public RectTransform chestCanvas;
 
  public Need[] needs = new Need[] {
 		new Need{color = new Color(1.0f,0.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00010f, gainPerClick = .1f, name = "physiology" },
@@ -139,8 +139,12 @@ private bool blinked = false;
                 headScreenUI.GetComponent<CanvasUIElement>().GetUI().gameObject.SetActive(true);
                 headScreenUI.GetComponent<CanvasUIElement>().activated = true;
 
-                headScreenUI.GetComponent<CanvasUIElement>().GetUI().transform.GetChild(1).GetComponent<Image>().sprite = MaslowManager.Instance.happies[happyInt];
-                headWorldUI.gameObject.SetActive(false);
+				RectTransform rt = headScreenUI.GetComponent<CanvasUIElement>().GetUI();
+				Transform t = rt.transform.GetChild(1);
+				t.GetComponent<Image>().sprite = MaslowManager.Instance.happies[happyInt];
+
+				//headScreenUI.GetComponent<CanvasUIElement>().GetUI().transform.GetChild(1).GetComponent<Image>().sprite = MaslowManager.Instance.happies[happyInt];
+				headWorldUI.gameObject.SetActive(false);
             }
             else
             {
@@ -167,7 +171,7 @@ private bool blinked = false;
         Habits.Habit newHabit= new Habits.Habit();
         foreach ( Habits.Habit eachHabit in Habits.habits)
         {
-            if (eachHabit.layer == Need.layer)
+            //if (eachHabit.layer == Need.layer)
 
         }
         return newHabit;
@@ -233,7 +237,11 @@ private bool blinked = false;
         meeting = true;
 		departing = false;
 		interactingWith = meeter;
-        meetTime = Time.time;
+		if (meeter.tag == "Player")
+		{
+			triangle.SetShow(NeedsTriangle.Show.aboveHead);
+		}
+		meetTime = Time.time;
         meetLength = 5f + UnityEngine.Random.Range(0f,5f);
     }
 
@@ -241,8 +249,9 @@ private bool blinked = false;
     {
         meeting = false;
         departing = true;
-        // TODO: Look away from whoever you're departing
-        characterMove.move.speed = 2f;
+		triangle.SetShow(NeedsTriangle.Show.inChest);
+		// TODO: Look away from whoever you're departing
+		characterMove.move.speed = 2f;
         metMaslow.Departed(this);
         departTime = Time.time;
     } 
@@ -257,12 +266,19 @@ private bool blinked = false;
 
     private void UpdateMeetings()
     {
-		if (meeting) {
+		if (interactingWith != null) {
 			Vector3 delta = interactingWith.transform.position - transform.position;
 			Vector3 midpoint = transform.position + delta / 2;
-			NS.Lines.MakeArrow(ref meeting_line, transform.position, midpoint, Color.black);
+			if (interactingWith.interactingWith != this)
+			{
+				NS.Lines.MakeArrow(ref meeting_line, transform.position, midpoint, Color.red);
+				interactingWith = null;
+				meeting = false;
+			} else {
+				NS.Lines.MakeArrow(ref meeting_line, transform.position, midpoint, Color.black);
+			}
 		}
-        if (meeting && Time.time - meetTime > meetLength)
+		if (meeting && Time.time - meetTime > meetLength)
         {
             Depart(interactingWith);
         }
@@ -302,6 +318,9 @@ private bool blinked = false;
         characterMove = GetComponent<CharacterMove>();
 
         InitNeeds();
+			if(chestCanvas == null) {
+				Debug.LogWarning("Missing chest canvas!");
+			}
     }
 }
     void Start() {

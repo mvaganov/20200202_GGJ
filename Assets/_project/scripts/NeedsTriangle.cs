@@ -12,10 +12,48 @@ public class NeedsTriangle : MonoBehaviour
 	public MaslowMeter maslow;
 	public NeedUI[] triangleLayers;
 
-/// <summary>
-/// A need level enum is used to classify habits by their primary met need level.
-/// </summary>
-	
+	public enum Show { inChest, playerUI, aboveHead }
+	public Show triangleShow = Show.inChest;
+	private Rigidbody2D rb;
+
+	public void SetShow(Show triangleShow) {
+		this.triangleShow = triangleShow;
+		UpdateTriangleUIParent();
+	}
+
+	public void UpdateTriangleUIParent() {
+		Transform maslowTransform = transform.parent;
+		Transform placeTobe = null;
+		if (rb != null) { rb.simulated = false; }
+		switch (triangleShow) {
+			case Show.inChest:
+				if(maslow.chestCanvas == null) { Debug.Log("need to set chest canvas for "+maslow.gameObject+" ("+maslow.transform.root+")"); }
+				placeTobe = maslow.chestCanvas.transform;
+				break;
+			case Show.playerUI:		placeTobe = CanvasForCanvasUIElement.Instance().transform.Find("maslowanchor"); break;
+			case Show.aboveHead:
+				RectTransform ui = maslow.headScreenUI.GetComponent<CanvasUIElement>().ui;
+				if(ui == null) {
+					NS.Chrono.setTimeout(UpdateTriangleUIParent, 100);
+					//Debug.Log("waiting for UI to happen...");
+					return;
+				}
+				if (rb != null) { rb.simulated = true; }
+				placeTobe = ui.Find("maslowanchor");
+				break;
+		}
+		if (maslowTransform.parent != placeTobe) {
+			if(placeTobe == null) { Debug.Log("no place to be when state is " + triangleShow); }
+			maslowTransform.SetParent(placeTobe);
+			maslowTransform.localScale = Vector3.one;
+			maslowTransform.localPosition = Vector3.zero;
+		}
+	}
+
+	/// <summary>
+	/// A need level enum is used to classify habits by their primary met need level.
+	/// </summary>
+
 
 
 
@@ -76,11 +114,18 @@ public class NeedsTriangle : MonoBehaviour
     {
 		ConnectButtonsToNeeds();
 		SetTextVisible(false);
+		rb = GetComponent<Rigidbody2D>();
+		UpdateTriangleUIParent();
 	}
 
-	void Update()
+	void FixedUpdate()
     {
 		//TODO: Move this update into maslow
 		//System.Array.ForEach(maslow.needs, (need) => need.Update(Time.deltaTime));
-    }
+
+		if(triangleShow == Show.aboveHead) {
+			RectTransform rt = GetComponent<RectTransform>();
+			rb.velocity = -rt.anchoredPosition;
+		}
+	}
 }
