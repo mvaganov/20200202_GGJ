@@ -40,11 +40,11 @@ public class MaslowMeter : MonoBehaviour {
  public void InitNeeds()
  {
      needs = new Need[] {
-		new Need{color = new Color(1.0f,0.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00010f, gainPerClick = .1f, name = "physiology", maslow=this  },
-		new Need{color = new Color(1.0f,0.7f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00008f, gainPerClick = .1f, name = "safety", maslow=this  },
-		new Need{color = new Color(0.5f,1.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00006f, gainPerClick = .1f, name = "belonging", maslow=this  },
-		new Need{color = new Color(0.0f,1.0f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00004f, gainPerClick = .1f, name = "esteem", maslow=this  },
-		new Need{color = new Color(0.0f,0.5f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00002f, gainPerClick = .1f, name = "actualization", maslow=this  },
+		new Need{color = new Color(1.0f,0.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00010f, gainPerClick = .1f, name = "physiology", maslow=this, layer = Habits.Layer.physiology  },
+		new Need{color = new Color(1.0f,0.7f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00008f, gainPerClick = .1f, name = "safety", maslow=this, layer = Habits.Layer.safety },
+		new Need{color = new Color(0.5f,1.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.00006f, gainPerClick = .1f, name = "belonging", maslow=this, layer = Habits.Layer.belonging  },
+		new Need{color = new Color(0.0f,1.0f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00004f, gainPerClick = .1f, name = "esteem", maslow=this, layer = Habits.Layer.esteem  },
+		new Need{color = new Color(0.0f,0.5f,1.0f,0.5f), value = .5f, lossPerSecond = 0.00002f, gainPerClick = .1f, name = "actualization", maslow=this, layer = Habits.Layer.actualization  },
  };
     if (!isPlayer)
     {
@@ -446,7 +446,7 @@ private bool blinked = false;
                 receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
             }
             // or its our first secondary
-            else if (receivedNeed.habitSecondary.name == null)
+            else if (receivedNeed.habitSecondary == null)
             {
                 receivedNeed.habitSecondary = influencerNeed.habitPrimary;
                 receivedNeed.habitPrimaryValue -= secondaryInfluenceAmount;
