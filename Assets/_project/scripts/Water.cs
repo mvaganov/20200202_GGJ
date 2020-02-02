@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,9 +7,14 @@ public class Water : MonoBehaviour {
     float goalY;
     float waterSpeed = 2;
     float epsilon = 0.1f;
+    float startY =  36.8f;
 
     void Start() {
         goalY = transform.position.y;
+    }
+
+    public bool waterTooHigh() {
+        return goalY > 64;
     }
 
     public void ChangeGoalHeight( float deltaHeight ) {
@@ -28,13 +34,18 @@ public class Water : MonoBehaviour {
         }
     }
     private void OnTriggerEnter( Collider other ) {
-        if ( other.tag == "Player" ) {
-            // TODO end game
-        }
-        else if ( other.tag == "Judge" ) {
+        if ( other.tag == "Player" || other.tag == "Judge" || other.tag == "House" ) {
+            // Immunity
         }
         else {
             other.gameObject.SetActive( false );
         }
+    }
+
+    internal void Reset() {
+        Vector3 newPos = transform.position;
+        newPos.y = startY;
+        transform.position = newPos;
+        goalY = startY;
     }
 }

@@ -21,24 +21,15 @@ public class MaslowMeter : MonoBehaviour {
     GameObject player;
     float kTransparencyRange = 5;
     bool votingPositive = false;
+    float historicalInfluence = 0;
+    AudioSource thunk;
+
 
     void Start() {
+        thunk = GetComponent<AudioSource>();
         player = GameObject.Find( "player" );
         UnityEngine.Assertions.Assert.IsNotNull( txtStatus );
-        if ( tag == "Player" ) {
-            // No change since last generation
-        }
-        else if ( tag == "Judge" ) {
-            // Judges start negative
-            happy = -10;
-            safety = -10;
-            food = -10;
-        }
-        else {
-            happy = UnityEngine.Random.Range( -7.0f, 7.0f );
-            safety = UnityEngine.Random.Range( -7.0f, 7.0f );
-            food = UnityEngine.Random.Range( -7.0f, 7.0f );
-        }
+        ReEvalInfluences( 0 );
     }
 
     private void SetTransBasedOnPlayerDist() {
@@ -123,36 +114,94 @@ public class MaslowMeter : MonoBehaviour {
             foodNumber = foodNumber.Substring( 0, 3 ).Replace( ".", " " );
 
             txtStatus.text = "";
-            txtStatus.text +=    "<sprite=14> " + "<color=\""+happyColor+"\">" + happyNumber;
-            txtStatus.text +=  "\n<sprite=2> "  + "<color=\""+safetyColor+"\">" + safetyNumber;
-            txtStatus.text +=  "\n<sprite=11> " + "<color=\""+foodColor+"\">" + foodNumber;
+            txtStatus.text +=    "<sprite=593> " + "<color=\""+happyColor+"\">" + happyNumber;
+            txtStatus.text +=  "\n<sprite=11> "  + "<color=\""+safetyColor+"\">" + safetyNumber;
+            txtStatus.text +=  "\n<sprite=623> " + "<color=\""+foodColor+"\">" + foodNumber;
 
             dirty = false;
         }
     }
 
+    internal void ReEvalInfluences( int roundNumber ) {
+        peopleThisPersonInfluenced = new HashSet<Transform>();
+        if ( roundNumber == 0 ) {
+            historicalInfluence = 0;
+
+            if ( tag == "Player" ) {
+                // Start nuetral
+                happy = 0;
+                safety = 0;
+                food = 0;
+            }
+            else if ( tag == "Judge" ) {
+                // Judges start negative
+                happy = -5;
+                safety = -5;
+                food = -5;
+            }
+            else {
+                happy = UnityEngine.Random.Range( -7.0f, 6.0f );
+                safety = UnityEngine.Random.Range( -7.0f, 7.0f );
+                food = UnityEngine.Random.Range( -7.0f, 8.0f );
+            }
+        }
+        else {
+            historicalInfluence += votingPositive ? 1 : -1;
+            if ( tag == "Player" ) {
+                // No change since last generation
+            }
+            else if ( tag == "Judge" ) {
+                // No change since last generation
+            }
+            else {
+                float low = -7 + historicalInfluence;
+                float high = 7 + historicalInfluence;
+                // New sentiment is halfway between last and random
+                happy = ( happy + UnityEngine.Random.Range( low, high ) );
+                safety = ( safety + UnityEngine.Random.Range( low, high ) );
+                food = ( food + UnityEngine.Random.Range( low, high ) );
+            }
+        }
+        happy = Mathf.Clamp( happy, -10, 10 );
+        safety = Mathf.Clamp( safety, -10, 10 );
+        food = Mathf.Clamp( food, -10, 10 );
+        dirty = true;
+
+    }
+
     private void OnTriggerEnter( Collider other ) {
-        if ( tag == "Judge" && other.tag == "House" ) {
-            // Judges don't influence others, only the city hall
-            var npc = GetComponent<NPC>();
-            UnityEngine.Assertions.Assert.IsNotNull( npc );
-            npc.Vote( votingPositive );
-            return;
+        if ( tag == "Judge" ) {
+            if ( other.tag == "House" ) {
+                // Judges don't influence others, only the city hall
+                var npc = GetComponent<NPC>();
+                UnityEngine.Assertions.Assert.IsNotNull( npc );
+                npc.Vote( votingPositive );
+                return;
+            }
         }
         else if ( other.tag == "Villager" || other.tag == "PlayerBubble" ) {
             if ( !peopleThisPersonInfluenced.Contains( other.transform.parent ) ) {
                 peopleThisPersonInfluenced.Add( other.transform.parent );
-                Debug.Log( gameObject.name + "Influenced " + other.gameObject.name );
+                Debug.Log( gameObject.name + " influenced " + other.transform.parent.gameObject.name );
 
                 MaslowMeter otherMeter = other.gameObject.transform.parent.GetComponent<MaslowMeter>();
                 UnityEngine.Assertions.Assert.IsNotNull( otherMeter );
                 otherMeter.Influence( happy, safety, food );
+
+                if ( tag == "Player" ) {
+                    thunk.Play();
+                }
             }
         }
     }
 
     // Based on input numbers [-10, 10] this person's numbers are influenced to change
     private void Influence( float phappy, float psafety, float pfood ) {
+
+        if ( tag == "Player" ) {
+            thunk.Play();
+        }
+
         // Right now influence is always +/- 1 or 0 
         if ( Math.Abs( phappy ) >= 5 ) {
             happy += phappy / Math.Abs( phappy );

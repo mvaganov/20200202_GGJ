@@ -12,12 +12,13 @@ public class GameManager : MonoBehaviour {
     [SerializeField] Transform NPCs;
     [SerializeField] Transform Judges;
     [SerializeField] Transform player;
+    [SerializeField] Water water;
     int roundnumber = 0;
     int kMaxRounds = 4;
     float kNumSecondsPerRound = 60;
     float numSecondsRemaining = 999;
 
-    string startedText = "To repair the planet, you must get politians to vote positively on climate change. However, they must be first interally repaired before they can be inspired to vote positively...\n\nFufill their needs (increase the numbers above head) to make them vote positive. If a positive or negative person bumps another, the other person will be slightly affected.  Talk to people by bumping into them. Get inspired (three positive numbers), then inspire the politians. \n\nIf you cannot enact change within X generations, then  society will be lost forever underwater.";
+    string startedText = "To repair the planet, you must get politicians to vote positively on climate change. However, they must be first interally repaired before they can be inspired to vote positively...\n\nFufill their needs (increase the numbers above head) to make them vote positive. If a positive or negative person bumps another, the other person will be slightly affected.  Talk to people by bumping into them. Get inspired (three positive numbers), then inspire the politians. \n\nIf you cannot enact change within X generations, then  society will be lost forever underwater.";
 
     public void ForceGenerationToEnd() {
         bool won = VotesPositive();
@@ -25,14 +26,26 @@ public class GameManager : MonoBehaviour {
         intermissionText.transform.parent.gameObject.SetActive( true );
         intermissionText.text = "<size=50%>Generation completed!" + "\n\n"
             + ( won ? "Politicians has voted to save society, you win!" : "Politicians have NOT voted to help." )
-            + ( ( roundnumber == kMaxRounds ) ? "The End" : "\n\n" + ( kMaxRounds - roundnumber ) + " generations remain..." );
-
+            + ( ( roundnumber == kMaxRounds ) ? "\n\nThe End" : "\n\n" + ( kMaxRounds - roundnumber ) + " generations remain..." );
+        if ( water.waterTooHigh() ) {
+            intermissionText.text += "Water became too high and everyone drowned =(";
+        }
+        if ( won ) {
+            water.Reset();
+            roundnumber = 0;
+        }
     }
 
     void OnContiuePressed() {
+        if ( roundnumber == 0 && intermissionText.text != startedText ) {
+            intermissionText.text = startedText;
+            return;
+        }
+
         intermissionText.transform.parent.gameObject.SetActive( false );
         roundnumber = ( roundnumber == kMaxRounds ) ? 0 : roundnumber + 1;
         StartRound();
+        water.ChangeGoalHeight( 4 );
     }
 
     bool VotesPositive() {
@@ -48,6 +61,7 @@ public class GameManager : MonoBehaviour {
         roundnumber = 0;
         UnityEngine.Assertions.Assert.IsNotNull( btnContinue );
         btnContinue.onClick.AddListener( OnContiuePressed );
+        intermissionText.text = startedText;
     }
 
     void StartRound() {
@@ -61,10 +75,12 @@ public class GameManager : MonoBehaviour {
         }
 
         player.transform.position = player.GetComponent<CharacterMove>().startPosition;
+        player.transform.GetComponent<MaslowMeter>().ReEvalInfluences( roundnumber );
+
         for ( int i = 0; i<NPCs.childCount; i++ ) {
             NPCs.GetChild( i ).gameObject.SetActive( true );
             NPCs.GetChild( i ).transform.position = NPCs.GetChild( i ).GetComponent<CharacterMove>().startPosition;
-            NPCs.GetChild( i ).GetComponent<NPC>().ReEvalInfluences();
+            NPCs.GetChild( i ).GetComponent<MaslowMeter>().ReEvalInfluences( roundnumber );
         }
         for ( int i = 0; i<Judges.childCount; i++ ) {
             Judges.GetChild( i ).gameObject.SetActive( true );

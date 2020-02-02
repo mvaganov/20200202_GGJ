@@ -20,20 +20,27 @@ public class NPC : MonoBehaviour {
         InvokeRepeating( "WalkTowardsSpotInRegion", 0, timeBetweenPaths );
     }
 
+    private void BeginJudgePathfinding() {
+        UnityEngine.Assertions.Assert.IsNotNull( txtVote );
+        Vector3 destination = GameObject.Find( "HouseRegion" ).transform.position;
+        moveController = GetComponent<CharacterMove>();
+        moveController.move.SetAutoMovePosition( destination );
+    }
+
     private void Start() {
         if ( judge ) {
-            UnityEngine.Assertions.Assert.IsNotNull( txtVote );
-            Vector3 destination = GameObject.Find( "HouseRegion" ).transform.position;
-            moveController = GetComponent<CharacterMove>();
-            moveController.move.speed /= 2;
-            moveController.move.SetAutoMovePosition( destination );
-
             var visual = transform.GetChild( 0 ).GetChild( 0 ).GetComponent<MeshRenderer>();
             UnityEngine.Assertions.Assert.IsNotNull( visual );
 
             var newMat = new Material( transform.GetChild( 0 ).GetChild( 0 ).GetComponent<MeshRenderer>().material);
             visual.material = newMat;
             visual.material.color = judgeColor;
+
+            moveController = GetComponent<CharacterMove>();
+            moveController.move.speed /= 2;
+
+            float timeBetweenPaths = UnityEngine.Random.Range(5, 10);
+            InvokeRepeating( "BeginJudgePathfinding", 0, timeBetweenPaths );
         }
     }
 
@@ -45,9 +52,5 @@ public class NPC : MonoBehaviour {
     internal void Vote( bool positive ) {
         UnityEngine.Assertions.Assert.IsTrue( judge );
         txtVote.text = positive ? "+" : "-";
-    }
-
-    internal void ReEvalInfluences() {
-
     }
 }
