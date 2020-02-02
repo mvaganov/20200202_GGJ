@@ -10,17 +10,56 @@ public class MaslowMeter : MonoBehaviour {
     [SerializeField] Material matRed;
     [SerializeField] Material matWhite;
 
+    
     HashSet<Transform> peopleThisPersonInfluenced = new HashSet<Transform>();
 
     // Stats of [-10, 10]
-    public float happy = 0;
-    public float safety = 0;
-    public float food = 0;
+    public float happy = 5;
+    public float health = 5;
+    public float safety = 5;
+    public float belonging = 5;
+    public float esteem = 5;
+    public float actualization = 5;
+
+/// <summary>
+/// The view UI the maslowmeter is connected to when a UI is visible.
+/// </summary>
+    public NeedsTriangle triangle;
+
+
+ public Need[] needs = new Need[] {
+		new Need{color = new Color(1.0f,0.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.010f, gainPerClick = .1f, name = "physiology" },
+		new Need{color = new Color(1.0f,0.7f,0.0f,0.5f), value = .5f, lossPerSecond = 0.008f, gainPerClick = .1f, name = "safety" },
+		new Need{color = new Color(0.5f,1.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.006f, gainPerClick = .1f, name = "belonging" },
+		new Need{color = new Color(0.0f,1.0f,1.0f,0.5f), value = .5f, lossPerSecond = 0.004f, gainPerClick = .1f, name = "esteem" },
+		new Need{color = new Color(0.0f,0.5f,1.0f,0.5f), value = .5f, lossPerSecond = 0.002f, gainPerClick = .1f, name = "actualization" },
+ };
+
+ public void InitNeeds()
+ {
+     needs = new Need[] {
+		new Need{color = new Color(1.0f,0.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.010f, gainPerClick = .1f, name = "physiology" },
+		new Need{color = new Color(1.0f,0.7f,0.0f,0.5f), value = .5f, lossPerSecond = 0.008f, gainPerClick = .1f, name = "safety" },
+		new Need{color = new Color(0.5f,1.0f,0.0f,0.5f), value = .5f, lossPerSecond = 0.006f, gainPerClick = .1f, name = "belonging" },
+		new Need{color = new Color(0.0f,1.0f,1.0f,0.5f), value = .5f, lossPerSecond = 0.004f, gainPerClick = .1f, name = "esteem" },
+		new Need{color = new Color(0.0f,0.5f,1.0f,0.5f), value = .5f, lossPerSecond = 0.002f, gainPerClick = .1f, name = "actualization" },
+ };
+ }
+
+    //public float food = 0;
+    /// <summary>
+    /// Variables changed, redraw text and set back to false till it changes again
+    /// </summary>
     bool dirty = true;
 
     GameObject player;
     float kTransparencyRange = 5;
 
+ private void Awake() {
+    {
+        InitNeeds();
+    }
+}
     void Start() {
         player = GameObject.Find( "player" );
         UnityEngine.Assertions.Assert.IsNotNull( txtStatus );
@@ -31,12 +70,10 @@ public class MaslowMeter : MonoBehaviour {
             // Judges start negative
             happy = -10;
             safety = -10;
-            food = -10;
         }
         else {
             happy = UnityEngine.Random.Range( -7.0f, 7.0f );
             safety = UnityEngine.Random.Range( -7.0f, 7.0f );
-            food = UnityEngine.Random.Range( -7.0f, 7.0f );
         }
     }
 
@@ -53,6 +90,10 @@ public class MaslowMeter : MonoBehaviour {
 
 
     void Update() {
+        
+        // Update needs simulations
+		System.Array.ForEach(needs, (need) => need.Update(Time.deltaTime));
+
         SetTransBasedOnPlayerDist();
 
         if ( dirty && txtStatus.gameObject.activeInHierarchy ) {
@@ -82,12 +123,12 @@ public class MaslowMeter : MonoBehaviour {
                 netResult -= 1;
             }
 
-            if ( food >= 5f ) {
+            if ( health >= 5f ) {
                 foodColor = "green";
                 netResult += 1;
             }
 
-            if ( food <= -5f ) {
+            if ( health <= -5f ) {
                 foodColor = "red";
                 netResult -= 1;
             }
@@ -104,7 +145,7 @@ public class MaslowMeter : MonoBehaviour {
 
             string happyNumber = happy.ToString() + "         ";
             string safetyNumber = safety.ToString()+ "         ";
-            string foodNumber = food.ToString()+ "         ";
+            string foodNumber = health.ToString()+ "         ";
 
             happyNumber = happyNumber.Substring( 0, 4 );
             safetyNumber  = safetyNumber.Substring( 0, 4 );
@@ -139,7 +180,7 @@ public class MaslowMeter : MonoBehaviour {
 
                 MaslowMeter otherMeter = other.gameObject.transform.parent.GetComponent<MaslowMeter>();
                 UnityEngine.Assertions.Assert.IsNotNull( otherMeter );
-                otherMeter.Influence( happy, safety, food );
+                otherMeter.Influence( happy, safety, health );
             }
         }
     }
@@ -158,8 +199,8 @@ public class MaslowMeter : MonoBehaviour {
         }
 
         if ( Math.Abs( pfood ) >= 5 ) {
-            food += pfood / Math.Abs( pfood );
-            food = Mathf.Clamp( food, -10, 10 );
+            health += pfood / Math.Abs( pfood );
+            health = Mathf.Clamp( health, -10, 10 );
         }
 
         dirty = true;

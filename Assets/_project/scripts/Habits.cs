@@ -6,14 +6,22 @@ public class Habits : MonoBehaviour
 {
 	public enum Layer { lowest_phys, low_safe, mid_belong, high_esteem, highest_actualization, happy }
 
+/// <summary>
+/// The habitual activity a person can do to meet some needs. Habits have a primary need level it effects positively and some secondary effected needs that can be positive or negative.
+/// </summary>
 	[System.Serializable]
 	public class Habit {
 		public string name;
 		public int id;
 		public Sprite sprite;
+		public Need.NeedLevelEnum needLevel = Need.NeedLevelEnum.Physiology;
 		public Effect[] effects;
 		[System.Serializable]
 		public struct Effect { public Layer layer; public float increase; public float timeToLose; }
+		/// <summary>
+		/// The current strength of a habit when a person has it. 0-10.
+		/// </summary>
+		public float strength = 0f;
 	}
 
 	public Habit[] habits = new Habit[] {

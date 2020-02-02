@@ -63,8 +63,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_spriteAsset: {fileID: 11400000, guid: c41005c129ba4d66911b75229fd70b45, type: 2}
   m_material: {fileID: 0}
@@ -238,8 +236,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: " <sprite=14> 0.7\n <sprite=2> -0.5\n <sprite=11> 0.4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -428,7 +424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 4780873372643401401}
   move:
-    speed: 5
+    speed: 2
     enableClickToMove: 0
     canMoveInAir: 0
     lookForwardMoving: 1
@@ -464,6 +460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac59570a1dedc4449c246c2d6abc514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  judge: 0
+  judgeColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1593009185
 MonoBehaviour:
   m_ObjectHideFlags: 0
