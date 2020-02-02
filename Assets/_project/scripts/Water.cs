@@ -31,8 +31,10 @@ public class Water : MonoBehaviour {
         if ( other.tag == "Player" ) {
             // TODO end game
         }
+        else if ( other.tag == "Judge" ) {
+        }
         else {
-            Destroy( other.gameObject );
+            other.gameObject.SetActive( false );
         }
     }
 }
