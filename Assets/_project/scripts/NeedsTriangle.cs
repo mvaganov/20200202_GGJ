@@ -17,17 +17,21 @@ public class NeedsTriangle : MonoBehaviour
 	private Rigidbody2D rb;
 
 	public void SetShow(Show triangleShow) {
-		this.triangleShow = triangleShow;
-		UpdateTriangleUIParent();
+		UpdateTriangleUIParent(triangleShow);
 	}
 
-	public void UpdateTriangleUIParent() {
+	public void UpdateTriangleUIParent(Show triangleShow) {
 		Transform maslowTransform = transform.parent;
 		Transform placeTobe = null;
 		if (rb != null) { rb.simulated = false; }
+		Show lastState = this.triangleShow;
+		this.triangleShow = triangleShow;
 		switch (triangleShow) {
 			case Show.inChest:
-				if(maslow.chestCanvas == null) { Debug.Log("need to set chest canvas for "+maslow.gameObject+" ("+maslow.transform.root+")"); }
+				//if (lastState != Show.inChest) { Debug.Log("bringing to chest from " + lastState); }
+				if(maslow.chestCanvas == null) {
+					Debug.Log("need to set chest canvas for "+maslow.gameObject+" ("+maslow.transform.root+")");
+				}
 				placeTobe = maslow.chestCanvas.transform;
 				SetTextVisible(false);
 				break;
@@ -35,7 +39,7 @@ public class NeedsTriangle : MonoBehaviour
 			case Show.aboveHead:
 				RectTransform ui = maslow.headScreenUI.GetComponent<CanvasUIElement>().ui;
 				if(ui == null) {
-					NS.Chrono.setTimeout(UpdateTriangleUIParent, 100);
+					NS.Chrono.setTimeout(()=>UpdateTriangleUIParent(triangleShow), 100);
 					//Debug.Log("waiting for UI to happen...");
 					return;
 				}
@@ -119,7 +123,7 @@ public class NeedsTriangle : MonoBehaviour
 		ConnectButtonsToNeeds();
 		SetTextVisible(false);
 		rb = GetComponent<Rigidbody2D>();
-		UpdateTriangleUIParent();
+		UpdateTriangleUIParent(triangleShow);
 	}
 
 	void FixedUpdate()
