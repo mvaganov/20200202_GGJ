@@ -10,8 +10,25 @@ public class NPCWithBoxes : MonoBehaviour {
     [SerializeField] Color judgeColor = Color.white;
     private BoxCollider region;
     private CharacterMove moveController;
-
+	public MeshRenderer skin;
 	private GameObject line;
+	public enum SkinColors { random, simpson, light, medium_light, medium, medium_dark, dark }
+	public SkinColors skinColor;
+	public static Color[] skinColors = {
+		Color.magenta,
+		new Color(1.0f,.86f,.36f),
+		new Color(.97f,.87f,.80f),
+		new Color(.95f,.82f,.64f),
+		new Color(.84f,.67f,.53f),
+		new Color(.68f,.49f,.34f),
+		new Color(.48f,.32f,.24f),
+	};
+	public void RefreshSkinColor()
+	{
+		if (skin) {
+			skin.material.color = skinColors[(int)skinColor];
+		}
+	}
 
     public void BeginPathing(BoxCollider boundingRegion ) {
         moveController = GetComponent<CharacterMove>();
@@ -21,7 +38,11 @@ public class NPCWithBoxes : MonoBehaviour {
     }
 
     private void Start() {
-        if ( judge ) {
+		if(skinColor == SkinColors.random) {
+			skinColor = (SkinColors)Random.Range(1, skinColors.Length);
+		}
+		RefreshSkinColor();
+		if ( judge ) {
             Vector3 destination = GameObject.Find( "HouseRegion" ).transform.position;
             moveController = GetComponent<CharacterMove>();
             moveController.move.speed /= 2;

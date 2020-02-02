@@ -488,6 +488,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   judge: 0
   judgeColor: {r: 1, g: 1, b: 1, a: 1}
+  skin: {fileID: 4780873372643401402}
+  skinColor: 0
 --- !u!1 &4780873372488770998
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +594,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4780873372643401400}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.84, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0.84, z: 0.09}
   m_LocalScale: {x: 0.8153, y: 0.8153, z: 0.8153}
   m_Children:
   - {fileID: 4780873372488770999}
@@ -624,7 +626,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c9339b62f30a30f47800f87854f758b9, type: 3}
+  - {fileID: 2100000, guid: 6be17d44353edeb45af0118b97afb26a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
