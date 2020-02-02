@@ -9,7 +9,9 @@ public class CharacterCamera : MonoBehaviour
 	[Tooltip("if true, do a ray cast to prevent the camera from going through walls")]
 	public bool wallClip = true;
 
-	public void UpdateRotationWithUserInput(ref float rotH, ref float rotV, ref float zoom, System.Action onMouseLookStart, System.Action onMouseLookStop) {
+	public Vector3 sensitivity = new Vector3(1, 1, 1);
+
+	public void UpdateRotationWithUserInput(ref float rotH, ref float rotV, ref float zoom) {
 		if (joystick != null && rotH == 0 && rotV == 0)
 		{
 			Vector3 inputDir = joystick.GetInputDirection();
@@ -43,19 +45,17 @@ public class CharacterCamera : MonoBehaviour
 		yaw = Vector3.Angle(Vector3.forward, straightForward);
 		if (Vector3.Dot(straightForward, Vector3.right) < 0) { yaw *= -1; }
 		if (Vector3.Dot(Vector3.up, transform.forward) > 0) { pitch *= -1; }
+		Debug.Log(targetDistance);
 	}
 
 	void Update()
     {
 		float rotH = horizontalRotateInput * Time.deltaTime, rotV = verticalRotateInput * Time.deltaTime, zoom = zoomInput * Time.deltaTime;
-		// TODO toggle swaps between modes, toggle mouselook by default, toggle mouse selection by default
-		UpdateRotationWithUserInput(ref rotH, ref rotV, ref zoom, ()=> {
-			CharacterFaceMouse face = target.GetComponent<CharacterFaceMouse>();
-			if (face) face.enabled = false;
-		}, () => {
-			CharacterFaceMouse face = target.GetComponent<CharacterFaceMouse>();
-			if(face) face.enabled = true;
-		});
+		//// TODO toggle swaps between modes, toggle mouselook by default, toggle mouse selection by default
+		UpdateRotationWithUserInput(ref rotH, ref rotV, ref zoom);
+		rotH *= sensitivity.x;
+		rotV *= sensitivity.y;
+		zoom *= sensitivity.z;
 		targetDistance += zoom;
 		if (rotH != 0 || rotV != 0)
 		{

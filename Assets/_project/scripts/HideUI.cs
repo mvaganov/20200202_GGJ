@@ -9,13 +9,14 @@ public class HideUI : MonoBehaviour {
         UnityEngine.Assertions.Assert.IsNotNull( btnHideUI );
         btnHideUI.onClick.AddListener( delegate {
             Transform baseUIController = transform.parent;
-            RecursiveDisableVisuals( baseUIController );
+            RecursiveDisableVisuals( baseUIController, baseUIController );
         } );
     }
 
-    private void RecursiveDisableVisuals( Transform root ) {
+    private void RecursiveDisableVisuals( Transform root, Transform self ) {
         for ( int i = 0; i<root.childCount; i++ ) {
             Transform curChild = root.GetChild(i);
+			if (curChild == self) continue; // don't disable the button itself...
             UnityEngine.UI.Image curChildVisual = curChild.GetComponent<UnityEngine.UI.Image>();
             if ( curChildVisual != null ) {
                 curChildVisual.enabled = false;
@@ -27,7 +28,7 @@ public class HideUI : MonoBehaviour {
             }
 
             if ( curChild.childCount > 0 ) {
-                RecursiveDisableVisuals( curChild );
+                RecursiveDisableVisuals( curChild, self );
             }
         }
     }
