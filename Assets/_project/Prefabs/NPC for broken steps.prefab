@@ -63,8 +63,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_spriteAsset: {fileID: 11400000, guid: c41005c129ba4d66911b75229fd70b45, type: 2}
   m_material: {fileID: 0}
@@ -238,8 +236,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: " <sprite=14> 0.7\n <sprite=2> -0.5\n <sprite=11> 0.4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -356,10 +352,10 @@ GameObject:
   - component: {fileID: 4780873372299134621}
   - component: {fileID: 4780873372299134620}
   - component: {fileID: 4780873372299134619}
-  - component: {fileID: 6991835598562501265}
   - component: {fileID: 1593009185}
+  - component: {fileID: 114117165501282482}
   m_Layer: 0
-  m_Name: NPC
+  m_Name: NPC for broken steps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -452,18 +448,6 @@ MonoBehaviour:
     maxJumps: 1
     jumpIcon: {fileID: 0}
     PressJump: 0
---- !u!114 &6991835598562501265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4780873372299134618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bac59570a1dedc4449c246c2d6abc514, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1593009185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,6 +468,20 @@ MonoBehaviour:
   happy: 0
   safety: 0
   food: 0
+--- !u!114 &114117165501282482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4780873372299134618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb31ee81fce74f459361d3a181cfca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  judge: 0
+  judgeColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &4780873372488770998
 GameObject:
   m_ObjectHideFlags: 0
