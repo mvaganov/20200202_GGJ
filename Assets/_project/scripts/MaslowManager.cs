@@ -58,7 +58,7 @@ public class MaslowManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(spriteSought.name);
+            //Debug.Log(spriteSought.name);
             string stringToIntify = "";
             if(spriteSought.name.Length == 18)
             {
@@ -76,7 +76,7 @@ public class MaslowManager : MonoBehaviour
             {
                 stringToIntify = spriteSought.name.Substring(17,4);
             }
-            Debug.Log("stringtointify:"+stringToIntify);
+            //Debug.Log("stringtointify:"+stringToIntify);
             int.TryParse(stringToIntify, out index);//System.Array.FindIndex(emojiSprites, s => s.name == spriteSought.name);
         }
         return index;

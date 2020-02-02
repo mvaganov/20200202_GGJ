@@ -317,38 +317,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f662957d57c2fb4eb9ab6fd14852c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maslow: {fileID: 0}
   triangleLayers: []
-  needs:
-  - name: pizza
-    color: {r: 1, g: 0, b: 0, a: 0.5}
-    value: 0.5
-    lossPerSecond: 0.01
-    gainPerClick: 0.1
-    ui: {fileID: 0}
-  - name: job
-    color: {r: 1, g: 0.7, b: 0, a: 0.5}
-    value: 0.5
-    lossPerSecond: 0.008
-    gainPerClick: 0.1
-    ui: {fileID: 0}
-  - name: friends
-    color: {r: 0.5, g: 1, b: 0, a: 0.5}
-    value: 0.5
-    lossPerSecond: 0.006
-    gainPerClick: 0.1
-    ui: {fileID: 0}
-  - name: feelin' swell
-    color: {r: 0, g: 1, b: 1, a: 0.5}
-    value: 0.5
-    lossPerSecond: 0.004
-    gainPerClick: 0.1
-    ui: {fileID: 0}
-  - name: political change
-    color: {r: 0, g: 0.5, b: 1, a: 0.5}
-    value: 0.5
-    lossPerSecond: 0.002
-    gainPerClick: 0.1
-    ui: {fileID: 0}
+  triangleShow: 0
 --- !u!1 &4476291280611786669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1659,8 +1630,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2260,13 +2231,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '
-
-    act
-
-    ualiz
-
-    ation'
+  m_text: act
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2294,8 +2259,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2311,7 +2276,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 11
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -2335,12 +2300,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 4476291282265786102}
-    characterCount: 16
+    characterCount: 3
     spriteCount: 0
-    spaceCount: 3
-    wordCount: 4
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
-    lineCount: 4
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -2525,8 +2490,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

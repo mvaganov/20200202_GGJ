@@ -107,8 +107,8 @@ using UnityEngine;
             
             if (habitPrimary != null)
             {
-                Debug.Log("Use primary name:" + habitPrimary.name);
-                Debug.Log("Use sprite:" + habitPrimary.sprite);
+                //Debug.Log("Use primary name:" + habitPrimary.name);
+                //Debug.Log("Use sprite:" + habitPrimary.sprite);
 
                 uiText = "<sprite=" + MaslowManager.Instance.GetEmojiSpriteIndex(habitPrimary.sprite) + "> " + uiText;
             }
