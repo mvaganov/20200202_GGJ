@@ -1526,6 +1526,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505621656}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &595750966 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4909381511635230873, guid: 49fa3863ef9461743a7eba2e6419dc98,
+    type: 3}
+  m_PrefabInstance: {fileID: 1706636865202380481}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ecf6a7f58e57d4f8c17ddd1237db55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &660950692
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8773,6 +8785,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1586200147}
     m_Modifications:
+    - target: {fileID: 1706636865691211758, guid: 49fa3863ef9461743a7eba2e6419dc98,
+        type: 3}
+      propertyPath: happinessBar
+      value: 
+      objectReference: {fileID: 595750966}
     - target: {fileID: 1706636865719579551, guid: 49fa3863ef9461743a7eba2e6419dc98,
         type: 3}
       propertyPath: cameraToBillboardFor
@@ -8782,6 +8799,16 @@ PrefabInstance:
         type: 3}
       propertyPath: triangleShow
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909381511635230872, guid: 49fa3863ef9461743a7eba2e6419dc98,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 249
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909381511635230875, guid: 49fa3863ef9461743a7eba2e6419dc98,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6194175923556547312, guid: 49fa3863ef9461743a7eba2e6419dc98,
         type: 3}

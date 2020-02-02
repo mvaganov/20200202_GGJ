@@ -3524,6 +3524,7 @@ MonoBehaviour:
   distance: 0
   headScreenUI: {fileID: 6727000786539286132}
   headWorldUI: {fileID: 7092308839710740664}
+  happinessBar: {fileID: 4909381511635230873}
   meeting: 0
   departing: 0
   departTime: 0
