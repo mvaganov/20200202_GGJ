@@ -59,6 +59,7 @@ public class NPCWithBoxes : MonoBehaviour {
             visual.material.color = judgeColor;
 
 			//NS.Lines.MakeArrow(ref line, transform.position, destination, Color.black, 1, 1);
+			Election.Instance.electors.Add(GetComponent<MaslowMeter>());
         }
     }
 
@@ -67,37 +68,38 @@ public class NPCWithBoxes : MonoBehaviour {
         moveController.move.SetAutoMovePosition( position );
 		//NS.Lines.Make(ref line, transform.position, position, Color.black);
     }
+	private bool myVote = false;
 
 	private static int[] noVotes = { 147, 642, 1762 };
 	private static int[] yesVotes = { 1853, 1909 };
+	private static int unknownVote = 2740;
 
 	public UnityEngine.UI.Image voteSlot;
-	private static int yesVoteCount = 0;
-	private static int noVoteCount = 0;
-	private int totalRounds = 0;
+	private static int totalRounds = 0;
 
-	public void Vote(bool positive) {
+	public void Vote( MaslowMeter.MyVote vote ) {
 		Sprite voteSprite = null;
-		if (positive) {
+		if (vote == MaslowMeter.MyVote.yea) {
 			voteSprite = MaslowManager.Instance.emojiSprites[yesVotes[Random.Range(0, yesVotes.Length)]];
-			++yesVoteCount;
 		} else {
 			voteSprite = MaslowManager.Instance.emojiSprites[noVotes[Random.Range(0, noVotes.Length)]];
-			++noVoteCount;
 		}
+		// TODO move a bunch of this code to Election...
+		int yesVoteCountThisTime, noVoteCountThisTime;
+		Election.Instance.Tally(out yesVoteCountThisTime, out noVoteCountThisTime);
 		if(voteSprite != null)
 		{
 			voteSlot.sprite = voteSprite;
 		}
-		int totalVotes = noVoteCount + yesVoteCount;
-		Debug.Log("VOTES: " + totalVotes);
-		if (noVoteCount >= 3 || 
-			(totalVotes == 5 && noVoteCount >= 3))
+		int totalVotes = noVoteCountThisTime + yesVoteCountThisTime;
+		//Debug.Log("VOTES: " + totalVotes+"   "+ yesVoteCountThisTime+" vs "+ noVoteCountThisTime);
+		if (noVoteCountThisTime >= 3 || 
+			(totalVotes == 5 && noVoteCountThisTime >= 3))
 		{
 			Noisy.PlaySound("Judge made bad choice");
 		}
-		if (yesVoteCount >= 3 || 
-			(totalVotes == 5 && yesVoteCount >= 3))
+		if (yesVoteCountThisTime >= 3 || 
+			(totalVotes == 5 && yesVoteCountThisTime >= 3))
 		{
 			Noisy.PlaySound("Judge made good choice");
 		}
@@ -105,17 +107,26 @@ public class NPCWithBoxes : MonoBehaviour {
 			CharacterMove[] cms = FindObjectsOfType<CharacterMove>();
 			System.Array.ForEach(cms, cm => { cm.transform.position = cm.startPosition; });
 			totalRounds++;
+			//Debug.Log(totalRounds);
+			Election.Instance.sealevel.position = Election.Instance.sealevel.position + Vector3.up * 5;
+			Debug.Log(Election.Instance.sealevel.position);
 		}
-		if(totalRounds == 5)
+		if(totalRounds >= 5)
 		{
-			if(yesVoteCount >= 3)
+			if(yesVoteCountThisTime >= 3)
 			{
 				Noisy.PlaySound("Win game");
 			}
-			if (noVoteCount >= 3)
+			if (noVoteCountThisTime >= 3)
 			{
 				Noisy.PlaySound("Lose game");
 			}
+			Debug.Log("NEED TO START OVER!");
+		}
+		if (totalVotes == 5)
+		{
+			Election.Instance.ResetVotes(unknownVote);
+			totalVotes = 0;
 		}
 	}
 }

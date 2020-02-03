@@ -79,7 +79,8 @@ public class MaslowMeter : MonoBehaviour {
     public bool isPlayer = false;
     
     float kTransparencyRange = 5;
-    bool votingPositive = false;
+	public enum MyVote { abstain, present, yea, nay }
+    public MyVote vote = MyVote.abstain;
 
     public CharacterMove characterMove;
 
@@ -689,8 +690,8 @@ public bool goodBlinking = false;
     public static float maxNeedValue = 10f;
     public static float maxNeedRandomValue = 7f;
 
-	bool VoteForEarth() {
-		return happy >= 5 && actualization >= 5;
+	MyVote VoteForEarth() {
+		return (happy >= 5 && actualization >= 5)?MyVote.yea:MyVote.nay;
 	}
 
     void FixedUpdate() {
@@ -702,7 +703,6 @@ public bool goodBlinking = false;
         UpdateHighest();
 		UpdateTriangleUI();
 		//SetTransBasedOnPlayerDist();
-		votingPositive = VoteForEarth();
 
         //if ( dirty && txtStatus.gameObject.activeInHierarchy ) {
         //    string happyColor = "white";
@@ -797,11 +797,12 @@ public bool goodBlinking = false;
 
 	private void OnTriggerEnter( Collider other ) {
         if ( tag == "Judge" && other.tag == "House" ) {
-            // Judges don't influence others, only the city hall
-            var npc = GetComponent<NPCWithBoxes>();
+			vote = VoteForEarth();
+			// Judges don't influence others, only the city hall
+			var npc = GetComponent<NPCWithBoxes>();
             UnityEngine.Assertions.Assert.IsNotNull( npc );
-            npc.Vote( votingPositive );
-			Debug.Log("JUDGED!");
+            npc.Vote( vote );
+			//Debug.Log("JUDGED!");
             return;
         }
         else if ( other.tag == "Villager" || other.tag == "Judge" || other.tag == "PlayerBubble" ) {
