@@ -74,6 +74,7 @@ public class NPCWithBoxes : MonoBehaviour {
 	public UnityEngine.UI.Image voteSlot;
 	private static int yesVoteCount = 0;
 	private static int noVoteCount = 0;
+	private int totalRounds = 0;
 
 	public void Vote(bool positive) {
 		Sprite voteSprite = null;
@@ -87,6 +88,34 @@ public class NPCWithBoxes : MonoBehaviour {
 		if(voteSprite != null)
 		{
 			voteSlot.sprite = voteSprite;
+		}
+		int totalVotes = noVoteCount + yesVoteCount;
+		Debug.Log("VOTES: " + totalVotes);
+		if (noVoteCount >= 3 || 
+			(totalVotes == 5 && noVoteCount >= 3))
+		{
+			Noisy.PlaySound("Judge made bad choice");
+		}
+		if (yesVoteCount >= 3 || 
+			(totalVotes == 5 && yesVoteCount >= 3))
+		{
+			Noisy.PlaySound("Judge made good choice");
+		}
+		if(totalVotes == 5) {
+			CharacterMove[] cms = FindObjectsOfType<CharacterMove>();
+			System.Array.ForEach(cms, cm => { cm.transform.position = cm.startPosition; });
+			totalRounds++;
+		}
+		if(totalRounds == 5)
+		{
+			if(yesVoteCount >= 3)
+			{
+				Noisy.PlaySound("Win game");
+			}
+			if (noVoteCount >= 3)
+			{
+				Noisy.PlaySound("Lose game");
+			}
 		}
 	}
 }
