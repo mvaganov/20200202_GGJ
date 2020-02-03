@@ -109,19 +109,20 @@ public class NPCWithBoxes : MonoBehaviour {
 			totalRounds++;
 			//Debug.Log(totalRounds);
 			Election.Instance.sealevel.position = Election.Instance.sealevel.position + Vector3.up * 5;
-			Debug.Log(Election.Instance.sealevel.position);
+			//Debug.Log(Election.Instance.sealevel.position);
 		}
 		if(totalRounds >= 5)
 		{
 			if(yesVoteCountThisTime >= 3)
 			{
 				Noisy.PlaySound("Win game");
+				UnityEngine.SceneManagement.SceneManager.LoadScene("Win Screen");
 			}
 			if (noVoteCountThisTime >= 3)
 			{
 				Noisy.PlaySound("Lose game");
+				UnityEngine.SceneManagement.SceneManager.LoadScene("Lose Screen");
 			}
-			Debug.Log("NEED TO START OVER!");
 		}
 		if (totalVotes == 5)
 		{

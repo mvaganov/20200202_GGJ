@@ -564,12 +564,12 @@ public bool goodBlinking = false;
                 // If we have no primary, get us started at max
                 if (receivedNeed.habitPrimary == null)
                 {
-                    Debug.Log("isPlayer:"+isPlayer);
-                    Debug.Log("highestLayer:"  + highestLayer);
+                    //Debug.Log("isPlayer:"+isPlayer);
+                    //Debug.Log("highestLayer:"  + highestLayer);
                     highestLayer ++;
                     happy+=2f;
                     interactingWith.happy +=2f;
-                    Debug.Log("highestLayer:"  + highestLayer);
+                    //Debug.Log("highestLayer:"  + highestLayer);
 
                     // TODO: Make a way to share someone's secondary needs with yourself, otehrwise just always ask for their primary.
                     receivedNeed.habitPrimary = influencerNeed.habitPrimary;
