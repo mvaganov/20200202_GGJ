@@ -3165,7 +3165,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6194175923607876949}
   serializedVersion: 2
-  m_Mass: 1000
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -3520,6 +3520,7 @@ MonoBehaviour:
     earth: 0
     layer: 0
   isPlayer: 0
+  vote: 0
   characterMove: {fileID: 6194175923607876948}
   distance: 0
   headScreenUI: {fileID: 6727000786539286132}
@@ -3530,6 +3531,10 @@ MonoBehaviour:
   departing: 0
   departTime: 0
   meetTime: 0
+  goodBlinkSpeed: 0.1
+  goodBlinkLast: 0
+  goodBlinking: 0
+  blinkingLayer: 0
 --- !u!114 &1601695811229797245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3546,6 +3551,7 @@ MonoBehaviour:
   judgeColor: {r: 1, g: 1, b: 1, a: 1}
   skin: {fileID: 6194175923397832053}
   skinColor: 0
+  voteSlot: {fileID: 0}
 --- !u!114 &2720594506381417773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3996,6 +4002,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.042444143
       objectReference: {fileID: 0}
+    - target: {fileID: 3300000, guid: c9339b62f30a30f47800f87854f758b9, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300002, guid: feaa658aa4f47cc45a79c6b90eeee91d, type: 3}
     - target: {fileID: 2300000, guid: c9339b62f30a30f47800f87854f758b9, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -4020,10 +4030,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[4]
       value: 
       objectReference: {fileID: 2100000, guid: e2996dca86373784598ea34ff1874a94, type: 2}
-    - target: {fileID: 3300000, guid: c9339b62f30a30f47800f87854f758b9, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 4300002, guid: feaa658aa4f47cc45a79c6b90eeee91d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9339b62f30a30f47800f87854f758b9, type: 3}
 --- !u!4 &6194175924321635339 stripped
