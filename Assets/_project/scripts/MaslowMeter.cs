@@ -396,13 +396,13 @@ public class MaslowMeter : MonoBehaviour {
         // TODO: Look at whoever you met
         meeting = true;
 		departing = false;
-        RestoreInteractingWithColor();
+//        RestoreInteractingWithColor();
 		//interactingWith = metMaslow;
 		//if (metMaslow.tag == "Player")
 		//{
 		//	//Debug.LogError(name + " met Player "+triangle.triangleShow+" "+triangle.transform.parent.parent.parent);
 		//}
-		characterMove.move.speed = 0.05f;
+//		characterMove.move.speed = 0.05f;
 		metMaslow.Met(this);
 		meetTime = Time.time;
         meetLength = 5f + UnityEngine.Random.Range(0f,5f);
@@ -413,8 +413,8 @@ public class MaslowMeter : MonoBehaviour {
         // TODO: Look at whoever you met
         meeting = true;
 		departing = false;
-        characterMove.move.speed = 0.05f;
-        RestoreInteractingWithColor();
+ //       characterMove.move.speed = 0.05f;
+//        RestoreInteractingWithColor();
 		//interactingWith = meeter;
 		//if (meeter.tag == "Player")
 		//{
@@ -820,6 +820,7 @@ public bool goodBlinking = false;
 			{
 				interactingWith = otherMaslow;
 				otherMaslow.interactingWith = this;
+				RestoreInteractingWithColor();
 			}
 			// If this is someone we haven't exchanged with before, we could meet with them
 			if ( !peopleThisPersonInfluenced.Contains( other.transform.parent ) ) {

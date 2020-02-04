@@ -73,6 +73,7 @@ public class NPCWithBoxes : MonoBehaviour {
 	private static int[] noVotes = { 147, 642, 1762 };
 	private static int[] yesVotes = { 1853, 1909 };
 	private static int unknownVote = 2740;
+	private static bool gameIsWon = false;
 
 	public UnityEngine.UI.Image voteSlot;
 	private static int totalRounds = 0;
@@ -103,31 +104,34 @@ public class NPCWithBoxes : MonoBehaviour {
 		{
 			Noisy.PlaySound("Judge made good choice");
 		}
+		// after 5 votes, increment the round
 		if(totalVotes == 5) {
-			CharacterMove[] cms = FindObjectsOfType<CharacterMove>();
-			System.Array.ForEach(cms, cm => { cm.transform.position = cm.startPosition; });
 			totalRounds++;
-			//Debug.Log(totalRounds);
-			Election.Instance.sealevel.position = Election.Instance.sealevel.position + Vector3.up * 5;
-			//Debug.Log(Election.Instance.sealevel.position);
 		}
-		if(totalRounds >= 5)
+		if(yesVoteCountThisTime >= 3)
 		{
-			if(yesVoteCountThisTime >= 3)
-			{
-				Noisy.PlaySound("Win game");
-				UnityEngine.SceneManagement.SceneManager.LoadScene("Win Screen");
-			}
-			if (noVoteCountThisTime >= 3)
-			{
-				Noisy.PlaySound("Lose game");
-				UnityEngine.SceneManagement.SceneManager.LoadScene("Lose Screen");
-			}
+			Noisy.PlaySound("Win game");
+			//UnityEngine.SceneManagement.SceneManager.LoadScene("Win Screen");
+			gameIsWon = true;
+			Camera.main.GetComponent<CharacterCamera>().target = Election.Instance.transform;
+			Election.Instance.victory.gameObject.SetActive(true);
+			Election.Instance.victory.Play();
+			return;
+		}
+		if(noVoteCountThisTime >= 3 && totalRounds >= 5)
+		{
+			Noisy.PlaySound("Lose game");
+			UnityEngine.SceneManagement.SceneManager.LoadScene("Lose Screen");
 		}
 		if (totalVotes == 5)
 		{
+			// clear votes
 			Election.Instance.ResetVotes(unknownVote);
-			totalVotes = 0;
+			// restart people at their start locations
+			CharacterMove[] cms = FindObjectsOfType<CharacterMove>();
+			System.Array.ForEach(cms, cm => { cm.transform.position = cm.startPosition; });
+			// bring up water
+			Election.Instance.sealevel.position = Election.Instance.sealevel.position + Vector3.up * 5;
 		}
 	}
 }

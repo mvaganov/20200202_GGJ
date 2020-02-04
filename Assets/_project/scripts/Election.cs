@@ -13,6 +13,7 @@ public class Election : MonoBehaviour
 		}
 	}
 
+	public ParticleSystem victory;
 	public List<MaslowMeter> electors = new List<MaslowMeter>();
 
 	public void Tally(out int yea, out int nay)
