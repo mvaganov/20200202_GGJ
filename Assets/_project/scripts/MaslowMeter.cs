@@ -397,7 +397,7 @@ public class MaslowMeter : MonoBehaviour {
         meeting = true;
 		departing = false;
         RestoreInteractingWithColor();
-		interactingWith = metMaslow;
+		//interactingWith = metMaslow;
 		//if (metMaslow.tag == "Player")
 		//{
 		//	//Debug.LogError(name + " met Player "+triangle.triangleShow+" "+triangle.transform.parent.parent.parent);
@@ -415,7 +415,7 @@ public class MaslowMeter : MonoBehaviour {
 		departing = false;
         characterMove.move.speed = 0.05f;
         RestoreInteractingWithColor();
-		interactingWith = meeter;
+		//interactingWith = meeter;
 		//if (meeter.tag == "Player")
 		//{
 		//	triangle.SetShow(NeedsTriangle.Show.aboveHead);
@@ -584,6 +584,7 @@ public bool goodBlinking = false;
                 {
                     receivedNeed.habitSecondary = influencerNeed.habitPrimary;
                     receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+
                 }
                 // or its our first secondary
                 else if (receivedNeed.habitSecondary == null)
@@ -811,9 +812,14 @@ public bool goodBlinking = false;
 				//showTriangleDuration = showTriangleLength;
 				ActivateTriangleUI(this);
 			}
-			if(tag == "Player" && otherMaslow != null) {
+			if (tag == "Player" && otherMaslow != null) {
 				//otherMaslow.showTriangleDuration = showTriangleLength;
 				ActivateTriangleUI(otherMaslow);
+			}
+			if(otherMaslow != null)
+			{
+				interactingWith = otherMaslow;
+				otherMaslow.interactingWith = this;
 			}
 			// If this is someone we haven't exchanged with before, we could meet with them
 			if ( !peopleThisPersonInfluenced.Contains( other.transform.parent ) ) {
