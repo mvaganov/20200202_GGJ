@@ -396,13 +396,13 @@ public class MaslowMeter : MonoBehaviour {
         // TODO: Look at whoever you met
         meeting = true;
 		departing = false;
-        RestoreInteractingWithColor();
-		interactingWith = metMaslow;
+//        RestoreInteractingWithColor();
+		//interactingWith = metMaslow;
 		//if (metMaslow.tag == "Player")
 		//{
 		//	//Debug.LogError(name + " met Player "+triangle.triangleShow+" "+triangle.transform.parent.parent.parent);
 		//}
-		characterMove.move.speed = 0.05f;
+//		characterMove.move.speed = 0.05f;
 		metMaslow.Met(this);
 		meetTime = Time.time;
         meetLength = 5f + UnityEngine.Random.Range(0f,5f);
@@ -413,9 +413,9 @@ public class MaslowMeter : MonoBehaviour {
         // TODO: Look at whoever you met
         meeting = true;
 		departing = false;
-        characterMove.move.speed = 0.05f;
-        RestoreInteractingWithColor();
-		interactingWith = meeter;
+ //       characterMove.move.speed = 0.05f;
+//        RestoreInteractingWithColor();
+		//interactingWith = meeter;
 		//if (meeter.tag == "Player")
 		//{
 		//	triangle.SetShow(NeedsTriangle.Show.aboveHead);
@@ -564,12 +564,12 @@ public bool goodBlinking = false;
                 // If we have no primary, get us started at max
                 if (receivedNeed.habitPrimary == null)
                 {
-                    Debug.Log("isPlayer:"+isPlayer);
-                    Debug.Log("highestLayer:"  + highestLayer);
+                    //Debug.Log("isPlayer:"+isPlayer);
+                    //Debug.Log("highestLayer:"  + highestLayer);
                     highestLayer ++;
                     happy+=2f;
                     interactingWith.happy +=2f;
-                    Debug.Log("highestLayer:"  + highestLayer);
+                    //Debug.Log("highestLayer:"  + highestLayer);
 
                     // TODO: Make a way to share someone's secondary needs with yourself, otehrwise just always ask for their primary.
                     receivedNeed.habitPrimary = influencerNeed.habitPrimary;
@@ -584,6 +584,7 @@ public bool goodBlinking = false;
                 {
                     receivedNeed.habitSecondary = influencerNeed.habitPrimary;
                     receivedNeed.habitPrimaryValue = MaslowMeter.maxHabitValue;
+
                 }
                 // or its our first secondary
                 else if (receivedNeed.habitSecondary == null)
@@ -811,9 +812,15 @@ public bool goodBlinking = false;
 				//showTriangleDuration = showTriangleLength;
 				ActivateTriangleUI(this);
 			}
-			if(tag == "Player" && otherMaslow != null) {
+			if (tag == "Player" && otherMaslow != null) {
 				//otherMaslow.showTriangleDuration = showTriangleLength;
 				ActivateTriangleUI(otherMaslow);
+			}
+			if(otherMaslow != null)
+			{
+				interactingWith = otherMaslow;
+				otherMaslow.interactingWith = this;
+				RestoreInteractingWithColor();
 			}
 			// If this is someone we haven't exchanged with before, we could meet with them
 			if ( !peopleThisPersonInfluenced.Contains( other.transform.parent ) ) {
