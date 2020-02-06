@@ -22,7 +22,9 @@ public class CharacterCamera : MonoBehaviour
 	}
 
 	/// how far the camera wants to be from the target
-	private float targetDistance = 10;
+	public float targetDistance = 10;
+	public float minDistance = 2;
+	public float maxDistance = 20;
 	/// keep track of rotation, so it can be un-rotated and cleanly re-rotated 
 	private float pitch, yaw;
 
@@ -67,7 +69,8 @@ public class CharacterCamera : MonoBehaviour
 			if (pitch >= 180) { pitch -= 360; }
 			transform.Rotate(pitch, yaw, 0);
 		}
-		if (targetDistance < 0) { targetDistance = 0; }
+		if (targetDistance < minDistance) { targetDistance = minDistance; }
+		if (targetDistance > maxDistance) { targetDistance = maxDistance; }
 	}
 
 	private void LateUpdate()
